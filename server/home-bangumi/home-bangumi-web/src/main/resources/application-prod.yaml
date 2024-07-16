@@ -1,0 +1,51 @@
+server:
+  port: 80
+logging:
+  config: classpath:logback-spring.xml
+
+spring:
+  application:
+    name: home-bangumi
+  datasource:
+    url: jdbc:sqlite:/data/home-bangumi/db/database.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  # 修改请求映射
+  mvc:
+    static-path-pattern: /**
+  # 修改静态资源目录
+  web:
+    resources:
+      static-locations:
+        - "file:/data/home-bangumi/"
+        - "file:/usr/local/var/www/"
+
+
+sa-token:
+  # accessToken 名称（同时也是 cookie 名称）
+  token-name: Authorization
+  # token前缀
+  token-prefix: Bearer
+  # accessToken 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # accessToken 最低活跃频率（单位：秒），如果 accessToken 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 accessToken （为 true 时所有登录共用一个 accessToken, 为 false 时每次登录新建一个 accessToken）
+  is-share: true
+  # accessToken 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: false
+
+hb:
+  rss:
+    bangumi:
+      static-resource-parent-dir: /data/home-bangumi
+      torrent-root-dir: /data/home-bangumi/torrents
+      poster-root-dir: /data/home-bangumi/static-resources/posters
