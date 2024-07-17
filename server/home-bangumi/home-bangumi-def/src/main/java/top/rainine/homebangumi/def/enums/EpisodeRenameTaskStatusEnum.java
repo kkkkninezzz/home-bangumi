@@ -2,6 +2,7 @@ package top.rainine.homebangumi.def.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import top.rainine.homebangumi.def.utils.EnumUtils;
 
 /**
  * @author rainine
@@ -34,4 +35,10 @@ public enum EpisodeRenameTaskStatusEnum {
     ;
 
     private final int status;
+
+    private static final EpisodeRenameTaskStatusEnum[] ENUMS = values();
+
+    public static boolean contains(Integer status) {
+        return EnumUtils.containsInteger(ENUMS, EpisodeRenameTaskStatusEnum::getStatus, status);
+    }
 }

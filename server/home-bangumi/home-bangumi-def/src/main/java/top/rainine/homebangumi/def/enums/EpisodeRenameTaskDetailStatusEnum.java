@@ -18,25 +18,34 @@ public enum EpisodeRenameTaskDetailStatusEnum {
     NONE(0),
 
     /**
-     * 解析标题失败
-     * */
-    PARSE_TITLE_FAILED(1),
-
-    /**
      * 等待执行
      * */
-    PENDING(2),
+    PENDING(1),
 
     /**
      * 成功
      * */
-    SUCCESS(3),
+    SUCCESS(2),
+
+    /**
+     * 解析标题失败
+     * */
+    PARSE_TITLE_FAILED(96),
+
+    /**
+     * 忽略
+     * */
+    IGNORED(97),
+
+    /**
+     * 被过滤掉的
+     * */
+    FILTERED_OUT(98),
 
     /**
      * 失败
      * */
-    FAIL(4),
-
+    FAIL(99),
     ;
 
     private final int status;

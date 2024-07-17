@@ -118,6 +118,16 @@ public enum HbCodeEnum {
     CUSTOMIZE_RENAMED_EPISODE_TITLE_FORMAT_INVALID(ErrorCode.CUSTOMIZE_RENAMED_EPISODE_TITLE_FORMAT_INVALID, "customize renamed episode title format invalid"),
 
     RSS_BANGUMI_EPISODE_RENAME_FAILED(ErrorCode.RSS_BANGUMI_EPISODE_RENAME_FAILED, "rss bangumi episode rename failed"),
+
+    EPISODE_RENAME_TASK_NAME_INVALID(ErrorCode.EPISODE_RENAME_TASK_NAME_INVALID, "episode rename task name invalid"),
+
+    EPISODE_DIR_PATH_INVALID(ErrorCode.EPISODE_DIR_PATH_INVALID, "episode dir path invalid"),
+
+    RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID(ErrorCode.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID, "renamed episode output dir path invalid"),
+
+    EPISODE_RENAME_TASK_STATUS_INVALID(ErrorCode.EPISODE_RENAME_TASK_STATUS_INVALID, "episode rename task status invalid"),
+
+
     ;
     private final String code;
 
@@ -317,6 +327,26 @@ public enum HbCodeEnum {
          * 自定义重命名剧集标题格式无效
          * */
         String CUSTOMIZE_RENAMED_EPISODE_TITLE_FORMAT_INVALID = "HB400029";
+
+        /**
+         * 剧集重命名任务名无效
+         * */
+        String EPISODE_RENAME_TASK_NAME_INVALID = "HB400030";
+
+        /**
+         * 剧集的目录路径无效
+         * */
+        String EPISODE_DIR_PATH_INVALID = "HB400031";
+
+        /**
+         * 重命名后的剧集输出路径无效
+         * */
+        String RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID = "HB400032";
+
+        /**
+         * 剧集重命名任务状态无效
+         * */
+        String EPISODE_RENAME_TASK_STATUS_INVALID = "HB400033";
         //endregion
 
 

@@ -56,6 +56,7 @@ public class CustomEnumRuntimeHints {
             hints.reflection().registerType(TorrentDownloadStatusEnum.class, MemberCategory.values());
             hints.reflection().registerType(TorrentFileRenameResultEnum.class, MemberCategory.values());
             hints.reflection().registerType(VideoFileExtensionEnum.class, MemberCategory.values());
+            hints.reflection().registerType(EpisodeRenameTaskStatusEnum.class, MemberCategory.values());
 
         }
     }
