@@ -9,7 +9,7 @@ import top.rainine.homebangumi.api.resp.MessagesResp;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.message.MessageService;
 import top.rainine.homebangumi.core.message.data.convertor.MessageConvertor;
-import top.rainine.homebangumi.dao.po.HbMessageEntity;
+import top.rainine.homebangumi.dao.po.HbMessage;
 import top.rainine.homebangumi.dao.po.QHbMessageEntity;
 import top.rainine.homebangumi.dao.repository.HbMessageRepository;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void addMessage(MessageCategoryEnum category, MessageTypeEnum type, String title, String content, String subjectId) {
-        HbMessageEntity entity = new HbMessageEntity();
+        HbMessage entity = new HbMessage();
         entity.setCategory(category.getCategory());
         entity.setType(type.getType());
         entity.setTitle(title);
@@ -52,7 +52,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public MessagesResp loadMessages(Integer daysAgo, Integer limit) {
         LocalDateTime startTime = HbDateUtils.now().plusDays(-daysAgo);
-        List<HbMessageEntity> entities = messageRepository.findAllByReadAndCreatedTimeGreaterThanOrderByCreatedTimeDesc(Boolean.FALSE, HbDateUtils.toMills(startTime), PageRequest.of(0, limit));
+        List<HbMessage> entities = messageRepository.findAllByReadAndCreatedTimeGreaterThanOrderByCreatedTimeDesc(Boolean.FALSE, HbDateUtils.toMills(startTime), PageRequest.of(0, limit));
 
         MessagesResp resp = new MessagesResp();resp.setMessages(entities.stream().map(messageConvertor::toMessageDto).toList());
 
@@ -62,7 +62,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void readMessage(Long id) {
-        HbMessageEntity messageEntity = messageRepository.findById(id).orElseThrow(() -> new HbBizException(HbCodeEnum.MESSAGE_NOT_EXISTS));
+        HbMessage messageEntity = messageRepository.findById(id).orElseThrow(() -> new HbBizException(HbCodeEnum.MESSAGE_NOT_EXISTS));
         if (messageEntity.getRead()) {
             return;
         }

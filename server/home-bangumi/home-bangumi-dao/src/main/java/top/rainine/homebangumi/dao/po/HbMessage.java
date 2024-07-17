@@ -18,7 +18,7 @@ import top.rainine.homebangumi.def.enums.MessageTypeEnum;
 @Entity
 @Table(name = "hb_message", indexes = {
 })
-public class HbMessageEntity extends BaseEntity {
+public class HbMessage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

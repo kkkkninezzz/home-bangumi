@@ -1,0 +1,37 @@
+package top.rainine.homebangumi.def.enums;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * @author rainine
+ * @description 剧集任务处理状态枚举
+ * @date 2024/7/17 10:46:40
+ */
+@Getter
+@RequiredArgsConstructor
+public enum EpisodeRenameTaskStatusEnum {
+
+    /**
+     * 初始状态，未处理
+     * */
+    NONE(0),
+
+    /**
+     * 等待处理
+     * */
+    PENDING(1),
+
+    /**
+     * 处理中
+     * */
+    PROCESSING(2),
+
+    /**
+     * 处理结束
+     * */
+    FINISHED(3),
+    ;
+
+    private final int status;
+}
