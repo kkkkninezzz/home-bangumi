@@ -42,14 +42,14 @@ public interface EpisodeRenameTaskApi {
      * 提交任务
      * */
     @PostMapping(value = "/{id}/submit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    Result<Long> submitTask(@PathVariable("id") Long id);
+    Result<Void> submitTask(@PathVariable("id") Long id);
 
     /**
      * 重新解析任务项
      * 注意: 该接口将删除所有已经解析出的任务项，并重新进行解析
      * */
     @PostMapping(value = "/{id}/items/reparse", produces = MediaType.APPLICATION_JSON_VALUE)
-    Result<Long> reparseTaskItems(@PathVariable("id") Long id);
+    Result<Void> reparseTaskItems(@PathVariable("id") Long id);
 
     /**
      * 忽略任务项

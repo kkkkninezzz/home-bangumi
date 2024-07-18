@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import top.rainine.homebangumi.def.enums.EpisodeRenameTaskDetailStatusEnum;
+import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 
 /**
  * @author rainine
@@ -33,7 +33,7 @@ public class HbEpisodeRenameTaskItem extends BaseEntity {
 
     /**
      * 状态
-     * @see EpisodeRenameTaskDetailStatusEnum#getStatus()
+     * @see EpisodeRenameTaskItemStatusEnum#getStatus()
      * */
     @Column(name = "status", nullable = false)
     private Integer status;

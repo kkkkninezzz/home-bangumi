@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum EpisodeRenameTaskDetailStatusEnum {
+public enum EpisodeRenameTaskItemStatusEnum {
 
     /**
      * 初始状态，未处理
@@ -18,14 +18,19 @@ public enum EpisodeRenameTaskDetailStatusEnum {
     NONE(0),
 
     /**
+     * 解析完成
+     * */
+    PARSED(1),
+
+    /**
      * 等待执行
      * */
-    PENDING(1),
+    PENDING(2),
 
     /**
      * 成功
      * */
-    SUCCESS(2),
+    SUCCESS(3),
 
     /**
      * 解析标题失败

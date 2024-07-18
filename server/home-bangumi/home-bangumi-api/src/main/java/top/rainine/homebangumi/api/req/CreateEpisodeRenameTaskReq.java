@@ -65,7 +65,7 @@ public class CreateEpisodeRenameTaskReq {
     /**
      * 过滤规则
      * */
-    private List<String> filterRules;
+    private List<String> filteredOutRules;
 
     /**
      * 是否删除源文件

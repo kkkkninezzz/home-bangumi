@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import top.rainine.homebangumi.def.enums.EpisodeRenameTaskDetailStatusEnum;
+import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 
 /**
  * @author rainine
@@ -25,7 +25,7 @@ public class EpisodeRenameTaskItemDto {
 
     /**
      * 状态
-     * @see EpisodeRenameTaskDetailStatusEnum#getStatus()
+     * @see EpisodeRenameTaskItemStatusEnum#getStatus()
      * */
     private Integer status;
 
