@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
+import top.rainine.homebangumi.common.utils.GsonUtils;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser;
 import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
@@ -17,6 +18,7 @@ import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
+import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 import top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 import top.rainine.homebangumi.def.exception.HbBizException;
@@ -154,7 +156,22 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public EpisodeRenameTaskDetailResp updateTask(Long id, UpdateEpisodeRenameTaskReq req) {
-        return null;
+        HbEpisodeRenameTask renameTask = getAndCheckTaskStatus(id);
+
+        episodeRenameTaskConvertor.updateHbEpisodeRenameTask(renameTask, req);
+        taskRepository.save(renameTask);
+
+        return episodeRenameTaskConvertor.toEpisodeRenameTaskDetailResp(renameTask);
+    }
+
+    private HbEpisodeRenameTask getAndCheckTaskStatus(Long id) {
+        HbEpisodeRenameTask renameTask = getTaskOrThrow(id);
+        // 如果不是待处理状态，那么不允许更新
+        if (!EpisodeRenameTaskStatusEnum.NONE.equals(renameTask.getTaskStatus())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_STATUS_NOT_ALLOW_OPERATE);
+        }
+
+        return renameTask;
     }
 
     @Override
@@ -163,13 +180,43 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
     }
 
     @Override
+    @Transactional
     public void reparseTaskItems(Long id) {
+        HbEpisodeRenameTask renameTask = getAndCheckTaskStatus(id);
 
+        taskItemRepository.deleteAllByTaskId(id);
+
+        EpisodeRenameTaskItemParserConfig config = EpisodeRenameTaskItemParserConfig
+                .builder()
+                .season(renameTask.getSeason())
+                .episodeDirPath(renameTask.getEpisodeDirPath())
+                .filteredOutRules(GsonUtils.toList(renameTask.getFilteredOutRules(), String.class))
+                .episodeTitleRenameMethod(EpisodeTitleRenameMethodEnum.of(renameTask.getEpisodeTitleRenameMethod()))
+                .customizeRenamedEpisodeTitleFormat(renameTask.getCustomizeRenamedEpisodeTitleFormat())
+                .build();
+
+        List<EpisodeRenameTaskItemParsedInfo> itemParsedInfoList = taskItemParser.parse(config);
+
+        Path episodeDirPath = Paths.get(renameTask.getEpisodeDirPath());
+        Path renamedOutputDirPath = Paths.get(renameTask.getRenamedOutputDirPath());
+        List<HbEpisodeRenameTaskItem> taskItemList = itemParsedInfoList.stream()
+                .map(parsedInfo -> toHbEpisodeRenameTaskItem(renameTask.getId(), episodeDirPath, renamedOutputDirPath, parsedInfo))
+                .toList();
+        taskItemRepository.saveAll(taskItemList);
+    }
+
+    private HbEpisodeRenameTaskItem getTaskItemOrThrow(Long taskId, Long itemId) {
+        return taskItemRepository.findByTaskIdAndId(taskId, itemId)
+                .orElseThrow(() -> new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_ITEM_NOT_EXISTS));
     }
 
     @Override
     public void ignoreTaskItem(Long id, Long itemId) {
+        getAndCheckTaskStatus(id);
+        HbEpisodeRenameTaskItem taskItem = getTaskItemOrThrow(id, itemId);
 
+        taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.IGNORED.getStatus());
+        taskItemRepository.save(taskItem);
     }
 
     @Override

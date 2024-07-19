@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author rainine
@@ -15,5 +16,9 @@ import java.util.List;
 public interface HbEpisodeRenameTaskItemRepository extends JpaRepository<HbEpisodeRenameTaskItem, Long> {
 
     List<HbEpisodeRenameTaskItem> findAllByTaskId(Long taskId);
+
+    void deleteAllByTaskId(Long taskId);
+
+    Optional<HbEpisodeRenameTaskItem> findByTaskIdAndId(Long taskId, Long id);
 
 }

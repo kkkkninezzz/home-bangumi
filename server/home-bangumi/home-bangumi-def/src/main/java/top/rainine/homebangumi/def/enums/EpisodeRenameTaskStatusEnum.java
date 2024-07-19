@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import top.rainine.homebangumi.def.utils.EnumUtils;
 
+import java.util.Objects;
+
 /**
  * @author rainine
  * @description 剧集任务处理状态枚举
@@ -40,5 +42,12 @@ public enum EpisodeRenameTaskStatusEnum {
 
     public static boolean contains(Integer status) {
         return EnumUtils.containsInteger(ENUMS, EpisodeRenameTaskStatusEnum::getStatus, status);
+    }
+
+    public boolean equals(Integer status) {
+        if (Objects.isNull(status)) {
+            return false;
+        }
+        return this.status == status;
     }
 }

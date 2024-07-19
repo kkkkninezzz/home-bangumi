@@ -7,6 +7,8 @@ import lombok.experimental.Accessors;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 import top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum;
 
+import java.util.List;
+
 /**
  * @author rainine
  * @description
@@ -65,7 +67,7 @@ public class EpisodeRenameTaskDetailResp {
      * 过滤规则
      * 格式为json数组字符串，每个元素为一个用于匹配的词组
      * */
-    private String filterRules;
+    private List<String> filteredOutRules;
 
     /**
      * 是否删除源文件
