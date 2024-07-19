@@ -3,6 +3,8 @@ package top.rainine.homebangumi.def.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 /**
  * @author rainine
  * @description 剧集任务详情处理状态枚举
@@ -35,7 +37,7 @@ public enum EpisodeRenameTaskItemStatusEnum {
     /**
      * 解析标题失败
      * */
-    PARSE_TITLE_FAILED(96),
+    TITLE_PARSE_FAILED(96),
 
     /**
      * 忽略
@@ -54,4 +56,11 @@ public enum EpisodeRenameTaskItemStatusEnum {
     ;
 
     private final int status;
+
+    public boolean equals(Integer status) {
+        if (Objects.isNull(status)) {
+            return false;
+        }
+        return this.status == status;
+    }
 }

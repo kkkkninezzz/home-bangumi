@@ -11,6 +11,7 @@ import top.rainine.homebangumi.api.annotation.valid.ValidEnumValue;
 import top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,15 +66,15 @@ public class CreateEpisodeRenameTaskReq {
     /**
      * 过滤规则
      * */
-    private List<String> filteredOutRules;
+    private List<String> filteredOutRules = new ArrayList<>();
 
     /**
      * 是否删除源文件
      * */
-    private Boolean deleteSourceFile;
+    private Boolean deleteSourceFile = Boolean.FALSE;
 
     /**
      * 覆盖已存在文件
      * */
-    private Boolean overwriteExistingFile;
+    private Boolean overwriteExistingFile = Boolean.FALSE;
 }

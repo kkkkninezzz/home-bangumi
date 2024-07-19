@@ -127,7 +127,9 @@ public enum HbCodeEnum {
 
     EPISODE_RENAME_TASK_STATUS_INVALID(ErrorCode.EPISODE_RENAME_TASK_STATUS_INVALID, "episode rename task status invalid"),
 
+    PARSE_EPISODE_RENAME_TASK_ITEM_FAILED(ErrorCode.PARSE_EPISODE_RENAME_TASK_ITEM_FAILED, "parse episode rename task item failed"),
 
+    EPISODE_RENAME_TASK_NOT_EXISTS(ErrorCode.EPISODE_RENAME_TASK_NOT_EXISTS, "episode rename task not exists"),
     ;
     private final String code;
 
@@ -448,6 +450,16 @@ public enum HbCodeEnum {
          * 剧集重命名失败
          * */
         String RSS_BANGUMI_EPISODE_RENAME_FAILED = "HB100018";
+
+        /**
+         * 解析剧集重命名任务item失败
+         * */
+        String PARSE_EPISODE_RENAME_TASK_ITEM_FAILED = "HB100019";
+
+        /**
+         * 任务不存在
+         * */
+        String EPISODE_RENAME_TASK_NOT_EXISTS = "HB100020";
         //endregion
     }
 }

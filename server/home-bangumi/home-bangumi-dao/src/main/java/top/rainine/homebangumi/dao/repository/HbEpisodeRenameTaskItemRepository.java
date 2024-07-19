@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 
+import java.util.List;
+
 /**
  * @author rainine
  * @description
@@ -11,4 +13,7 @@ import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
  */
 @Repository
 public interface HbEpisodeRenameTaskItemRepository extends JpaRepository<HbEpisodeRenameTaskItem, Long> {
+
+    List<HbEpisodeRenameTaskItem> findAllByTaskId(Long taskId);
+
 }

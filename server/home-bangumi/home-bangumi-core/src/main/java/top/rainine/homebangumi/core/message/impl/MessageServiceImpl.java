@@ -10,7 +10,7 @@ import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.message.MessageService;
 import top.rainine.homebangumi.core.message.data.convertor.MessageConvertor;
 import top.rainine.homebangumi.dao.po.HbMessage;
-import top.rainine.homebangumi.dao.po.QHbMessageEntity;
+import top.rainine.homebangumi.dao.po.QHbMessage;
 import top.rainine.homebangumi.dao.repository.HbMessageRepository;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 import top.rainine.homebangumi.def.enums.MessageCategoryEnum;
@@ -73,9 +73,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void readAllMessages() {
-        QHbMessageEntity qHbMessageEntity = QHbMessageEntity.hbMessageEntity;
-        jpaQueryFactory.update(qHbMessageEntity).set(qHbMessageEntity.read, true)
-                .where(qHbMessageEntity.read.eq(false))
+        QHbMessage qHbMessage = QHbMessage.hbMessage;
+        jpaQueryFactory.update(qHbMessage).set(qHbMessage.read, true)
+                .where(qHbMessage.read.eq(false))
                 .execute();
     }
 }

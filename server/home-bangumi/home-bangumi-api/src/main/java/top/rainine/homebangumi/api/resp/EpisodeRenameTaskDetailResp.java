@@ -76,4 +76,9 @@ public class EpisodeRenameTaskDetailResp {
      * 覆盖已存在文件
      * */
     private Boolean overwriteExistingFile;
+
+    /**
+     * 创建时间
+     * */
+    private Long createdTime;
 }
