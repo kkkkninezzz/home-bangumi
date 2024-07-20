@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import top.rainine.homebangumi.common.data.TorrentInfo;
 import top.rainine.homebangumi.common.utils.BencodeUtils;
@@ -54,6 +55,14 @@ public class RssBangumiEpisodeTorrentParser {
             builder.torrentStoredPath(torrentStoredPath.toString());
         } catch (IOException e) {
             log.error("[RssBangumiEpisodeTorrentParser]download torrent failed, torrentLink: {}", parsedInfo.torrentLink());
+
+            return builder
+                    .status(RssBangumiEpisodeStatusEnum.TORRENT_DOWNLOAD_FAILED)
+                    .build();
+        }
+
+        if (ArrayUtils.isEmpty(torrentBytes)) {
+            log.error("[RssBangumiEpisodeTorrentParser]torrent is empty, torrentLink: {}", parsedInfo.torrentLink());
 
             return builder
                     .status(RssBangumiEpisodeStatusEnum.TORRENT_DOWNLOAD_FAILED)
