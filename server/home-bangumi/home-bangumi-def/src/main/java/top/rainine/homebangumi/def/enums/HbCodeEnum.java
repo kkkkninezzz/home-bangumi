@@ -134,6 +134,8 @@ public enum HbCodeEnum {
     EPISODE_RENAME_TASK_STATUS_NOT_ALLOW_OPERATE(ErrorCode.EPISODE_RENAME_TASK_STATUS_NOT_ALLOW_OPERATE, "episode rename task status not allow operate"),
 
     EPISODE_RENAME_TASK_ITEM_NOT_EXISTS(ErrorCode.EPISODE_RENAME_TASK_ITEM_NOT_EXISTS, "episode rename task item not exists"),
+
+    EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE(ErrorCode.EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE, "episode rename task item status not allow operate"),
     ;
     private final String code;
 
@@ -474,6 +476,11 @@ public enum HbCodeEnum {
          * 任务项不存在
          * */
         String EPISODE_RENAME_TASK_ITEM_NOT_EXISTS = "HB100022";
+
+        /**
+         * 当前状态不允许更新
+         * */
+        String EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE = "HB100023";
         //endregion
     }
 }

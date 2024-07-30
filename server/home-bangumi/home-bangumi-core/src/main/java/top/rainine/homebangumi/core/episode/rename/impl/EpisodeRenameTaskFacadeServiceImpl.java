@@ -17,10 +17,7 @@ import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository;
-import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
-import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
-import top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum;
-import top.rainine.homebangumi.def.enums.HbCodeEnum;
+import top.rainine.homebangumi.def.enums.*;
 import top.rainine.homebangumi.def.exception.HbBizException;
 
 import java.nio.file.Path;
@@ -221,7 +218,23 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public void manualParseTaskItem(Long id, Long itemId, ManualParseRenameTaskItemReq req) {
+        HbEpisodeRenameTask task = getAndCheckTaskStatus(id);
+        HbEpisodeRenameTaskItem taskItem = getTaskItemOrThrow(id, itemId);
+        if (!EpisodeRenameTaskItemStatusEnum.PARSED.equals(taskItem.getStatus())
+                && !EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED.equals(taskItem.getStatus())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE);
+        }
 
+        taskItem.setEpisodeNo(req.getEpisodeNo());
+        taskItem.setRenamedEpisodeFileName(req.getRenamedEpisodeFileName());
+
+        Path newRenamedEpisodeStoredPath = Paths.get(task.getRenamedOutputDirPath()).resolve(req.getRenamedEpisodeFileName());
+        taskItem.setRenamedEpisodeOutputPath(newRenamedEpisodeStoredPath.toString());
+
+        if (EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED.equals(taskItem.getStatus())) {
+            taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.PARSED.getStatus());
+            taskItem.setErrorMessage("");
+        }
     }
 
     @Override
@@ -229,3 +242,18 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
         return null;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
