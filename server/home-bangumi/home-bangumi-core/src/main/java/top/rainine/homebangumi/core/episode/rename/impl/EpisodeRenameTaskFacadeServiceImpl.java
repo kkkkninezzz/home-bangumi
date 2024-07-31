@@ -1,8 +1,13 @@
 package top.rainine.homebangumi.core.episode.rename.impl;
 
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.rainine.homebangumi.api.req.*;
@@ -13,19 +18,19 @@ import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser;
 import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
 import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 import top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertor;
+import top.rainine.homebangumi.core.utils.PageRequestUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
+import top.rainine.homebangumi.dao.po.QHbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository;
+import top.rainine.homebangumi.dao.utils.JpaUtils;
 import top.rainine.homebangumi.def.enums.*;
 import top.rainine.homebangumi.def.exception.HbBizException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author rainine
@@ -44,6 +49,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
     private final EpisodeRenameTaskItemParser taskItemParser;
 
     private final EpisodeRenameTaskConvertor episodeRenameTaskConvertor;
+
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Override
     @Transactional
@@ -239,7 +246,68 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public PagedResp<PagedEpisodeRenameTaskItemDto> loadPagedTasks(PagedReq<LoadPagedTasksReqConditionDto> req) {
-        return null;
+        QHbEpisodeRenameTask qHbEpisodeRenameTask = QHbEpisodeRenameTask.hbEpisodeRenameTask;
+
+        JPAQuery<HbEpisodeRenameTask> query = jpaQueryFactory.select(qHbEpisodeRenameTask)
+                .from(qHbEpisodeRenameTask);
+
+        LoadPagedTasksReqConditionDto condition = req.getCondition();
+        BooleanExpression where = null;
+        if (StringUtils.isNotBlank(condition.getTaskName())) {
+            where = JpaUtils.and(where, qHbEpisodeRenameTask.taskName.like(STR."%\{condition.getTaskName()}%"));
+        }
+
+        if (Objects.nonNull(condition.getTaskStatus())) {
+            where = JpaUtils.and(where, qHbEpisodeRenameTask.taskStatus.eq(condition.getTaskStatus()));
+        }
+
+        if (Objects.nonNull(where)) {
+            query.where(where);
+        }
+
+        Pageable pageable = PageRequestUtils.toPageable(req);
+        query.orderBy(qHbEpisodeRenameTask.createdTime.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        QueryResults<HbEpisodeRenameTask> results = query.fetchResults();
+        List<PagedEpisodeRenameTaskItemDto> list = results.getResults()
+                .stream()
+                .map(this::buildPagedEpisodeRenameTaskItemDto)
+                .toList();
+
+        return PagedResp.<PagedEpisodeRenameTaskItemDto>create()
+                .setCurrent(req.getCurrent())
+                .setPageSize(req.getPageSize())
+                .setTotal(results.getTotal())
+                .setList(list);
+    }
+
+    private static final List<Integer> TOTAL_COUNT_STATUS_LIST = Arrays.asList(
+            EpisodeRenameTaskItemStatusEnum.NONE.getStatus(),
+            EpisodeRenameTaskItemStatusEnum.PARSED.getStatus(),
+            EpisodeRenameTaskItemStatusEnum.PENDING.getStatus(),
+            EpisodeRenameTaskItemStatusEnum.SUCCESS.getStatus(),
+            EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED.getStatus(),
+            EpisodeRenameTaskItemStatusEnum.FAILED.getStatus()
+            );
+
+    private PagedEpisodeRenameTaskItemDto buildPagedEpisodeRenameTaskItemDto(HbEpisodeRenameTask task) {
+        long totalCount = taskItemRepository.countByTaskIdAndStatusIn(task.getId(), TOTAL_COUNT_STATUS_LIST);
+
+        long pendingCount = 0;
+        long successCount = 0;
+        long failedCount = 0;
+        if (EpisodeRenameTaskStatusEnum.PENDING.equals(task.getTaskStatus())) {
+            pendingCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.PENDING.getStatus());
+        } else if (EpisodeRenameTaskStatusEnum.PROCESSING.equals(task.getTaskStatus())
+                || EpisodeRenameTaskStatusEnum.FINISHED.equals(task.getTaskStatus())) {
+            pendingCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.PENDING.getStatus());
+            successCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.SUCCESS.getStatus());
+            failedCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());
+        }
+
+        return episodeRenameTaskConvertor.toPagedEpisodeRenameTaskItemDto(task, totalCount, pendingCount, successCount, failedCount);
     }
 }
 

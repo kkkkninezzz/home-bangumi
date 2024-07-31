@@ -52,7 +52,7 @@ public enum EpisodeRenameTaskItemStatusEnum {
     /**
      * 失败
      * */
-    FAIL(99),
+    FAILED(99),
     ;
 
     private final int status;
