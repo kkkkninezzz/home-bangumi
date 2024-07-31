@@ -24,4 +24,6 @@ public interface HbEpisodeRenameTaskItemRepository extends JpaRepository<HbEpiso
     long countByTaskIdAndStatusIn(Long taskId, List<Integer> statusList);
 
     long countByTaskIdAndStatus(Long taskId, Integer status);
+
+    List<HbEpisodeRenameTaskItem> findAllByTaskIdAndStatus(Long taskId, Integer status);
 }

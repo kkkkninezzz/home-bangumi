@@ -1,0 +1,14 @@
+package top.rainine.homebangumi.core.episode.rename;
+
+/**
+ * @author rainine
+ * @description 任务管理器
+ * @date 2024/7/31 18:45:45
+ */
+public interface EpisodeRenameTaskManager {
+
+    /**
+     * 提交任务
+     * */
+    void submitTask(Long id);
+}

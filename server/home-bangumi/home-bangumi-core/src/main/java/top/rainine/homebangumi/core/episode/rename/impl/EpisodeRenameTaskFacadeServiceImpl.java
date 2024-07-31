@@ -15,6 +15,7 @@ import top.rainine.homebangumi.api.resp.*;
 import top.rainine.homebangumi.common.utils.GsonUtils;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser;
+import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
 import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 import top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertor;
@@ -51,6 +52,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
     private final EpisodeRenameTaskConvertor episodeRenameTaskConvertor;
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    private final EpisodeRenameTaskManager episodeRenameTaskManager;
 
     @Override
     @Transactional
@@ -180,7 +183,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public void submitTask(Long id) {
-
+        getAndCheckTaskStatus(id);
+        episodeRenameTaskManager.submitTask(id);
     }
 
     @Override
