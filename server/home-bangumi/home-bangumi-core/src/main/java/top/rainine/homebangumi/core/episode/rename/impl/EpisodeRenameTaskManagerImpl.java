@@ -6,6 +6,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
+import top.rainine.homebangumi.core.utils.ObjectUtil;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
@@ -14,7 +15,9 @@ import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.*;
 
 /**
  * @author rainine
@@ -30,9 +33,21 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
 
     private final HbEpisodeRenameTaskItemRepository taskItemRepository;
 
+    private final EpisodeRenameTaskExecutor renameTaskExecutor;
+
+    /**
+     * 已经提交了的任务
+     * */
+    private final ConcurrentMap<Long, Object> submitTasks = new ConcurrentHashMap<>();
+
     @Override
     @Transactional
-    public void submitTask(Long id) {
+    public synchronized void submitTask(Long id) {
+        // 说明任务正在执行中
+        if (submitTasks.containsKey(id)) {
+            return;
+        }
+
         Optional<HbEpisodeRenameTask> taskOptional = taskRepository.findById(id);
         if (taskOptional.isEmpty()) {
             log.error("[EpisodeRenameTaskManager]submit task failed, task is null, taskId: {}", id);
@@ -56,7 +71,14 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
             taskItemRepository.saveAll(parsedItems);
         }
 
-        // TODO 提交到线程池中
+        renameTaskExecutor.asyncExecuteTask(id);
+        submitTasks.put(id, ObjectUtil.DEFAULT_OBJECT);
+    }
+
+    @Override
+    public void onTaskExecuteEnd(Long id) {
+        log.info("[EpisodeRenameTaskManager]task execute end, taskId: {}", id);
+        submitTasks.remove(id);
     }
 }
 

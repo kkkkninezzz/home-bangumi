@@ -133,12 +133,12 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
                     .orElse(1);
         }
 
-        String scrapedTitle = previewInfoList
-                .stream()
-                .filter(previewInfo -> previewInfo.status() == RssBangumiEpisodeStatusEnum.PARSED)
-                .findFirst()
-                .map(RssBangumiEpisodePreviewInfo::bangumiTitle)
-                .orElse("");
+//        String scrapedTitle = previewInfoList
+//                .stream()
+//                .filter(previewInfo -> previewInfo.status() == RssBangumiEpisodeStatusEnum.PARSED)
+//                .findFirst()
+//                .map(RssBangumiEpisodePreviewInfo::bangumiTitle)
+//                .orElse("");
 
         String posterUrl = "";
         if (StringUtils.isNotEmpty(bangumiParedInfo.posterStoredPath())) {

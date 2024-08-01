@@ -11,4 +11,9 @@ public interface EpisodeRenameTaskManager {
      * 提交任务
      * */
     void submitTask(Long id);
+
+    /**
+     * 当前任务执行结束
+     * */
+    void onTaskExecuteEnd(Long id);
 }

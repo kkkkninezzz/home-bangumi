@@ -35,6 +35,11 @@ public enum EpisodeRenameTaskItemStatusEnum {
     SUCCESS(3),
 
     /**
+     * 跳过
+     * */
+    SKIPPED(95),
+
+    /**
      * 解析标题失败
      * */
     TITLE_PARSE_FAILED(96),
