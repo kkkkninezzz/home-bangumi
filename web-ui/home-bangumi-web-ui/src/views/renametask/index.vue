@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import RssBangumiCard from "./components/RssBangumiCard.vue";
+import EpisodeRenameTaskCard from "./components/EpisodeRenameTaskCard.vue";
 import { useDetailPage } from "./components/hooks";
 import { message } from "@/utils/message";
 import { ElMessageBox, ElSwitch } from "element-plus";
@@ -253,7 +253,7 @@ function onSearchClick(
       <el-row :gutter="20">
         <el-col :span="4"
           ><el-button :icon="useRenderIcon(AddFill)" @click="openCreateForm">
-            新增Rss番剧
+            创建任务
           </el-button>
 
           <rss-link-create-dialog-form
@@ -275,7 +275,7 @@ function onSearchClick(
       :element-loading-svg="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
     >
-      <el-empty v-if="pagination.total <= 0" :description="`不存在rss番剧`" />
+      <el-empty v-if="pagination.total <= 0" :description="`不存在任务`" />
       <template v-else>
         <el-space wrap :size="30">
           <template
@@ -287,7 +287,7 @@ function onSearchClick(
             :lg="6"
             :xl="4"
           >
-            <rss-bangumi-card
+            <episode-rename-task-card
               :rssBangumiCard="bangumi"
               @delete-rss-bangumi="handleDeleteRssBangumi"
               @manage-rss-bangumi="handleManageRssBangumi"
