@@ -4,8 +4,8 @@ import { useDetailPage } from "./components/hooks";
 import { message } from "@/utils/message";
 import { ElMessageBox, ElSwitch } from "element-plus";
 import { ref, onMounted, h } from "vue";
-import RssLinkCreateDialogForm from "./components/RssLinkCreateDialogForm.vue";
-import RssBangumiSearchForm from "./components/RssBangumiSearchForm.vue";
+//import RssLinkCreateDialogForm from "./components/RssLinkCreateDialogForm.vue";
+//import RssBangumiSearchForm from "./components/RssBangumiSearchForm.vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import AddFill from "@iconify-icons/ri/add-circle-line";
 
@@ -20,10 +20,10 @@ import {
   archiveRssBangumi,
   deleteRssBangumi
 } from "@/api/rssBangumi";
-import { RssBangumiCardPropType } from "./props";
+import { EpisodeRenameTaskCardPropType } from "./props";
 
 defineOptions({
-  name: "RssBangumi"
+  name: "EpisodeRenameTask"
 });
 
 const { toDetailPage, router } = useDetailPage();
@@ -40,7 +40,7 @@ const svg = `
 
 const pagination = ref({ current: 1, pageSize: 12, total: 1 });
 const dataLoading = ref(false);
-const bangumiList = ref(new Array<RssBangumiCardPropType>());
+const taskList = ref(new Array<EpisodeRenameTaskCardPropType>());
 const searchConditions = ref({
   rssName: null,
   bangumiTitle: null,
@@ -68,12 +68,12 @@ const getCardListData = async () => {
     return;
   }
 
-  const result: Array<RssBangumiCardPropType> = resp.data.list.map(
+  const result: Array<EpisodeRenameTaskCardPropType> = resp.data.list.map(
     (item, index, array) => {
       return toRssBangumiCardPropType(item);
     }
   );
-  bangumiList.value = result;
+  taskList.value = result;
   pagination.value.current = resp.data.current;
   pagination.value.pageSize = resp.data.pageSize;
   pagination.value.total = resp.data.total;
@@ -81,7 +81,7 @@ const getCardListData = async () => {
 
 function toRssBangumiCardPropType(
   dto: PagedRssbBangumiItemDto
-): RssBangumiCardPropType {
+): EpisodeRenameTaskCardPropType {
   return {
     id: dto.id,
     rssName: dto.rssName,
@@ -97,7 +97,18 @@ function toRssBangumiCardPropType(
 }
 
 onMounted(() => {
-  getCardListData();
+  //getCardListData();
+  taskList.value = [
+    {
+      id: 1,
+      taskName: "test",
+      taskStatus: 0,
+      totalCount: 1,
+      pendingCount: 1,
+      successCount: 1,
+      failedCount: 1
+    }
+  ];
 });
 
 const onPageSizeChange = (size: number) => {
@@ -114,108 +125,6 @@ const handleManageRssBangumi = (id: number) => {
   toDetailPage({ id: id });
 };
 
-const handleInactiveRssBangumi = async (id: number) => {
-  const resp: ApiResult = await inactiveRssBangumi(id);
-  if (!resp.success) {
-    return;
-  }
-  message("暂停订阅成功", { type: "success" });
-  getCardListData();
-};
-
-const handleActiveRssBangumi = async (id: number) => {
-  const resp: ApiResult = await activeRssBangumi(id);
-  if (!resp.success) {
-    return;
-  }
-  message("启用订阅成功", { type: "success" });
-  getCardListData();
-};
-
-const handleDeleteRssBangumi = (id: number) => {
-  const deleteFile = ref<boolean>(false);
-  ElMessageBox({
-    title: "删除rss番剧",
-    message: () =>
-      h("div", null, [
-        h("p", null, [
-          h(
-            "span",
-            null,
-            "确定要删除吗？删除后不可恢复，同时会删除提交到下载器中的种子文件"
-          )
-        ]),
-        h("p", null, [
-          h(ElSwitch, {
-            modelValue: deleteFile.value,
-            "onUpdate:modelValue": (val: boolean) => {
-              deleteFile.value = val;
-            },
-            activeText: "删除下载完成的剧集文件"
-          })
-        ])
-      ]),
-    showCancelButton: true,
-    confirmButtonText: "确认",
-    cancelButtonText: "取消"
-  })
-    .then(() => {
-      doHandleDeleteRssBangumi(id, deleteFile.value);
-    })
-    .catch(() => {});
-};
-
-const doHandleDeleteRssBangumi = async (id: number, deleteFile: boolean) => {
-  const resp: ApiResult = await deleteRssBangumi(id, deleteFile);
-  if (!resp.success) {
-    return;
-  }
-  message("删除成功", { type: "success" });
-  getCardListData();
-};
-
-const handleArchiveRssBangumi = (id: number) => {
-  const deleteFile = ref<boolean>(false);
-  ElMessageBox({
-    title: "归档rss番剧",
-    message: () =>
-      h("div", null, [
-        h("p", null, [
-          h(
-            "span",
-            null,
-            "确定要归档吗？归档后不可恢复，同时会删除提交到下载器中的种子文件"
-          )
-        ]),
-        h("p", null, [
-          h(ElSwitch, {
-            modelValue: deleteFile.value,
-            "onUpdate:modelValue": (val: boolean) => {
-              deleteFile.value = val;
-            },
-            activeText: "删除下载完成的剧集文件"
-          })
-        ])
-      ]),
-    showCancelButton: true,
-    confirmButtonText: "确认",
-    cancelButtonText: "取消"
-  })
-    .then(() => {
-      doHandleArchive(id, deleteFile.value);
-    })
-    .catch(() => {});
-};
-
-const doHandleArchive = async (id: number, deleteFile: boolean) => {
-  const resp: ApiResult = await archiveRssBangumi(id, deleteFile);
-  if (!resp.success) {
-    return;
-  }
-  message("归档成功", { type: "success" });
-  getCardListData();
-};
-
 const createFormVisible = ref(false);
 function openCreateForm() {
   createFormVisible.value = true;
@@ -224,8 +133,8 @@ function closeCreateForm() {
   createFormVisible.value = false;
 }
 
-// 当预览成功时
-function onPreviewRssBangumiSuccess(id: number) {
+// 当创建任务成功时
+function onCreateTaskSuccess(id: number) {
   toDetailPage({ id: id });
 }
 
@@ -256,12 +165,12 @@ function onSearchClick(
             创建任务
           </el-button>
 
-          <rss-link-create-dialog-form
+          <!-- <rss-link-create-dialog-form
             v-if="createFormVisible"
             @cancel="closeCreateForm"
             @closeForm="closeCreateForm"
-            @preview-success="onPreviewRssBangumiSuccess"
-          />
+            @preview-success="onCreateTaskSuccess"
+          /> -->
         </el-col>
         <el-col :span="20">
           <rss-bangumi-search-form
@@ -279,7 +188,7 @@ function onSearchClick(
       <template v-else>
         <el-space wrap :size="30">
           <template
-            v-for="(bangumi, index) in bangumiList"
+            v-for="(task, index) in taskList"
             :key="index"
             :xs="24"
             :sm="12"
@@ -288,12 +197,8 @@ function onSearchClick(
             :xl="4"
           >
             <episode-rename-task-card
-              :rssBangumiCard="bangumi"
-              @delete-rss-bangumi="handleDeleteRssBangumi"
+              :task-card="task"
               @manage-rss-bangumi="handleManageRssBangumi"
-              @inactive-rss-bangumi="handleInactiveRssBangumi"
-              @active-rss-bangumi="handleActiveRssBangumi"
-              @archive-rss-bangumi="handleArchiveRssBangumi"
             />
           </template>
         </el-space>

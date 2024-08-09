@@ -1,25 +1,16 @@
 <script setup lang="ts">
 import { computed, PropType } from "vue";
 import More2Fill from "@iconify-icons/ri/more-2-fill";
-import { ReText } from "@/components/ReText";
-import {
-  RssBangumiStatusEnum,
-  RssBangumiStatusTagMap,
-  BroadcastDayOfWeekTagMap,
-  RssCategoryTagMap,
-  RssBangumiHandleMethodEnum,
-  CollectTag,
-  ArchivedCollectTag
-} from "../enums";
-import { RssBangumiCardPropType } from "../props";
+import { EpisodeRenameTaskStatusTagMap } from "../enums";
+import { EpisodeRenameTaskCardPropType } from "../props";
 
 defineOptions({
-  name: "RssBangumiCard"
+  name: "EpisodeRenameTaskCard"
 });
 
 const props = defineProps({
   taskCard: {
-    type: Object as PropType<RssBangumiCardPropType>
+    type: Object as PropType<EpisodeRenameTaskCardPropType>
   }
 });
 
@@ -37,76 +28,10 @@ const handleClickDelete = (id: number) => {
   emit("delete-task", id);
 };
 
-// 判断是否是inactive状态
-const rssBangumiActive = computed(
-  () => props.rssBangumiCard?.status == RssBangumiStatusEnum.ACTIVE
-);
-
-const getImageUrl = (posterUrl: string) => {
-  if (posterUrl && posterUrl != "") {
-    return import.meta.env.VITE_SERVER_BASE_URL + "/" + posterUrl;
-  }
-  return new URL("../../../assets/imgs/default-poster.png", import.meta.url)
-    .href;
-};
-
 // 状态的 tag
-const rssBangumiStatusTag = computed(() => {
-  if (
-    props.rssBangumiCard?.handleMethod == RssBangumiHandleMethodEnum.SUBSCRIBE
-  ) {
-    return RssBangumiStatusTagMap.get(props.rssBangumiCard?.status);
-  }
-
-  // 如果是归档的，那么展示归档状态的收集tag
-  if (props.rssBangumiCard?.status == RssBangumiStatusEnum.ARCHIVED) {
-    return ArchivedCollectTag;
-  }
-
-  return CollectTag;
+const taskStatusTag = computed(() => {
+  return EpisodeRenameTaskStatusTagMap.get(props.taskCard?.taskStatus);
 });
-
-// 显示放送的星期 tag
-const broadcastDayOfWeekTag = computed(() =>
-  BroadcastDayOfWeekTagMap.get(props.rssBangumiCard?.broadcastDayOfWeek)
-);
-
-// rss类别的 tag
-const rssCategoryTag = computed(() =>
-  RssCategoryTagMap.get(props.rssBangumiCard.rssCategory)
-);
-
-// 展示inactive按钮
-const showInactiveButton = computed(
-  () =>
-    props.rssBangumiCard?.handleMethod ==
-      RssBangumiHandleMethodEnum.SUBSCRIBE &&
-    props.rssBangumiCard?.status == RssBangumiStatusEnum.ACTIVE
-);
-
-// 展示active按钮
-const showActiveButton = computed(
-  () =>
-    props.rssBangumiCard?.handleMethod ==
-      RssBangumiHandleMethodEnum.SUBSCRIBE &&
-    props.rssBangumiCard?.status == RssBangumiStatusEnum.INACTIVE
-);
-// 展示归档按钮
-const showArchiveButton = computed(
-  () => props.rssBangumiCard?.status != RssBangumiStatusEnum.ARCHIVED
-);
-
-const dateFormat = (dateMills: number) => {
-  const date = new Date(dateMills);
-  // 从 Date 对象中获取年、月和日
-  const year: number = date.getFullYear(); // 获取年份
-  const month: number = date.getMonth() + 1; // 获取月份（注意：月份从 0 开始）
-  const day: number = date.getDate(); // 获取日
-
-  // 格式化日期为 "YY/MM/DD" 格式
-  const formattedDate: string = `${year.toString().slice(2)}/${month.toString().padStart(2, "0")}/${day.toString().padStart(2, "0")}`;
-  return formattedDate;
-};
 </script>
 
 <template>
@@ -114,98 +39,100 @@ const dateFormat = (dateMills: number) => {
     <template #header>
       <div class="list-card-item_detail--header_row">
         <el-row>
-          <el-col :span="16" class="grid-content">
+          <el-col :span="20" class="grid-content">
             <ReText class="list-card-item_detail--title text-[24px]">
-              {{ rssBangumiCard.bangumiTitle }}
+              {{ taskCard.taskName }}
             </ReText>
           </el-col>
-          <el-col v-if="rssBangumiCard.season" :span="4" class="grid-content">
+          <el-col :span="4" class="grid-content">
             <el-tag
-              color="#faaa3b"
+              :color="taskStatusTag.color"
               effect="dark"
               class="list-card-item_detail--tag"
-              >第{{
-                rssBangumiCard.season ? rssBangumiCard.season : 0
-              }}季</el-tag
+              >{{ taskStatusTag.content }}</el-tag
             >
-          </el-col>
-          <el-col :span="4">
-            <div class="list-card-item_detail--operation">
-              <el-dropdown trigger="click">
-                <IconifyIconOffline :icon="More2Fill" class="text-[24px]" />
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item
-                      v-if="showInactiveButton"
-                      @click="handleClickInactive(rssBangumiCard.id)"
-                    >
-                      禁用</el-dropdown-item
-                    >
-                    <el-dropdown-item
-                      v-if="showActiveButton"
-                      @click="handleClickActive(rssBangumiCard.id)"
-                    >
-                      启用
-                    </el-dropdown-item>
-
-                    <el-dropdown-item
-                      v-if="showArchiveButton"
-                      @click="handleClickArchive(rssBangumiCard.id)"
-                    >
-                      归档
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      @click="handleClickDelete(rssBangumiCard.id)"
-                    >
-                      删除
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
           </el-col>
         </el-row>
       </div>
     </template>
     <div class="list-card-item_detail--poster">
-      <img
-        :src="getImageUrl(rssBangumiCard.posterUrl)"
-        style="width: 100%"
-        @click="handleClickManage(rssBangumiCard.id)"
-      />
-    </div>
-    <template #footer>
       <div class="flex gap-2">
         <el-tag
-          v-if="rssBangumiStatusTag"
-          :color="rssBangumiStatusTag.color"
+          color="#faaa3b"
           effect="dark"
           class="list-card-item_detail--tag"
         >
-          {{ rssBangumiStatusTag.content }}
+          总数: 1
         </el-tag>
         <el-tag
-          v-if="rssCategoryTag"
-          :color="rssCategoryTag.color"
+          color="#faaa3b"
           effect="dark"
           class="list-card-item_detail--tag"
-          >{{ rssCategoryTag.content }}</el-tag
         >
+          等待中: 1
+        </el-tag>
         <el-tag
-          v-if="rssBangumiCard.broadcastDate"
+          color="#faaa3b"
           effect="dark"
           class="list-card-item_detail--tag"
-          >{{ dateFormat(rssBangumiCard.broadcastDate) }}</el-tag
         >
+          处理中: 1
+        </el-tag>
         <el-tag
-          v-if="broadcastDayOfWeekTag"
-          :color="broadcastDayOfWeekTag.color"
+          color="#faaa3b"
           effect="dark"
           class="list-card-item_detail--tag"
-          >{{ broadcastDayOfWeekTag.content }}</el-tag
         >
+          成功: 1
+        </el-tag>
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          失败: 1
+        </el-tag>
       </div>
-    </template>
+    </div>
+    <!-- <template #footer>
+      <div class="flex gap-2">
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          总数: 1
+        </el-tag>
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          等待中: 1
+        </el-tag>
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          处理中: 1
+        </el-tag>
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          成功: 1
+        </el-tag>
+        <el-tag
+          color="#faaa3b"
+          effect="dark"
+          class="list-card-item_detail--tag"
+        >
+          失败: 1
+        </el-tag>
+      </div>
+    </template> -->
   </el-card>
 </template>
 
