@@ -64,7 +64,7 @@ onBeforeMount(() => {
   initTaskState();
 });
 
-// rss链接相关规则
+// 任务表单相关规则
 const taskRules = {
   taskName: [
     {
@@ -98,7 +98,7 @@ const taskRules = {
   ]
 };
 
-// rss链接表单的列
+// task表单的列
 const taskColumns: PlusColumn[] = [
   {
     label: "任务名",

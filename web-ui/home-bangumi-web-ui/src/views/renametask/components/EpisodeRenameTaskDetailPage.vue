@@ -2,20 +2,20 @@
 import { ref } from "vue";
 import { useDetailPage } from "./hooks";
 import "plus-pro-components/es/components/form/style/css";
-import RssBangumiCardDetailPageBangumiForm from "./RssBangumiCardDetailPageBangumiForm.vue";
+import EpisodeRenameTaskDetailPageTaskForm from "./EpisodeRenameTaskDetailPageTaskForm.vue";
 import RssBangumiCardDetailPageEpisodesTable from "./RssBangumiCardDetailPageEpisodesTable.vue";
 
 defineOptions({
-  name: "RssBangumiCardDetailPage"
+  name: "EpisodeRenameTaskDetailPage"
 });
 
 const { initToDetailPage, getParameter, router } = useDetailPage();
 initToDetailPage();
 
-const rssBangumiId = ref(Number(getParameter["id"]));
+const taskId = ref(Number(getParameter["id"]));
 
-const episodesTablekey = ref(new Date().getTime());
-const bangumiFormkey = ref(new Date().getTime());
+const itemsTablekey = ref(new Date().getTime());
+const taskFormkey = ref(new Date().getTime());
 // 当预览成功时重新刷新剧集列表
 function refreshAll() {
   refreshEpisodesTable();
@@ -23,11 +23,11 @@ function refreshAll() {
 }
 
 function refreshEpisodesTable() {
-  episodesTablekey.value = new Date().getTime();
+  itemsTablekey.value = new Date().getTime();
 }
 
 function refreshBangumiForm() {
-  bangumiFormkey.value = new Date().getTime();
+  taskFormkey.value = new Date().getTime();
 }
 </script>
 <template>
@@ -35,9 +35,9 @@ function refreshBangumiForm() {
     <el-container>
       <el-header height="300">
         <el-card>
-          <RssBangumiCardDetailPageBangumiForm
-            :key="bangumiFormkey"
-            :rss-bangumi-id="rssBangumiId"
+          <episode-rename-task-detail-page-task-form
+            :key="taskFormkey"
+            :taskId="taskId"
             @reparse-success="refreshAll"
             @archive-success="refreshAll"
             @incremental-parse-success="refreshAll"
@@ -50,8 +50,8 @@ function refreshBangumiForm() {
       <el-main
         ><el-card>
           <RssBangumiCardDetailPageEpisodesTable
-            :key="episodesTablekey"
-            :rss-bangumi-id="rssBangumiId"
+            :key="itemsTablekey"
+            :rss-bangumi-id="taskId"
             height="400"
             @ignore-success="refreshEpisodesTable"
             @delete-success="refreshEpisodesTable"
