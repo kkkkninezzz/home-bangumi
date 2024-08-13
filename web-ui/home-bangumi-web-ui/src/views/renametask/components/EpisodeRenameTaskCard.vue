@@ -35,7 +35,7 @@ const taskStatusTag = computed(() => {
 </script>
 
 <template>
-  <el-card style="width: 300px; height: 500px" class="list-card-item">
+  <el-card style="width: 280px; height: 260px" class="list-card-item">
     <template #header>
       <div class="list-card-item_detail--header_row">
         <el-row>
@@ -56,83 +56,21 @@ const taskStatusTag = computed(() => {
       </div>
     </template>
     <div class="list-card-item_detail--poster">
-      <div class="flex gap-2">
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          总数: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          等待中: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          处理中: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          成功: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          失败: 1
-        </el-tag>
-      </div>
+      <el-descriptions direction="vertical" :column="2" border>
+        <el-descriptions-item label="总数" width="110">{{
+          taskCard.totalCount
+        }}</el-descriptions-item>
+        <el-descriptions-item label="等待中" width="110">{{
+          taskCard.pendingCount
+        }}</el-descriptions-item>
+        <el-descriptions-item label="成功" width="110">{{
+          taskCard.successCount
+        }}</el-descriptions-item>
+        <el-descriptions-item label="失败" width="110">{{
+          taskCard.failedCount
+        }}</el-descriptions-item>
+      </el-descriptions>
     </div>
-    <!-- <template #footer>
-      <div class="flex gap-2">
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          总数: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          等待中: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          处理中: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          成功: 1
-        </el-tag>
-        <el-tag
-          color="#faaa3b"
-          effect="dark"
-          class="list-card-item_detail--tag"
-        >
-          失败: 1
-        </el-tag>
-      </div>
-    </template> -->
   </el-card>
 </template>
 
@@ -175,8 +113,6 @@ const taskStatusTag = computed(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 250px;
-      height: 340px;
 
       border-radius: 2%;
 

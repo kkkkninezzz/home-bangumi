@@ -42,3 +42,27 @@ export enum EpisodeRenameTaskItemStatusEnum {
   FILTERED_OUT = 98, // 被过滤掉的
   FAILED = 99 // 失败
 }
+
+// 重命名任务的状态下拉列表
+export const EpisodeRenameTaskStatusOptions = [
+  {
+    label: "未处理",
+    value: EpisodeRenameTaskStatusEnum.NONE,
+    color: "blue"
+  },
+  {
+    label: "等待中",
+    value: EpisodeRenameTaskStatusEnum.PENDING,
+    color: "blue"
+  },
+  {
+    label: "处理中",
+    value: EpisodeRenameTaskStatusEnum.PROCESSING,
+    color: "blue"
+  },
+  {
+    label: "结束",
+    value: EpisodeRenameTaskStatusEnum.FINISHED,
+    color: "blue"
+  }
+];

@@ -1,20 +1,11 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
-import { ElCard } from "element-plus";
 import "plus-pro-components/es/components/form/style/css";
 import {
   type PlusColumn,
   type FieldValues,
   PlusSearch
 } from "plus-pro-components";
-
-import {
-  RssBangumiPreviewReq,
-  RssBangumiPreviewResp,
-  previewRssBangumi
-} from "@/api/rssBangumi";
-
-import { message } from "@/utils/message";
 
 import {
   RssBangumRssCategoryOptions,

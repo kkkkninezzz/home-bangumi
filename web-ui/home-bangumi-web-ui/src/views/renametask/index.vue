@@ -5,7 +5,7 @@ import { message } from "@/utils/message";
 import { ElMessageBox, ElSwitch } from "element-plus";
 import { ref, onMounted, h } from "vue";
 //import RssLinkCreateDialogForm from "./components/RssLinkCreateDialogForm.vue";
-//import RssBangumiSearchForm from "./components/RssBangumiSearchForm.vue";
+import EpisodeRenameTaskSearchForm from "./components/EpisodeRenameTaskSearchForm.vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import AddFill from "@iconify-icons/ri/add-circle-line";
 
@@ -42,11 +42,8 @@ const pagination = ref({ current: 1, pageSize: 12, total: 1 });
 const dataLoading = ref(false);
 const taskList = ref(new Array<EpisodeRenameTaskCardPropType>());
 const searchConditions = ref({
-  rssName: null,
-  bangumiTitle: null,
-  rssCategory: null,
-  handleMethod: null,
-  status: null
+  taskName: null,
+  taskStatus: null
 });
 
 const getCardListData = async () => {
@@ -70,7 +67,7 @@ const getCardListData = async () => {
 
   const result: Array<EpisodeRenameTaskCardPropType> = resp.data.list.map(
     (item, index, array) => {
-      return toRssBangumiCardPropType(item);
+      return toRenameTaskCardPropType(item);
     }
   );
   taskList.value = result;
@@ -79,20 +76,17 @@ const getCardListData = async () => {
   pagination.value.total = resp.data.total;
 };
 
-function toRssBangumiCardPropType(
+function toRenameTaskCardPropType(
   dto: PagedRssbBangumiItemDto
 ): EpisodeRenameTaskCardPropType {
   return {
     id: dto.id,
-    rssName: dto.rssName,
-    rssCategory: dto.rssCategory,
-    handleMethod: dto.handleMethod,
-    status: dto.status,
-    bangumiTitle: dto.bangumiInfo?.title ?? "",
-    posterUrl: dto.bangumiInfo?.posterUrl ?? "",
-    broadcastDayOfWeek: dto.bangumiInfo?.broadcastDayOfWeek ?? null,
-    broadcastDate: dto.bangumiInfo?.broadcastDate ?? null,
-    season: dto.bangumiInfo?.season ?? 0
+    taskName: dto.rssName,
+    taskStatus: dto.status,
+    totalCount: dto.rssCategory,
+    pendingCount: 0,
+    successCount: 0,
+    failedCount: 0
   };
 }
 
@@ -138,17 +132,9 @@ function onCreateTaskSuccess(id: number) {
   toDetailPage({ id: id });
 }
 
-function onSearchClick(
-  rssNameOrBanugmiTitle: string,
-  rssCategory: number,
-  handleMethod: number,
-  status: number
-) {
-  searchConditions.value.rssName = rssNameOrBanugmiTitle;
-  searchConditions.value.bangumiTitle = rssNameOrBanugmiTitle;
-  searchConditions.value.rssCategory = rssCategory;
-  searchConditions.value.handleMethod = handleMethod;
-  searchConditions.value.status = status;
+function onSearchClick(taskName: string, taskStatus: number) {
+  searchConditions.value.taskName = taskName;
+  searchConditions.value.taskStatus = taskStatus;
 
   // 当点击搜索按钮时，页码重置
   pagination.value.current = 1;
@@ -160,7 +146,7 @@ function onSearchClick(
   <div>
     <div class="w-full">
       <el-row :gutter="20">
-        <el-col :span="4"
+        <el-col :span="10"
           ><el-button :icon="useRenderIcon(AddFill)" @click="openCreateForm">
             创建任务
           </el-button>
@@ -172,8 +158,8 @@ function onSearchClick(
             @preview-success="onCreateTaskSuccess"
           /> -->
         </el-col>
-        <el-col :span="20">
-          <rss-bangumi-search-form
+        <el-col :span="14">
+          <episode-rename-task-search-form
             :loading="dataLoading"
             @search="onSearchClick"
         /></el-col>
@@ -186,16 +172,8 @@ function onSearchClick(
     >
       <el-empty v-if="pagination.total <= 0" :description="`不存在任务`" />
       <template v-else>
-        <el-space wrap :size="30">
-          <template
-            v-for="(task, index) in taskList"
-            :key="index"
-            :xs="24"
-            :sm="12"
-            :md="10"
-            :lg="6"
-            :xl="4"
-          >
+        <el-space wrap :size="30" style="width: 100%">
+          <template v-for="(task, index) in taskList" :key="index">
             <episode-rename-task-card
               :task-card="task"
               @manage-rss-bangumi="handleManageRssBangumi"
