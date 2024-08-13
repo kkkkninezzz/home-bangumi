@@ -11,15 +11,11 @@ import AddFill from "@iconify-icons/ri/add-circle-line";
 
 import { ApiResult } from "@/api/base";
 import {
-  LoadPagedRssbangumisResp,
-  LoadPagedRssbangumisReq,
-  loadPagedRssBangumis,
-  PagedRssbBangumiItemDto,
-  activeRssBangumi,
-  inactiveRssBangumi,
-  archiveRssBangumi,
-  deleteRssBangumi
-} from "@/api/rssBangumi";
+  loadPagedTasks,
+  LoadPagedTasksReq,
+  LoadPagedEpisodeRenameTaskItemsResp,
+  PagedEpisodeRenameTaskItemDto
+} from "@/api/renameTask";
 import { EpisodeRenameTaskCardPropType } from "./props";
 
 defineOptions({
@@ -47,19 +43,16 @@ const searchConditions = ref({
 });
 
 const getCardListData = async () => {
-  const req: LoadPagedRssbangumisReq = {
+  const req: LoadPagedTasksReq = {
     current: pagination.value.current,
     pageSize: pagination.value.pageSize,
     condition: {
-      rssName: searchConditions.value.rssName,
-      bangumiTitle: searchConditions.value.bangumiTitle,
-      rssCategory: searchConditions.value.rssCategory,
-      handleMethod: searchConditions.value.handleMethod,
-      status: searchConditions.value.status
+      taskName: searchConditions.value.taskName,
+      taskStatus: searchConditions.value.taskStatus
     }
   };
   dataLoading.value = true;
-  const resp: LoadPagedRssbangumisResp = await loadPagedRssBangumis(req);
+  const resp: LoadPagedEpisodeRenameTaskItemsResp = await loadPagedTasks(req);
   dataLoading.value = false;
   if (!resp.success) {
     return;
@@ -77,32 +70,32 @@ const getCardListData = async () => {
 };
 
 function toRenameTaskCardPropType(
-  dto: PagedRssbBangumiItemDto
+  dto: PagedEpisodeRenameTaskItemDto
 ): EpisodeRenameTaskCardPropType {
   return {
     id: dto.id,
-    taskName: dto.rssName,
-    taskStatus: dto.status,
-    totalCount: dto.rssCategory,
-    pendingCount: 0,
-    successCount: 0,
-    failedCount: 0
+    taskName: dto.taskName,
+    taskStatus: dto.taskStatus,
+    totalCount: dto.totalCount,
+    pendingCount: dto.pendingCount,
+    successCount: dto.successCount,
+    failedCount: dto.failedCount
   };
 }
 
 onMounted(() => {
-  //getCardListData();
-  taskList.value = [
-    {
-      id: 1,
-      taskName: "test",
-      taskStatus: 0,
-      totalCount: 1,
-      pendingCount: 1,
-      successCount: 1,
-      failedCount: 1
-    }
-  ];
+  getCardListData();
+  // taskList.value = [
+  //   {
+  //     id: 1,
+  //     taskName: "test",
+  //     taskStatus: 0,
+  //     totalCount: 1,
+  //     pendingCount: 1,
+  //     successCount: 1,
+  //     failedCount: 1
+  //   }
+  // ];
 });
 
 const onPageSizeChange = (size: number) => {
