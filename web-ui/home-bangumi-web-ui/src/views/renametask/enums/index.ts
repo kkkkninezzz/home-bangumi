@@ -66,3 +66,34 @@ export const EpisodeRenameTaskStatusOptions = [
     color: "blue"
   }
 ];
+
+/**
+ * 剧集重命名方式
+ */
+export enum EpisodeTitleRenameMethodEnum {
+  /** 不进行重命名，保留种子的文件名 */
+  NONE = 0,
+
+  /** 基于种子文件解析出来的标题进行重命名 */
+  TORRENT_PARSED_TITLE = 1,
+
+  /** 基于官方标题进行重命名 */
+  OFFICIAL_TITLE = 2,
+
+  /** 基于自定义标题进行重命名 */
+  CUSTOMIZED_TITLE = 3
+}
+
+// 剧集重命名方式options
+export const EpisodeTitleRenameMethodOptions = [
+  {
+    label: "Torrent parsed title",
+    value: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE,
+    color: "blue"
+  },
+  {
+    label: "Customized title",
+    value: EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE,
+    color: "blue"
+  }
+];

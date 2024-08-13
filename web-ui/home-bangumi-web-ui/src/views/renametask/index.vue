@@ -4,7 +4,7 @@ import { useDetailPage } from "./components/hooks";
 import { message } from "@/utils/message";
 import { ElMessageBox, ElSwitch } from "element-plus";
 import { ref, onMounted, h } from "vue";
-//import RssLinkCreateDialogForm from "./components/RssLinkCreateDialogForm.vue";
+import EpisodeRenameTaskCreateDialogForm from "./components/EpisodeRenameTaskCreateDialogForm.vue";
 import EpisodeRenameTaskSearchForm from "./components/EpisodeRenameTaskSearchForm.vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import AddFill from "@iconify-icons/ri/add-circle-line";
@@ -144,12 +144,12 @@ function onSearchClick(taskName: string, taskStatus: number) {
             创建任务
           </el-button>
 
-          <!-- <rss-link-create-dialog-form
+          <episode-rename-task-create-dialog-form
             v-if="createFormVisible"
             @cancel="closeCreateForm"
             @closeForm="closeCreateForm"
-            @preview-success="onCreateTaskSuccess"
-          /> -->
+            @create-success="onCreateTaskSuccess"
+          />
         </el-col>
         <el-col :span="14">
           <episode-rename-task-search-form
