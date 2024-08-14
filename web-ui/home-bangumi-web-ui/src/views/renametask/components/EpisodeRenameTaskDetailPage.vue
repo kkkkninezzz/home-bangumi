@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useDetailPage } from "./hooks";
 import "plus-pro-components/es/components/form/style/css";
 import EpisodeRenameTaskDetailPageTaskForm from "./EpisodeRenameTaskDetailPageTaskForm.vue";
-import RssBangumiCardDetailPageEpisodesTable from "./RssBangumiCardDetailPageEpisodesTable.vue";
+import EpisodeRenameTaskDetailPageEpisodesTable from "./EpisodeRenameTaskDetailPageEpisodesTable.vue";
 
 defineOptions({
   name: "EpisodeRenameTaskDetailPage"
@@ -16,17 +16,17 @@ const taskId = ref(Number(getParameter["id"]));
 
 const itemsTablekey = ref(new Date().getTime());
 const taskFormkey = ref(new Date().getTime());
-// 当预览成功时重新刷新剧集列表
+
 function refreshAll() {
-  refreshEpisodesTable();
-  refreshBangumiForm();
+  refreshTaskItemsTable();
+  refreshTaskDetailForm();
 }
 
-function refreshEpisodesTable() {
+function refreshTaskItemsTable() {
   itemsTablekey.value = new Date().getTime();
 }
 
-function refreshBangumiForm() {
+function refreshTaskDetailForm() {
   taskFormkey.value = new Date().getTime();
 }
 </script>
@@ -37,26 +37,20 @@ function refreshBangumiForm() {
         <el-card>
           <episode-rename-task-detail-page-task-form
             :key="taskFormkey"
-            :taskId="taskId"
+            :task-id="taskId"
             @reparse-success="refreshAll"
-            @archive-success="refreshAll"
-            @incremental-parse-success="refreshAll"
-            @collect-success="refreshEpisodesTable"
-            @active-success="refreshAll"
-            @inactive-success="refreshAll"
+            @submit-success="refreshAll"
           />
         </el-card>
       </el-header>
       <el-main
         ><el-card>
-          <RssBangumiCardDetailPageEpisodesTable
+          <episode-rename-task-detail-page-episodes-table
             :key="itemsTablekey"
-            :rss-bangumi-id="taskId"
+            :task-id="taskId"
             height="400"
-            @ignore-success="refreshEpisodesTable"
-            @delete-success="refreshEpisodesTable"
-            @manual-parse-success="refreshEpisodesTable"
-            @rename-success="refreshEpisodesTable" /></el-card
+            @ignore-success="refreshTaskItemsTable"
+            @manual-parse-success="refreshTaskItemsTable" /></el-card
       ></el-main>
     </el-container>
   </div>

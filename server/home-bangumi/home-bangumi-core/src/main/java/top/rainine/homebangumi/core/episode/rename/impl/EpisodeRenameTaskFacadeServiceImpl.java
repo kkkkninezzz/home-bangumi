@@ -124,7 +124,7 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public EpisodeRenameTaskItemsResp getTaskItems(Long id) {
-        getTaskOrThrow(id);
+        HbEpisodeRenameTask renameTask = getTaskOrThrow(id);
 
         List<HbEpisodeRenameTaskItem> hbEpisodeRenameTaskItems = taskItemRepository.findAllByTaskId(id);
         List<EpisodeRenameTaskItemDto> list = hbEpisodeRenameTaskItems
@@ -138,6 +138,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
                 .toList();
 
         return new EpisodeRenameTaskItemsResp()
+                .setTaskId(renameTask.getId())
+                .setTaskStatus(renameTask.getTaskStatus())
                 .setItems(list);
     }
 
@@ -246,6 +248,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
             taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.PARSED.getStatus());
             taskItem.setErrorMessage("");
         }
+
+        taskItemRepository.save(taskItem);
     }
 
     @Override

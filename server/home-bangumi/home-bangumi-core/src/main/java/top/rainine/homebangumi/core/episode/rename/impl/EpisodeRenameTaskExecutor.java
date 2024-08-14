@@ -50,7 +50,7 @@ public class EpisodeRenameTaskExecutor {
 
         HbEpisodeRenameTask task = taskOptional.get();
 
-        if (!EpisodeRenameTaskStatusEnum.FINISHED.equals(task.getTaskStatus())) {
+        if (EpisodeRenameTaskStatusEnum.FINISHED.equals(task.getTaskStatus())) {
             log.error("[EpisodeRenameTaskExecutor]task is finished, taskId: {}", taskId);
             return;
         }

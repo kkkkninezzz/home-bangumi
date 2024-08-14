@@ -43,6 +43,65 @@ export enum EpisodeRenameTaskItemStatusEnum {
   FAILED = 99 // 失败
 }
 
+// 状态tag
+export interface EpisodeRenameTaskItemStatusTag {
+  tagType: EpPropMergeType<
+    StringConstructor,
+    "success" | "warning" | "info" | "primary" | "danger",
+    unknown
+  >;
+  tagContent: string;
+}
+
+// task item 状态的tag映射
+export const EpisodeRenameTaskItemStatusTagMap = new Map<
+  number,
+  EpisodeRenameTaskItemStatusTag
+>();
+
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.NONE, {
+  tagType: "primary",
+  tagContent: "未处理"
+});
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.PARSED, {
+  tagType: "primary",
+  tagContent: "已解析"
+});
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.PENDING, {
+  tagType: "primary",
+  tagContent: "等待执行"
+});
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.SUCCESS, {
+  tagType: "success",
+  tagContent: "等待执行"
+});
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.SKIPPED, {
+  tagType: "info",
+  tagContent: "跳过"
+});
+EpisodeRenameTaskItemStatusTagMap.set(
+  EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED,
+  {
+    tagType: "danger",
+    tagContent: "标题解析失败"
+  }
+);
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.IGNORED, {
+  tagType: "info",
+  tagContent: "忽略"
+});
+EpisodeRenameTaskItemStatusTagMap.set(
+  EpisodeRenameTaskItemStatusEnum.FILTERED_OUT,
+  {
+    tagType: "info",
+    tagContent: "过滤"
+  }
+);
+EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.FAILED, {
+  tagType: "danger",
+  tagContent: "失败"
+});
+
 // 重命名任务的状态下拉列表
 export const EpisodeRenameTaskStatusOptions = [
   {

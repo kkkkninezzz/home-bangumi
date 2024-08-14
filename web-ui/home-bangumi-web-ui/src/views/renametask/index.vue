@@ -108,7 +108,7 @@ const onCurrentChange = (current: number) => {
   getCardListData();
 };
 
-const handleManageRssBangumi = (id: number) => {
+const handleManageTask = (id: number) => {
   toDetailPage({ id: id });
 };
 
@@ -169,7 +169,7 @@ function onSearchClick(taskName: string, taskStatus: number) {
           <template v-for="(task, index) in taskList" :key="index">
             <episode-rename-task-card
               :task-card="task"
-              @manage-rss-bangumi="handleManageRssBangumi"
+              @manage-task="handleManageTask"
             />
           </template>
         </el-space>

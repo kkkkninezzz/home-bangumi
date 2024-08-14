@@ -56,7 +56,12 @@ const taskStatusTag = computed(() => {
       </div>
     </template>
     <div class="list-card-item_detail--poster">
-      <el-descriptions direction="vertical" :column="2" border>
+      <el-descriptions
+        direction="vertical"
+        :column="2"
+        border
+        @click="handleClickManage(taskCard.id)"
+      >
         <el-descriptions-item label="总数" width="110">{{
           taskCard.totalCount
         }}</el-descriptions-item>

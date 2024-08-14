@@ -179,6 +179,8 @@ export type EpisodeRenameTaskItemDto = {
  */
 export type EpisodeRenameTaskItemsResp = {
   data: {
+    taskId: number;
+    taskStatus: number;
     items: Array<EpisodeRenameTaskItemDto>;
   };
 } & ApiResult;

@@ -48,7 +48,7 @@ const emit = defineEmits<{
 
 const updateLoading = ref(false);
 const reparseLoading = ref(false);
-const submitLoading = ref(false);
+const submitTaskLoading = ref(false);
 const reqButtonDisable = ref(false);
 
 // 提交任务相关的表单
@@ -143,21 +143,21 @@ const taskColumns: PlusColumn[] = [
     }
   },
   {
-    label: "创建时间",
-    prop: "createdTime",
-    valueType: "date-picker",
-    fieldProps: { disabled: true },
-    colProps: {
-      span: 4
-    }
-  },
-  {
     label: "剧集季度",
     width: 120,
     prop: "season",
     valueType: "input-number",
     colProps: {
       span: 4
+    }
+  },
+  {
+    label: "创建时间",
+    prop: "createdTime",
+    valueType: "date-picker",
+    fieldProps: { disabled: true, type: "datetime" },
+    colProps: {
+      span: 6
     }
   },
   {
@@ -286,9 +286,9 @@ const handleSubmitTask = async () => {
 };
 
 const doHandleSubmitTask = async () => {
-  beforeReqForButton(submitLoading);
+  beforeReqForButton(submitTaskLoading);
   const resp: ApiResult = await submitTask(props.taskId);
-  afterReqForButton(submitLoading);
+  afterReqForButton(submitTaskLoading);
   if (!resp.success) {
     return;
   }
@@ -327,7 +327,7 @@ const doHandleReparse = async () => {
   <span :key="key" />
   <PlusForm
     v-model="taskState"
-    :disabled="EpisodeRenameTaskStatusEnum.NONE != taskState.status"
+    :disabled="EpisodeRenameTaskStatusEnum.NONE != taskState.taskStatus"
     label-position="top"
     :columns="taskColumns"
     :rules="taskRules"
@@ -338,15 +338,15 @@ const doHandleReparse = async () => {
     <template #footer="{ handleSubmit }">
       <div style="margin: 0 auto">
         <el-button
-          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.status"
+          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.taskStatus"
           type="danger"
-          :loading="submitLoading"
+          :loading="submitTaskLoading"
           :disabled="reqButtonDisable"
           @click="handleSubmitTask"
           >提交任务</el-button
         >
         <el-button
-          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.status"
+          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.taskStatus"
           type="danger"
           :loading="reparseLoading"
           :disabled="reqButtonDisable"
@@ -355,7 +355,7 @@ const doHandleReparse = async () => {
         >
 
         <el-button
-          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.status"
+          v-if="EpisodeRenameTaskStatusEnum.NONE == taskState.taskStatus"
           type="primary"
           :loading="updateLoading"
           :disabled="reqButtonDisable"

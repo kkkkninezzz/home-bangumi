@@ -41,7 +41,7 @@ public interface EpisodeRenameTaskApi {
     /**
      * 提交任务
      * */
-    @PostMapping(value = "/{id}/submit", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}/submit", produces = MediaType.APPLICATION_JSON_VALUE)
     Result<Void> submitTask(@PathVariable("id") Long id);
 
     /**
