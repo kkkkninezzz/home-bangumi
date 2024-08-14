@@ -41,6 +41,7 @@ public class ScheduledTaskSettingsServiceImpl implements ScheduledTaskSettingsSe
                 .pushParsedEpisodesToDownloaderDuration(ofMinutes(settingMap.get(SystemSettingKeyEnum.PUSH_PARSED_EPISODES_TO_DOWNLOADER_DURATION).getValue()))
                 .renameEpisodesDuration(ofMinutes(settingMap.get(SystemSettingKeyEnum.RENAME_EPISODES_DURATION).getValue()))
                 .updateRssSubscriptionDuration(ofMinutes(settingMap.get(SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION).getValue()))
+                .checkNotFinishedRenameTaskDuration(ofMinutes(settingMap.get(SystemSettingKeyEnum.CHECK_NOT_FINISHED_RENAME_TASK_DURATION).getValue()))
                 .build();
     }
 
@@ -82,5 +83,10 @@ public class ScheduledTaskSettingsServiceImpl implements ScheduledTaskSettingsSe
     @Override
     public Duration getUpdateRssSubscriptionDuration() {
         return ofMinutes(systemSettingsService.getSetting(SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION).getValue());
+    }
+
+    @Override
+    public Duration getCheckNotFinishedRenameTaskDuration() {
+        return ofMinutes(systemSettingsService.getSetting(SystemSettingKeyEnum.CHECK_NOT_FINISHED_RENAME_TASK_DURATION).getValue());
     }
 }

@@ -16,4 +16,9 @@ public interface EpisodeRenameTaskManager {
      * 当前任务执行结束
      * */
     void onTaskExecuteEnd(Long id);
+
+    /**
+     * 检查所有未完成的任务
+     * */
+    void checkAllNotFinishedTasks();
 }

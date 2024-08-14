@@ -39,12 +39,12 @@ const taskStatusTag = computed(() => {
     <template #header>
       <div class="list-card-item_detail--header_row">
         <el-row>
-          <el-col :span="19" class="grid-content">
+          <el-col :span="18" class="grid-content">
             <ReText class="list-card-item_detail--title text-[24px]">
               {{ taskCard.taskName }}
             </ReText>
           </el-col>
-          <el-col :span="5" class="grid-content">
+          <el-col :span="6" class="grid-content">
             <el-tag
               :color="taskStatusTag.color"
               effect="dark"

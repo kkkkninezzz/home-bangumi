@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.utils.ObjectUtil;
+import top.rainine.homebangumi.core.utils.SpringContextUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
@@ -14,6 +16,7 @@ import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -36,8 +39,10 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
 
     /**
      * 已经提交了的任务
+     * key: 任务id
+     * value: 提交时间
      * */
-    private final ConcurrentMap<Long, Object> submitTasks = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Long, LocalDateTime> submitTasks = new ConcurrentHashMap<>();
 
     @Override
     @Transactional
@@ -71,13 +76,26 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
         }
 
         renameTaskExecutor.asyncExecuteTask(id);
-        submitTasks.put(id, ObjectUtil.DEFAULT_OBJECT);
+        submitTasks.put(id, HbDateUtils.now());
     }
 
     @Override
     public void onTaskExecuteEnd(Long id) {
         log.info("[EpisodeRenameTaskManager]task execute end, taskId: {}", id);
         submitTasks.remove(id);
+    }
+
+    @Override
+    public void checkAllNotFinishedTasks() {
+        List<HbEpisodeRenameTask> tasks = taskRepository.findAllByTaskStatusIn(EpisodeRenameTaskStatusEnum.NOT_FINISHED_VALUES);
+        if (CollectionUtils.isEmpty(tasks)) {
+            return;
+        }
+
+        // TODO 检查是否有待执行已久的数据
+
+        EpisodeRenameTaskManager taskManager = SpringContextUtils.getBean(EpisodeRenameTaskManager.class);
+        tasks.forEach(task -> taskManager.submitTask(task.getId()));
     }
 }
 

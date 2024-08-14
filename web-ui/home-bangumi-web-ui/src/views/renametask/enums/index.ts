@@ -73,7 +73,7 @@ EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.PENDING, {
 });
 EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.SUCCESS, {
   tagType: "success",
-  tagContent: "等待执行"
+  tagContent: "成功"
 });
 EpisodeRenameTaskItemStatusTagMap.set(EpisodeRenameTaskItemStatusEnum.SKIPPED, {
   tagType: "info",

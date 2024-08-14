@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import top.rainine.homebangumi.def.utils.EnumUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +41,8 @@ public enum EpisodeRenameTaskStatusEnum {
     private final int status;
 
     private static final EpisodeRenameTaskStatusEnum[] ENUMS = values();
+
+    public static final List<Integer> NOT_FINISHED_VALUES = Arrays.asList(EpisodeRenameTaskStatusEnum.PENDING.status, EpisodeRenameTaskStatusEnum.PROCESSING.status);
 
     public static boolean contains(Integer status) {
         return EnumUtils.containsInteger(ENUMS, EpisodeRenameTaskStatusEnum::getStatus, status);

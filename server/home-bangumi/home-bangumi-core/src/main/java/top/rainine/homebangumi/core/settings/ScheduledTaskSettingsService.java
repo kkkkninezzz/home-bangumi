@@ -22,4 +22,6 @@ public interface ScheduledTaskSettingsService {
     Duration getRenameEpisodesDuration();
 
     Duration getUpdateRssSubscriptionDuration();
+
+    Duration getCheckNotFinishedRenameTaskDuration();
 }
