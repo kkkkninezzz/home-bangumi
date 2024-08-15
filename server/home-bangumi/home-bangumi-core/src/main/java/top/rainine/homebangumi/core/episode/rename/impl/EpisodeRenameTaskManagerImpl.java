@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
-import top.rainine.homebangumi.core.utils.ObjectUtil;
+import top.rainine.homebangumi.core.event.HbEventBus;
+import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;
 import top.rainine.homebangumi.core.utils.SpringContextUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
@@ -36,6 +37,8 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
     private final HbEpisodeRenameTaskItemRepository taskItemRepository;
 
     private final EpisodeRenameTaskExecutor renameTaskExecutor;
+
+    private final HbEventBus hbEventBus;
 
     /**
      * 已经提交了的任务
@@ -92,7 +95,13 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
             return;
         }
 
-        // TODO 检查是否有待执行已久的数据
+        LocalDateTime now = HbDateUtils.now();
+        submitTasks.forEach((taskId, startTime) -> {
+            // 如果任务2个小时还没有结束，那么视为执行时间过长
+            if (startTime.plusHours(2).isBefore(now)) {
+                hbEventBus.publishEvent(new EpisodeRenameTaskExecutionTimeTooLongEvent(taskId, startTime));
+            }
+        });
 
         EpisodeRenameTaskManager taskManager = SpringContextUtils.getBean(EpisodeRenameTaskManager.class);
         tasks.forEach(task -> taskManager.submitTask(task.getId()));

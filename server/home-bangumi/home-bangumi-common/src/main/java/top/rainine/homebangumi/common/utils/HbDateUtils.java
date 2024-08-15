@@ -1,6 +1,7 @@
 package top.rainine.homebangumi.common.utils;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
 /**
@@ -9,6 +10,9 @@ import java.time.temporal.TemporalAdjusters;
  * @desc
  */
 public class HbDateUtils {
+
+    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private HbDateUtils() {}
 
     /**
@@ -120,5 +124,9 @@ public class HbDateUtils {
 
         // 设置上个季度的开始时间为季度第一天的00:00
         return LocalDateTime.of(year, startMonth, 1, 0, 0, 0);
+    }
+
+    public static String formatLocalDateTime(LocalDateTime localDateTime) {
+        return localDateTime.format(DEFAULT_DATE_TIME_FORMATTER);
     }
 }

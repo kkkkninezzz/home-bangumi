@@ -6,7 +6,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
+import top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteEndEvent;
+import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;
 
 /**
  * @author rainine
@@ -20,9 +22,23 @@ public class EpisodeRenameTaskEventListener {
 
     private final EpisodeRenameTaskManager taskManager;
 
+    private final EpisodeRenameTaskAlterMessageComponent alterMessageComponent;
+
     @EventListener(EpisodeRenameTaskExecuteEndEvent.class)
     @Async
     public void onEpisodeRenameTaskExecuteEndEvent(EpisodeRenameTaskExecuteEndEvent event) {
         taskManager.onTaskExecuteEnd(event.getTaskId());
+    }
+
+    @EventListener(EpisodeRenameTaskExecutionTimeTooLongEvent.class)
+    @Async
+    public void addTaskExecutionTimeTooLongMessage(EpisodeRenameTaskExecutionTimeTooLongEvent event) {
+        alterMessageComponent.addTaskExecutionTimeTooLongMessage(event.getTaskId(), event.getStartTime());
+    }
+
+    @EventListener(EpisodeRenameTaskExecuteEndEvent.class)
+    @Async
+    public void addTaskExecuteEndMessage(EpisodeRenameTaskExecuteEndEvent event) {
+        alterMessageComponent.addTaskExecuteEndMessage(event.getTaskId());
     }
 }

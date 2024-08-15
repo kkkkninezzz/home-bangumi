@@ -55,6 +55,8 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     private final EpisodeRenameTaskManager episodeRenameTaskManager;
 
+    private final EpisodeRenameTaskComponent taskComponent;
+
     @Override
     @Transactional
     public CreateEpisodeRenameTaskResp createTask(CreateEpisodeRenameTaskReq req) {
@@ -111,8 +113,7 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
      * 获取任务，不存在则抛出异常
      * */
     private HbEpisodeRenameTask getTaskOrThrow(Long id) {
-        return taskRepository.findById(id)
-                .orElseThrow(() -> new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_NOT_EXISTS));
+        return taskComponent.getTaskOrThrow(id);
     }
 
     @Override
@@ -291,28 +292,21 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
                 .setList(list);
     }
 
-    private static final List<Integer> TOTAL_COUNT_STATUS_LIST = Arrays.asList(
-            EpisodeRenameTaskItemStatusEnum.NONE.getStatus(),
-            EpisodeRenameTaskItemStatusEnum.PARSED.getStatus(),
-            EpisodeRenameTaskItemStatusEnum.PENDING.getStatus(),
-            EpisodeRenameTaskItemStatusEnum.SUCCESS.getStatus(),
-            EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED.getStatus(),
-            EpisodeRenameTaskItemStatusEnum.FAILED.getStatus()
-            );
+
 
     private PagedEpisodeRenameTaskItemDto buildPagedEpisodeRenameTaskItemDto(HbEpisodeRenameTask task) {
-        long totalCount = taskItemRepository.countByTaskIdAndStatusIn(task.getId(), TOTAL_COUNT_STATUS_LIST);
+        long totalCount = taskComponent.countTotalOfTaskItems(task.getId());
 
         long pendingCount = 0;
         long successCount = 0;
         long failedCount = 0;
         if (EpisodeRenameTaskStatusEnum.PENDING.equals(task.getTaskStatus())) {
-            pendingCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.PENDING.getStatus());
+            pendingCount = taskComponent.countPendingOfTaskItems(task.getId());
         } else if (EpisodeRenameTaskStatusEnum.PROCESSING.equals(task.getTaskStatus())
                 || EpisodeRenameTaskStatusEnum.FINISHED.equals(task.getTaskStatus())) {
-            pendingCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.PENDING.getStatus());
-            successCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.SUCCESS.getStatus());
-            failedCount = taskItemRepository.countByTaskIdAndStatus(task.getId(), EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());
+            pendingCount = taskComponent.countPendingOfTaskItems(task.getId());
+            successCount = taskComponent.countSuccessOfTaskItems(task.getId());
+            failedCount = taskComponent.countFailedOfTaskItems(task.getId());
         }
 
         return episodeRenameTaskConvertor.toPagedEpisodeRenameTaskItemDto(task, totalCount, pendingCount, successCount, failedCount);
