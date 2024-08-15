@@ -29,7 +29,8 @@ public class ScheduledTaskSettingsServiceImpl implements ScheduledTaskSettingsSe
             SystemSettingKeyEnum.CHECK_EPISODE_DOWNLOAD_STATUS_DURATION,
             SystemSettingKeyEnum.PUSH_PARSED_EPISODES_TO_DOWNLOADER_DURATION,
             SystemSettingKeyEnum.RENAME_EPISODES_DURATION,
-            SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION);
+            SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION,
+            SystemSettingKeyEnum.CHECK_NOT_FINISHED_RENAME_TASK_DURATION);
 
     @Override
     public ScheduledTaskSettings getSettings() {
@@ -51,7 +52,8 @@ public class ScheduledTaskSettingsServiceImpl implements ScheduledTaskSettingsSe
                 new BaseSystemSetting(SystemSettingKeyEnum.CHECK_EPISODE_DOWNLOAD_STATUS_DURATION, toMinutes(settings.checkEpisodeDownloadStatusDuration())),
                 new BaseSystemSetting(SystemSettingKeyEnum.PUSH_PARSED_EPISODES_TO_DOWNLOADER_DURATION, toMinutes(settings.pushParsedEpisodesToDownloaderDuration())),
                 new BaseSystemSetting(SystemSettingKeyEnum.RENAME_EPISODES_DURATION, toMinutes(settings.renameEpisodesDuration())),
-                new BaseSystemSetting(SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION, toMinutes(settings.updateRssSubscriptionDuration()))
+                new BaseSystemSetting(SystemSettingKeyEnum.UPDATE_RSS_SUBSCRIPTION_DURATION, toMinutes(settings.updateRssSubscriptionDuration())),
+                new BaseSystemSetting(SystemSettingKeyEnum.CHECK_NOT_FINISHED_RENAME_TASK_DURATION, toMinutes(settings.checkNotFinishedRenameTaskDuration()))
         );
 
         systemSettingsService.saveSettings(baseSystemSettings);

@@ -136,6 +136,8 @@ public enum HbCodeEnum {
     EPISODE_RENAME_TASK_ITEM_NOT_EXISTS(ErrorCode.EPISODE_RENAME_TASK_ITEM_NOT_EXISTS, "episode rename task item not exists"),
 
     EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE(ErrorCode.EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE, "episode rename task item status not allow operate"),
+
+    UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID(ErrorCode.UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID, "update check not finished rename task duration invalid"),
     ;
     private final String code;
 
@@ -355,6 +357,12 @@ public enum HbCodeEnum {
          * 剧集重命名任务状态无效
          * */
         String EPISODE_RENAME_TASK_STATUS_INVALID = "HB400033";
+
+
+        /**
+         * 定时检查未完成的重命名任务的定时任务周期无效
+         * */
+        String UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID = "HB400034";
         //endregion
 
 

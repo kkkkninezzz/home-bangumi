@@ -32,7 +32,8 @@ const settingsState = ref<FieldValues>({
   checkEpisodeDownloadStatusDuration: 1,
   pushParsedEpisodesToDownloaderDuration: 1,
   renameEpisodesDuration: 1,
-  updateRssSubscriptionDuration: 1
+  updateRssSubscriptionDuration: 1,
+  checkNotFinishedRenameTaskDuration: 1
 });
 
 // 初始化设置的表单
@@ -52,6 +53,8 @@ function setSettingsState(resp: ScheduledTaskSettingsResp) {
   settingsState.value.renameEpisodesDuration = resp.data.renameEpisodesDuration;
   settingsState.value.updateRssSubscriptionDuration =
     resp.data.updateRssSubscriptionDuration;
+  settingsState.value.checkNotFinishedRenameTaskDuration =
+    resp.data.checkNotFinishedRenameTaskDuration;
 }
 
 onBeforeMount(() => {
@@ -82,6 +85,12 @@ const settingsRules = {
     {
       required: true,
       message: "请输入更新rss bangumi的定时任务周期"
+    }
+  ],
+  checkNotFinishedRenameTaskDuration: [
+    {
+      required: true,
+      message: "请输入检查未完成的重命名任务的定时任务周期"
     }
   ]
 };
@@ -206,6 +215,36 @@ const settingsColumns: PlusColumn[] = [
     colProps: {
       span: 4
     }
+  },
+  {
+    label: "检查未完成的重命名任务(分钟)",
+    //width: 120,
+    prop: "checkNotFinishedRenameTaskDuration",
+    valueType: "input-number",
+    fieldProps: { min: 0, clearable: false },
+    colProps: {
+      span: 20
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "checkNotFinishedRenameTaskDurationButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          type: "primary",
+          onClick: handleClickCheckNotFinishedRenameTaskDurationButton
+        },
+        () => "立即执行"
+      );
+    },
+    colProps: {
+      span: 4
+    }
   }
 ];
 
@@ -218,7 +257,9 @@ const handleSubmit = async (values: FieldValues) => {
     renameEpisodesDuration: settingsState.value
       .renameEpisodesDuration as number,
     updateRssSubscriptionDuration: settingsState.value
-      .updateRssSubscriptionDuration as number
+      .updateRssSubscriptionDuration as number,
+    checkNotFinishedRenameTaskDuration: settingsState.value
+      .checkNotFinishedRenameTaskDuration as number
   };
 
   const resp: ScheduledTaskSettingsResp =
@@ -281,6 +322,19 @@ const handleClickUpdateRssSubscriptionDurationButton = () => {
     .catch(() => {});
 };
 
+const handleClickCheckNotFinishedRenameTaskDurationButton = () => {
+  ElMessageBox.confirm("确认立即检查未完成的重命名任务吗？", "立即执行", {
+    type: "warning",
+    center: true
+  })
+    .then(() => {
+      doRunOnceScheduledTask(
+        ScheduledTaskIdEnum.CHECK_NOT_FINISHED_RENAME_TASK
+      );
+    })
+    .catch(() => {});
+};
+
 const doRunOnceScheduledTask = async (taskId: ScheduledTaskIdEnum) => {
   const req: RunOnceScheduledTaskReq = {
     taskId: taskId
@@ -296,13 +350,12 @@ const doRunOnceScheduledTask = async (taskId: ScheduledTaskIdEnum) => {
 
 <template>
   <PlusForm
-    label-position="top"
     v-model="settingsState"
+    label-position="top"
     :rules="settingsRules"
     :columns="settingsColumns"
     :row-props="{ gutter: 20 }"
     footerAlign="right"
     @submit="handleSubmit"
-  >
-  </PlusForm>
+  />
 </template>
