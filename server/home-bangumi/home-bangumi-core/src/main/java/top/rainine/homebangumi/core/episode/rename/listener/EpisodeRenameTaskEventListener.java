@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteEndEvent;
+import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteFailedEvent;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;
 
 /**
@@ -40,5 +41,11 @@ public class EpisodeRenameTaskEventListener {
     @Async
     public void addTaskExecuteEndMessage(EpisodeRenameTaskExecuteEndEvent event) {
         alterMessageComponent.addTaskExecuteEndMessage(event.getTaskId());
+    }
+
+    @EventListener(EpisodeRenameTaskExecuteFailedEvent.class)
+    @Async
+    public void onEpisodeRenameTaskExecuteFailedEvent(EpisodeRenameTaskExecuteFailedEvent event) {
+        taskManager.onTaskExecuteFailed(event.getTaskId());
     }
 }

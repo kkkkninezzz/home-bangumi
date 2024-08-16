@@ -65,7 +65,6 @@ public class MikanXmlRuntimeHints implements InitializingBean {
             return;
         }
 
-        log.info("[MikanXmlRuntimeHints] start");
         XStream xStream = new XStream(new Dom4JDriver());
         xStream.setClassLoader(this.getClass().getClassLoader());
         xStream.autodetectAnnotations(true);

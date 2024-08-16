@@ -3,12 +3,15 @@ package top.rainine.homebangumi.core.episode.rename.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.event.HbEventBus;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;
+import top.rainine.homebangumi.core.utils.HbAdvisor;
 import top.rainine.homebangumi.core.utils.SpringContextUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
@@ -19,6 +22,7 @@ import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.*;
 
@@ -30,7 +34,7 @@ import java.util.concurrent.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
+public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager, HbAdvisor<EpisodeRenameTaskManagerImpl> {
 
     private final HbEpisodeRenameTaskRepository taskRepository;
 
@@ -48,23 +52,37 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
     private final ConcurrentMap<Long, LocalDateTime> submitTasks = new ConcurrentHashMap<>();
 
     @Override
-    @Transactional
     public synchronized void submitTask(Long id) {
         // 说明任务正在执行中
         if (submitTasks.containsKey(id)) {
             return;
         }
 
+        boolean preSubmitTaskResult = self().preSubmitTask(id);
+        if (!preSubmitTaskResult) {
+            return;
+        }
+
+        renameTaskExecutor.asyncExecuteTask(id);
+        submitTasks.put(id, HbDateUtils.now());
+    }
+
+    /**
+     * 预提交任务，更新任务的前置状态
+     * @return 如果预提交成功，返回true
+     * */
+    @Transactional
+    public boolean preSubmitTask(Long id) {
         Optional<HbEpisodeRenameTask> taskOptional = taskRepository.findById(id);
         if (taskOptional.isEmpty()) {
             log.error("[EpisodeRenameTaskManager]submit task failed, task is null, taskId: {}", id);
-            return;
+            return false;
         }
 
         HbEpisodeRenameTask task = taskOptional.get();
         if (EpisodeRenameTaskStatusEnum.FINISHED.equals(task.getTaskStatus())) {
             log.warn("[EpisodeRenameTaskManager]submit task failed, task is finished, taskId: {}", id);
-            return;
+            return false;
         }
 
         if (EpisodeRenameTaskStatusEnum.NONE.equals(task.getTaskStatus())) {
@@ -78,8 +96,7 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
             taskItemRepository.saveAll(parsedItems);
         }
 
-        renameTaskExecutor.asyncExecuteTask(id);
-        submitTasks.put(id, HbDateUtils.now());
+        return true;
     }
 
     @Override
@@ -89,6 +106,7 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
     }
 
     @Override
+    @Async
     public void checkAllNotFinishedTasks() {
         List<HbEpisodeRenameTask> tasks = taskRepository.findAllByTaskStatusIn(EpisodeRenameTaskStatusEnum.NOT_FINISHED_VALUES);
         if (CollectionUtils.isEmpty(tasks)) {
@@ -105,6 +123,12 @@ public class EpisodeRenameTaskManagerImpl implements EpisodeRenameTaskManager {
 
         EpisodeRenameTaskManager taskManager = SpringContextUtils.getBean(EpisodeRenameTaskManager.class);
         tasks.forEach(task -> taskManager.submitTask(task.getId()));
+    }
+
+    @Override
+    public void onTaskExecuteFailed(Long id) {
+        log.info("[EpisodeRenameTaskManager]task execute failed, taskId: {}", id);
+        submitTasks.remove(id);
     }
 }
 

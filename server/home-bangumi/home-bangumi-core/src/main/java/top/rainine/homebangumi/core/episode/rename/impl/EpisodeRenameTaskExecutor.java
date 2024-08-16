@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.event.HbEventBus;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameFinishedEvent;
+import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteEndEvent;
+import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteFailedEvent;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository;
@@ -42,6 +44,15 @@ public class EpisodeRenameTaskExecutor {
      * */
     @Async
     public void asyncExecuteTask(Long taskId) {
+        try {
+            executeTask(taskId);
+        } catch (Exception e) {
+            log.error("[EpisodeRenameTaskExecutor]async execute task failed, taskId: {}", taskId, e);
+            hbEventBus.publishEvent(new EpisodeRenameTaskExecuteFailedEvent(taskId));
+        }
+    }
+
+    private void executeTask(Long taskId) {
         Optional<HbEpisodeRenameTask> taskOptional = taskRepository.findById(taskId);
         if (taskOptional.isEmpty()) {
             log.error("[EpisodeRenameTaskExecutor]task not exists, taskId: {}", taskId);
@@ -77,7 +88,7 @@ public class EpisodeRenameTaskExecutor {
         task.setTaskStatus(EpisodeRenameTaskStatusEnum.FINISHED.getStatus());
         taskRepository.save(task);
 
-        hbEventBus.publishEvent(new EpisodeRenameFinishedEvent(taskId));
+        hbEventBus.publishEvent(new EpisodeRenameTaskExecuteEndEvent(taskId));
     }
 
     private void handleTaskItem(HbEpisodeRenameTaskItem taskItem, boolean deleteSourceFile, boolean overwriteExistingFile) {
