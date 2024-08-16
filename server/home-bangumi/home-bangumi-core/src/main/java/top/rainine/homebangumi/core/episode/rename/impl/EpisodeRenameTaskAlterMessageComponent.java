@@ -33,7 +33,8 @@ public class EpisodeRenameTaskAlterMessageComponent {
 
         String messageContent = STR."\{renameTask.getTaskName()} 执行时间过长，请手动处理。开始时间: \{HbDateUtils.formatLocalDateTime(startTime)}";
 
-        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.WARNING, renameTask.getTaskName(), messageContent, taskId.toString());
+        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.WARNING,
+                STR."重命名任务 \{renameTask.getTaskName()}", messageContent, taskId.toString());
     }
 
     /**
@@ -46,6 +47,7 @@ public class EpisodeRenameTaskAlterMessageComponent {
 
         String messageContent = STR."\{renameTask.getTaskName()} 执行结束。 成功数量: \{successOfTaskItems}，失败数量: \{failedOfTaskItems}";
 
-        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.INFO, renameTask.getTaskName(), messageContent, taskId.toString());
+        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.INFO,
+                STR."重命名任务 \{renameTask.getTaskName()}", messageContent, taskId.toString());
     }
 }
