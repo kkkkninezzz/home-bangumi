@@ -3,6 +3,12 @@
 
 `Home Bangumi`是基于 RSS 的自动追番整理下载工具。基于[Mikan Project](https://mikanani.me/)的rss链接即可实现自动追番。
 
+## 预览
+### 首页
+![首页](docs/images/首页.png)
+### rss番剧
+![rss番剧](docs/images/我的番剧-rss番剧.png)
+
 ## 使用方式
 仅推荐使用docker进行部署，通常建议选择最新的版本号使用，`latest`作为日常合并到master时就会更新，并不一定同步产生新的版本号。
 
