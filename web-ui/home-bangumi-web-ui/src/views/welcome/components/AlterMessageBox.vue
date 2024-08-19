@@ -46,10 +46,10 @@ function handleReadMessage(messageId: number) {
     <div class="flex justify-between alter-message-box-header">
       <span class="text-md font-medium">通知</span>
     </div>
-    <div style="height: 800px">
+    <div class="alter-message-box-content">
       <el-empty v-if="messageList.length == 0" description="no data" />
       <el-scrollbar v-else max-height="800px">
-        <el-space direction="vertical" :size="20">
+        <el-space direction="vertical" :size="20" :fill="true">
           <template v-for="(message, index) in messageList">
             <alter-message-card
               :message-card="message"
@@ -86,5 +86,9 @@ function handleReadMessage(messageId: number) {
 <style lang="scss" scoped>
 .alter-message-box-header {
   margin-bottom: 15px;
+}
+
+.alter-message-box-content {
+  height: 800px;
 }
 </style>

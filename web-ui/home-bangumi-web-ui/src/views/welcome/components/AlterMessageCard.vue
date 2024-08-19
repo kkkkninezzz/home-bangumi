@@ -119,6 +119,7 @@ const handleReadClick = async () => {
 
 .message-content {
   margin-bottom: 12px;
+  width: 100%;
 }
 
 .message-time {
