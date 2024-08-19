@@ -29,6 +29,7 @@ import top.rainine.homebangumi.core.rss.RssSubscriptionUpdateService;
 import top.rainine.homebangumi.core.rss.data.RssBangumiPreviewInfo;
 import top.rainine.homebangumi.core.rss.data.convertor.RssBangumiConvertor;
 import top.rainine.homebangumi.core.rss.data.convertor.RssBangumiEpisodeConvertor;
+import top.rainine.homebangumi.core.utils.HbAdvisor;
 import top.rainine.homebangumi.core.utils.PageRequestUtils;
 import top.rainine.homebangumi.dao.po.*;
 import top.rainine.homebangumi.dao.po.QHbBangumi;
@@ -56,7 +57,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RssBangumiServiceImpl implements RssBangumiService {
+public class RssBangumiServiceImpl implements RssBangumiService, HbAdvisor<RssBangumiServiceImpl> {
 
     private final HbRssBangumiRepository hbRssBangumiRepository;
 
@@ -85,7 +86,6 @@ public class RssBangumiServiceImpl implements RssBangumiService {
     private final RssBangumiConvertor rssBangumiConvertor;
 
     @Override
-    @Transactional
     public PreviewRssBangumiResp previewAndCreateRssBangumi(PreviewRssBangumiReq req) {
         hbRssBangumiRepository.findByRssLink(req.getRssLink())
                 .ifPresent(_ -> {
@@ -112,6 +112,15 @@ public class RssBangumiServiceImpl implements RssBangumiService {
 
         RssBangumiPreviewInfo previewInfo = rssBangumiParseService.parse(parseConfig);
 
+        Long rssBangumiId = self().createRssBangumi(req, previewInfo);
+        return PreviewRssBangumiResp
+                .builder()
+                .id(rssBangumiId)
+                .build();
+    }
+
+    @Transactional
+    public Long createRssBangumi(PreviewRssBangumiReq req, RssBangumiPreviewInfo previewInfo) {
         HbBangumi hbBangumi = rssBangumiConvertor.toHbBangumi(previewInfo);
         hbBangumiRepository.save(hbBangumi);
 
@@ -127,10 +136,7 @@ public class RssBangumiServiceImpl implements RssBangumiService {
                         downloadDir, req.getDownloaderCategory())).toList();
         hbRssBangumiEpisodeRepository.saveAll(episodeList);
 
-        return PreviewRssBangumiResp
-                .builder()
-                .id(hbRssBangumi.getId())
-                .build();
+        return hbRssBangumi.getId();
     }
 
     /**
@@ -225,18 +231,9 @@ public class RssBangumiServiceImpl implements RssBangumiService {
     }
 
     @Override
-    @Transactional
-    public Long reparseRssBangumiEpisodes(Long id) {
+    public synchronized Long reparseRssBangumiEpisodes(Long id) {
         HbRssBangumi hbRssBangumi = getNotArchivedRssBangumiOrThrow(id);
-        // 如果处于active状态，那么更新为inactive
-        if (RssBangumiStatusEnum.ACTIVE.equals(hbRssBangumi.getStatus())) {
-            hbRssBangumi.setStatus(RssBangumiStatusEnum.INACTIVE.getStatus());
-            hbRssBangumiRepository.save(hbRssBangumi);
-        }
-
-        // 删除所有的剧集信息
-        // 重新解析时，默认删除所有下载好的文件
-        deleteAllRssBangumiEpisodesAndNotCheckRssBangumi(id, true);
+        self().beforeReparseRssBangumiEpisodes(hbRssBangumi);
 
         HbBangumi hbBangumi = hbBangumiRepository.findById(hbRssBangumi.getBangumiId())
                 .orElse(null);
@@ -257,6 +254,31 @@ public class RssBangumiServiceImpl implements RssBangumiService {
                 .build();
         RssBangumiPreviewInfo previewInfo = rssBangumiParseService.parse(parseConfig);
 
+        self().afterReparseRssBangumiEpisodes(hbRssBangumi, hbBangumi, previewInfo);
+        return id;
+    }
+
+    /**
+     * 在重新解析之前
+     * */
+    @Transactional
+    public void beforeReparseRssBangumiEpisodes(HbRssBangumi hbRssBangumi) {
+        // 如果处于active状态，那么更新为inactive
+        if (RssBangumiStatusEnum.ACTIVE.equals(hbRssBangumi.getStatus())) {
+            hbRssBangumi.setStatus(RssBangumiStatusEnum.INACTIVE.getStatus());
+            hbRssBangumiRepository.save(hbRssBangumi);
+        }
+
+        // 删除所有的剧集信息
+        // 重新解析时，默认删除所有下载好的文件
+        deleteAllRssBangumiEpisodesAndNotCheckRssBangumi(hbRssBangumi.getId(), true);
+    }
+
+    /**
+     * 在重新解析之后，进行更新
+     * */
+    @Transactional
+    public void afterReparseRssBangumiEpisodes(HbRssBangumi hbRssBangumi, HbBangumi hbBangumi, RssBangumiPreviewInfo previewInfo) {
         // 如果之前没有解析出rssBangumi, 那么插入
         if (Objects.isNull(hbBangumi)) {
             hbBangumi = rssBangumiConvertor.toHbBangumi(previewInfo);
@@ -274,8 +296,6 @@ public class RssBangumiServiceImpl implements RssBangumiService {
                 .map(episodePreviewInfo -> rssBangumiComponent.toHbRssBangumiEpisode(hbRssBangumi.getId(), bangumiTitle, episodePreviewInfo, downloadDir,
                         hbRssBangumi.getDownloaderCategory())).toList();
         hbRssBangumiEpisodeRepository.saveAll(episodeList);
-
-        return id;
     }
 
     @Override

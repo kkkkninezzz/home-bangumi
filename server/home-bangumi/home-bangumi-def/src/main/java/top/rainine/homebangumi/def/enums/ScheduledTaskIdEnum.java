@@ -19,6 +19,9 @@ public enum ScheduledTaskIdEnum {
     RENAME_EPISODES(3),
 
     UPDATE_RSS_SUBSCRIPTION(4),
+
+    CHECK_NOT_FINISHED_RENAME_TASK(5),
+
     ;
 
     private final int task;

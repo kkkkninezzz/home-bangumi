@@ -1,5 +1,6 @@
 export default {
   path: "/system-settings",
+  redirect: "/system-settings/network-proxy/index",
   meta: {
     icon: "ant-design:setting-filled",
     title: "系统设置"
@@ -16,6 +17,7 @@ export default {
     },
     {
       path: "/system-settings/downloader/index",
+      redirect: "/system-settings/downloader/qbittorrent",
       name: "DownloaderSettings",
       meta: {
         icon: "mdi:cloud-download",
@@ -24,12 +26,15 @@ export default {
       children: [
         {
           path: "/system-settings/downloader/qbittorrent",
-          component: () => import("@/views/systemsettings/downloader/components/QbittorrentDownloaderSettingsPage.vue"),
+          component: () =>
+            import(
+              "@/views/systemsettings/downloader/components/QbittorrentDownloaderSettingsPage.vue"
+            ),
           name: "QbittorrentDownloaderSettingsPage",
           meta: {
             title: "qbittorrent",
             icon: "cbi:qbittorrent",
-            
+
             // 通过设置showParent为true，显示父级
             showParent: true
           }
@@ -53,7 +58,7 @@ export default {
         icon: "gridicons:scheduled",
         title: "定时任务"
       }
-    },
+    }
     // {
     //   path: "/system-settings/scraped-pase/index",
     //   name: "ScrapedPaseSettings",

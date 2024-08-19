@@ -61,7 +61,7 @@ public class HbRssBangumi extends BaseEntity {
 
     /**
      * 过滤规则
-     * 格式为json数组字符串，每个元素为一个正则表达式
+     * 格式为json数组字符串，每个元素为一个用于匹配的词组
      * */
     @Column(name = "filter_rules", length = 512, nullable = false)
     private String filterRules;

@@ -44,4 +44,11 @@ public class UpdateScheduledTaskSettingsReq {
     @NotNull(message = HbCodeEnum.ErrorCode.UPDATE_RSS_SUBSCRIPTION_DURATION_INVALID)
     @Min(value = 1, message = HbCodeEnum.ErrorCode.UPDATE_RSS_SUBSCRIPTION_DURATION_INVALID)
     private Integer updateRssSubscriptionDuration;
+
+    /**
+     * 检查未完成的重命名任务 的定时任务周期，单位分钟
+     * */
+    @NotNull(message = HbCodeEnum.ErrorCode.UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID)
+    @Min(value = 1, message = HbCodeEnum.ErrorCode.UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID)
+    private Integer checkNotFinishedRenameTaskDuration;
 }

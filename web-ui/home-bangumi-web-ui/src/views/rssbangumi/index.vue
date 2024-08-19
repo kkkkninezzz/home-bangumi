@@ -277,16 +277,8 @@ function onSearchClick(
     >
       <el-empty v-if="pagination.total <= 0" :description="`不存在rss番剧`" />
       <template v-else>
-        <el-space wrap :size="30">
-          <template
-            v-for="(bangumi, index) in bangumiList"
-            :key="index"
-            :xs="24"
-            :sm="12"
-            :md="10"
-            :lg="6"
-            :xl="4"
-          >
+        <el-space wrap :size="30" style="width: 100%">
+          <template v-for="(bangumi, index) in bangumiList" :key="index">
             <rss-bangumi-card
               :rssBangumiCard="bangumi"
               @delete-rss-bangumi="handleDeleteRssBangumi"

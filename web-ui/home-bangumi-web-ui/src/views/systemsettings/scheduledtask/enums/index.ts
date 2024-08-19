@@ -1,5 +1,3 @@
-
-
 export enum ScheduledTaskIdEnum {
   CHECK_EPISODE_DOWNLOAD = 1,
 
@@ -8,4 +6,6 @@ export enum ScheduledTaskIdEnum {
   RENAME_EPISODES = 3,
 
   UPDATE_RSS_SUBSCRIPTION = 4,
+
+  CHECK_NOT_FINISHED_RENAME_TASK = 5
 }

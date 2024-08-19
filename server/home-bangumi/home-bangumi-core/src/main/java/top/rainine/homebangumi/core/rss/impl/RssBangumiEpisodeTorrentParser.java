@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import top.rainine.homebangumi.common.data.TorrentInfo;
 import top.rainine.homebangumi.common.utils.BencodeUtils;
 import top.rainine.homebangumi.core.net.OkHttpService;
@@ -59,6 +61,14 @@ public class RssBangumiEpisodeTorrentParser {
                     .build();
         }
 
+        if (ArrayUtils.isEmpty(torrentBytes)) {
+            log.error("[RssBangumiEpisodeTorrentParser]torrent is empty, torrentLink: {}", parsedInfo.torrentLink());
+
+            return builder
+                    .status(RssBangumiEpisodeStatusEnum.TORRENT_DOWNLOAD_FAILED)
+                    .build();
+        }
+
         // 解析种子信息
         TorrentInfo torrentInfo;
         try {
@@ -101,7 +111,13 @@ public class RssBangumiEpisodeTorrentParser {
         }
 
         String renamedTitle = episodeTitleRenameAdapter.renameTitle(episodeFileName, episodeTitleInfo);
-        String renamedTitleFileName = STR."\{renamedTitle}.\{FilenameUtils.getExtension(episodeFileName)}";
+        String fileExtension = FilenameUtils.getExtension(episodeFileName);
+        String renamedTitleFileName;
+        if (StringUtils.isNotBlank(fileExtension)) {
+            renamedTitleFileName = STR."\{renamedTitle}.\{FilenameUtils.getExtension(episodeFileName)}";
+        } else {
+            renamedTitleFileName = renamedTitle;
+        }
 
         return builder.episodeNo(episodeTitleInfo.episode())
                 .season(episodeTitleInfo.season())

@@ -7,7 +7,7 @@ spring:
   application:
     name: home-bangumi
   datasource:
-    url: jdbc:sqlite:/data/home-bangumi/db/database.db
+    url: jdbc:sqlite:/data/home-bangumi/db/database.db?journal_mode=WAL
     driver-class-name: org.sqlite.JDBC
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect

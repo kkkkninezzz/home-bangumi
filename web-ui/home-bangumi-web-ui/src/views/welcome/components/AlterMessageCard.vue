@@ -8,7 +8,8 @@ import {
   WarnTriangleFilled
 } from "@element-plus/icons-vue";
 import { AlterMessageCardPropType } from "../props";
-import { useDetailPage } from "@/views/rssbangumi/components/hooks";
+import * as rssbangumiHooks from "@/views/rssbangumi/components/hooks";
+import * as renametaskHooks from "@/views/renametask/components/hooks";
 import { formatDateTime } from "@/utils/date";
 import { MessageCategoryEnum, MessageTypeEnum } from "@/views/message/enums";
 import { readMessage } from "@/api/message";
@@ -28,13 +29,23 @@ const emit = defineEmits<{
   (e: "read", messageId: number): void;
 }>();
 
-const { toDetailPage, router } = useDetailPage();
+const { toDetailPage: rssBangumiToDetailPage } =
+  rssbangumiHooks.useDetailPage();
+const { toDetailPage: renameTaskToDetailPage } =
+  renametaskHooks.useDetailPage();
 
 const handleClick = () => {
   if (props.messageCard.category == MessageCategoryEnum.RSS_BANGUMI_EPISODE) {
     if (props.messageCard.subjectId) {
       // 跳转到番剧详情页
-      toDetailPage({ id: props.messageCard.subjectId });
+      rssBangumiToDetailPage({ id: props.messageCard.subjectId });
+    }
+  } else if (
+    props.messageCard.category == MessageCategoryEnum.EPISODE_RENAME_TASK
+  ) {
+    if (props.messageCard.subjectId) {
+      // 跳转到重命名任务详情页
+      renameTaskToDetailPage({ id: props.messageCard.subjectId });
     }
   }
 };
@@ -108,6 +119,7 @@ const handleReadClick = async () => {
 
 .message-content {
   margin-bottom: 12px;
+  width: 100%;
 }
 
 .message-time {

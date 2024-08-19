@@ -14,7 +14,13 @@ public enum MessageCategoryEnum {
     /**
      * rss bangumi 剧集
      * */
-    RSS_BANGUMI_EPISODE(1);
+    RSS_BANGUMI_EPISODE(1),
+
+    /**
+     * 剧集重命名任务
+     * */
+    EPISODE_RENAME_TASK(2),
+    ;
 
     private final int category;
 }

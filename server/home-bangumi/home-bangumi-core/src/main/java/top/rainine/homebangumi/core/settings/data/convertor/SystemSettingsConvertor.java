@@ -54,6 +54,7 @@ public interface SystemSettingsConvertor {
     @Mapping(target = "pushParsedEpisodesToDownloaderDuration", expression = "java(durationToMinutes(settings.pushParsedEpisodesToDownloaderDuration()))")
     @Mapping(target = "renameEpisodesDuration", expression = "java(durationToMinutes(settings.renameEpisodesDuration()))")
     @Mapping(target = "updateRssSubscriptionDuration", expression = "java(durationToMinutes(settings.updateRssSubscriptionDuration()))")
+    @Mapping(target = "checkNotFinishedRenameTaskDuration", expression = "java(durationToMinutes(settings.checkNotFinishedRenameTaskDuration()))")
     ScheduledTaskSettingsResp toScheduledTaskSettingsResp(ScheduledTaskSettings settings);
 
     default Integer durationToMinutes(Duration duration) {

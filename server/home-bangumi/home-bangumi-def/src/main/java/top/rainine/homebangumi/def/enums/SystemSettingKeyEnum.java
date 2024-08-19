@@ -117,6 +117,11 @@ public enum SystemSettingKeyEnum {
      * 定时更新rss bangumi的定时任务周期，单位分钟，默认2小时执行一次
      * */
     UPDATE_RSS_SUBSCRIPTION_DURATION("UPDATE_RSS_SUBSCRIPTION_DURATION", Integer.class, 120),
+
+    /**
+     * 检查未完成的重命名任务的定时任务周期，单位分钟，默认2小时执行一次
+     * */
+    CHECK_NOT_FINISHED_RENAME_TASK_DURATION("CHECK_NOT_FINISHED_RENAME_TASK_DURATION", Integer.class, 120),
     //endregion
     // TODO 定义配置key
     ;
