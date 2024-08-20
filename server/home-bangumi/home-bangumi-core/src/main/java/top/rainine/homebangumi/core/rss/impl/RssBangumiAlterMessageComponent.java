@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.message.MessageService;
+import top.rainine.homebangumi.core.message.data.AddMessageInfo;
 import top.rainine.homebangumi.dao.po.HbRssBangumi;
 import top.rainine.homebangumi.dao.po.HbRssBangumiEpisode;
 import top.rainine.homebangumi.def.enums.MessageCategoryEnum;
@@ -43,7 +44,16 @@ public class RssBangumiAlterMessageComponent {
         String bangumiTitle = rssBangumiComponent.getBangumiTitle(rssBangumi.getBangumiId());
 
         String messageContent = messageContentGenerator.generate(episode, bangumiTitle);
-        messageService.addMessage(MessageCategoryEnum.RSS_BANGUMI_EPISODE, MessageTypeEnum.WARNING, title, messageContent, rssBangumi.getId().toString());
+
+        messageService.addMessage(AddMessageInfo.builder()
+                .category(MessageCategoryEnum.RSS_BANGUMI_EPISODE)
+                .type(MessageTypeEnum.WARNING)
+                .title(title)
+                .content(messageContent)
+                .subjectId(rssBangumi.getId().toString())
+                .addToBox(true)
+                .push(true)
+                .build());
     }
 
     /**

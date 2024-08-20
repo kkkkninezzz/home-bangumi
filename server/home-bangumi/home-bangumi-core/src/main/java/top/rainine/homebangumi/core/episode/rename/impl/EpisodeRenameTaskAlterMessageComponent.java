@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
 import top.rainine.homebangumi.core.message.MessageService;
+import top.rainine.homebangumi.core.message.data.AddMessageInfo;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.def.enums.MessageCategoryEnum;
 import top.rainine.homebangumi.def.enums.MessageTypeEnum;
@@ -33,8 +34,15 @@ public class EpisodeRenameTaskAlterMessageComponent {
 
         String messageContent = STR."\{renameTask.getTaskName()} 执行时间过长，请手动处理。开始时间: \{HbDateUtils.formatLocalDateTime(startTime)}";
 
-        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.WARNING,
-                STR."重命名任务 \{renameTask.getTaskName()}", messageContent, taskId.toString());
+        messageService.addMessage(AddMessageInfo.builder()
+                .category(MessageCategoryEnum.EPISODE_RENAME_TASK)
+                .type(MessageTypeEnum.WARNING)
+                .title(STR."重命名任务 \{renameTask.getTaskName()}")
+                .content(messageContent)
+                .subjectId(taskId.toString())
+                .addToBox(true)
+                .push(true)
+                .build());
     }
 
     /**
@@ -47,7 +55,14 @@ public class EpisodeRenameTaskAlterMessageComponent {
 
         String messageContent = STR."\{renameTask.getTaskName()} 执行结束。 成功数量: \{successOfTaskItems}，失败数量: \{failedOfTaskItems}";
 
-        messageService.addMessage(MessageCategoryEnum.EPISODE_RENAME_TASK, MessageTypeEnum.INFO,
-                STR."重命名任务 \{renameTask.getTaskName()}", messageContent, taskId.toString());
+        messageService.addMessage(AddMessageInfo.builder()
+                .category(MessageCategoryEnum.EPISODE_RENAME_TASK)
+                .type(MessageTypeEnum.INFO)
+                .title(STR."重命名任务 \{renameTask.getTaskName()}")
+                .content(messageContent)
+                .subjectId(taskId.toString())
+                .addToBox(true)
+                .push(true)
+                .build());
     }
 }

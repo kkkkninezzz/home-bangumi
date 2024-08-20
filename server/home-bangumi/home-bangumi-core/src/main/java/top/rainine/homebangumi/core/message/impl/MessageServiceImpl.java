@@ -7,7 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import top.rainine.homebangumi.api.resp.MessagesResp;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
+import top.rainine.homebangumi.core.message.MessagePushManager;
 import top.rainine.homebangumi.core.message.MessageService;
+import top.rainine.homebangumi.core.message.data.AddMessageInfo;
 import top.rainine.homebangumi.core.message.data.convertor.MessageConvertor;
 import top.rainine.homebangumi.dao.po.HbMessage;
 import top.rainine.homebangumi.dao.po.QHbMessage;
@@ -36,6 +38,8 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageConvertor messageConvertor;
 
+    private final MessagePushManager messagePushManager;
+
     @Override
     public void addMessage(MessageCategoryEnum category, MessageTypeEnum type, String title, String content, String subjectId) {
         HbMessage entity = new HbMessage();
@@ -47,6 +51,23 @@ public class MessageServiceImpl implements MessageService {
         entity.setRead(false);
 
         messageRepository.save(entity);
+    }
+
+    @Override
+    public void pushMessage(MessageCategoryEnum category, MessageTypeEnum type, String title, String content) {
+        String message = STR."\{type.name()}: \{title}\n\n\{content}";
+        messagePushManager.asyncPushMessage(message);
+    }
+
+    @Override
+    public void addMessage(AddMessageInfo info) {
+        if (info.addToBox()) {
+            this.addMessage(info.category(), info.type(), info.title(), info.content(), info.subjectId());
+        }
+
+        if (info.push()) {
+            this.pushMessage(info.category(), info.type(), info.title(), info.content());
+        }
     }
 
     @Override
