@@ -41,7 +41,7 @@ public class MessagePusherSettingsServiceImpl implements MessagePusherSettingsSe
                 .builder()
                 .enable(settingMap.get(SystemSettingKeyEnum.MESSAGE_PUSHER_WECOMCHAN_ENABLE).getValue())
                 .url(settingMap.get(SystemSettingKeyEnum.MESSAGE_PUSHER_WECOMCHAN_URL).getValue())
-                .enable(settingMap.get(SystemSettingKeyEnum.MESSAGE_PUSHER_WECOMCHAN_SEND_KEY).getValue())
+                .sendKey(settingMap.get(SystemSettingKeyEnum.MESSAGE_PUSHER_WECOMCHAN_SEND_KEY).getValue())
                 .build();
     }
 

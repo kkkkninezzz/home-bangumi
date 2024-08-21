@@ -129,7 +129,7 @@ public enum SystemSettingKeyEnum {
     /**
      * wecomchan是否可用
      * */
-    MESSAGE_PUSHER_WECOMCHAN_ENABLE("MESSAGE_PUSHER_WECOMCHAN_ENABLE", Boolean.class, false),
+    MESSAGE_PUSHER_WECOMCHAN_ENABLE("MESSAGE_PUSHER_WECOMCHAN_ENABLE", Boolean.class, Boolean.FALSE),
 
     /**
      * wecomchan的url

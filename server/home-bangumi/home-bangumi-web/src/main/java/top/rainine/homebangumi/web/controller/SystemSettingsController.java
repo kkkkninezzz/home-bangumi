@@ -3,10 +3,7 @@ package top.rainine.homebangumi.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import top.rainine.homebangumi.api.SystemSettingsApi;
-import top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq;
-import top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq;
+import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
 import top.rainine.homebangumi.core.settings.SystemSettingsApiFacadeService;
 
@@ -59,5 +56,15 @@ public class SystemSettingsController implements SystemSettingsApi {
     @Override
     public Result<ScheduledTaskSettingsResp> updateScheduledTaskSettings(UpdateScheduledTaskSettingsReq req) {
         return Result.createSuccess(apiFacadeService.updateScheduledTaskSettings(req));
+    }
+
+    @Override
+    public Result<WecomchanSettingsResp> getWecomchanSettings() {
+        return Result.createSuccess(apiFacadeService.getWecomchanSettings());
+    }
+
+    @Override
+    public Result<WecomchanSettingsResp> updateWecomchanSettings(UpdateWecomchanSettingsReq req) {
+        return Result.createSuccess(apiFacadeService.updateWecomchanSettings(req));
     }
 }

@@ -138,6 +138,12 @@ public enum HbCodeEnum {
     EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE(ErrorCode.EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE, "episode rename task item status not allow operate"),
 
     UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID(ErrorCode.UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID, "update check not finished rename task duration invalid"),
+
+    WECOMCHAN_SETTINGS_ENABLE_INVALID(ErrorCode.WECOMCHAN_SETTINGS_ENABLE_INVALID, "wecomchan settings enable invalid"),
+
+    WECOMCHAN_SETTINGS_URL_INVALID(ErrorCode.WECOMCHAN_SETTINGS_URL_INVALID, "wecomchan settings url invalid"),
+
+    WECOMCHAN_SETTINGS_SEND_KEY_INVALID(ErrorCode.WECOMCHAN_SETTINGS_SEND_KEY_INVALID, "wecomchan settings sendKey invalid"),
     ;
     private final String code;
 
@@ -363,6 +369,21 @@ public enum HbCodeEnum {
          * 定时检查未完成的重命名任务的定时任务周期无效
          * */
         String UPDATE_CHECK_NOT_FINISHED_RENAME_TASK_DURATION_INVALID = "HB400034";
+
+        /**
+         * 更新wecomchan的enable字段无效
+         * */
+        String WECOMCHAN_SETTINGS_ENABLE_INVALID = "HB400035";
+
+        /**
+         * 更新wecomchan的url字段无效
+         * */
+        String WECOMCHAN_SETTINGS_URL_INVALID = "HB400036";
+
+        /**
+         * 更新wecomchan的sendKey字段无效
+         * */
+        String WECOMCHAN_SETTINGS_SEND_KEY_INVALID = "HB400037";
         //endregion
 
 

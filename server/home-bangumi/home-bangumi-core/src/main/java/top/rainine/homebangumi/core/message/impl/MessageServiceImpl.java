@@ -55,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void pushMessage(MessageCategoryEnum category, MessageTypeEnum type, String title, String content) {
-        String message = STR."\{type.name()}: \{title}\n\n\{content}";
+        String message = STR."[HB] \{type.name()}: \{title}\n\n\{content}";
         messagePushManager.asyncPushMessage(message);
     }
 

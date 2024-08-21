@@ -3,22 +3,10 @@ package top.rainine.homebangumi.core.settings.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq;
-import top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq;
-import top.rainine.homebangumi.api.resp.EpisodeFilterRulesSettingsResp;
-import top.rainine.homebangumi.api.resp.NetworkProxySettingsResp;
-import top.rainine.homebangumi.api.resp.QbittorrentDownloaderSettingsResp;
-import top.rainine.homebangumi.api.resp.ScheduledTaskSettingsResp;
-import top.rainine.homebangumi.core.settings.DownloaderSettingsService;
-import top.rainine.homebangumi.core.settings.EpisodeFilterRulesSettingsService;
-import top.rainine.homebangumi.core.settings.NetProxySettingsService;
-import top.rainine.homebangumi.core.settings.SystemSettingsApiFacadeService;
-import top.rainine.homebangumi.core.settings.data.EpisodeFilterRulesSettings;
-import top.rainine.homebangumi.core.settings.data.NetProxySettings;
-import top.rainine.homebangumi.core.settings.data.QbittorrentDownloaderSettings;
-import top.rainine.homebangumi.core.settings.data.ScheduledTaskSettings;
+import top.rainine.homebangumi.api.req.*;
+import top.rainine.homebangumi.api.resp.*;
+import top.rainine.homebangumi.core.settings.*;
+import top.rainine.homebangumi.core.settings.data.*;
 import top.rainine.homebangumi.core.settings.data.convertor.SystemSettingsConvertor;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 import top.rainine.homebangumi.def.exception.HbBizException;
@@ -41,7 +29,9 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
 
     private final EpisodeFilterRulesSettingsService  episodeFilterRulesSettingsService;
 
-    private final ScheduledTaskSettingsServiceImpl scheduledTaskSettingsService;
+    private final ScheduledTaskSettingsService scheduledTaskSettingsService;
+
+    private final MessagePusherSettingsService messagePusherSettingsService;
 
     private final SystemSettingsConvertor systemSettingsConvertor;
 
@@ -107,6 +97,19 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
         ScheduledTaskSettings settings = systemSettingsConvertor.toScheduledTaskSettings(req);
         scheduledTaskSettingsService.updateSettings(settings);
         return getScheduledTaskSettings();
+    }
+
+    @Override
+    public WecomchanSettingsResp getWecomchanSettings() {
+        WecomchanSettings wecomchanSettings = messagePusherSettingsService.getWecomchanSettings();
+        return systemSettingsConvertor.toWecomchanSettingsResp(wecomchanSettings);
+    }
+
+    @Override
+    public WecomchanSettingsResp updateWecomchanSettings(UpdateWecomchanSettingsReq req) {
+        WecomchanSettings wecomchanSettings = systemSettingsConvertor.toWecomchanSettings(req);
+        messagePusherSettingsService.updateWecomchanSettings(wecomchanSettings);
+        return getWecomchanSettings();
     }
 }
 

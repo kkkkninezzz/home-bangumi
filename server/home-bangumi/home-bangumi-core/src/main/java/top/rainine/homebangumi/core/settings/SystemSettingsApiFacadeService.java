@@ -1,13 +1,7 @@
 package top.rainine.homebangumi.core.settings;
 
-import top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq;
-import top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq;
-import top.rainine.homebangumi.api.resp.EpisodeFilterRulesSettingsResp;
-import top.rainine.homebangumi.api.resp.NetworkProxySettingsResp;
-import top.rainine.homebangumi.api.resp.QbittorrentDownloaderSettingsResp;
-import top.rainine.homebangumi.api.resp.ScheduledTaskSettingsResp;
+import top.rainine.homebangumi.api.req.*;
+import top.rainine.homebangumi.api.resp.*;
 
 /**
  * @authoer rainine
@@ -31,4 +25,8 @@ public interface SystemSettingsApiFacadeService {
     ScheduledTaskSettingsResp getScheduledTaskSettings();
 
     ScheduledTaskSettingsResp updateScheduledTaskSettings(UpdateScheduledTaskSettingsReq req);
+
+    WecomchanSettingsResp getWecomchanSettings();
+
+    WecomchanSettingsResp updateWecomchanSettings(UpdateWecomchanSettingsReq req);
 }
