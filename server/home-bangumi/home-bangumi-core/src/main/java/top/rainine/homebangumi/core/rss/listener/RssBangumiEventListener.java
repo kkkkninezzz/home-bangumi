@@ -67,4 +67,10 @@ public class RssBangumiEventListener {
     public void onEpisodeTorrentDownloadFailedEvent(EpisodeTorrentDownloadFailedEvent event) {
         alterMessageComponent.addTorrentDownloadFailedMessage(event.getEpisodeId());
     }
+
+    @EventListener(EpisodeFinishedEvent.class)
+    @Async
+    public void addEpisodeFinishedMessage(EpisodeFinishedEvent event) {
+        alterMessageComponent.addEpisodeFinishedMessage(event.getEpisodeId());
+    }
 }
