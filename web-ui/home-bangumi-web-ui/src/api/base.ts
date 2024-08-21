@@ -71,6 +71,12 @@ class HbHttp {
             return;
           }
 
+          // 如果状态为400那么认为是参数有问题，提示参数
+          if (status && status == 400) {
+            message(axiosError.response.data.msg, { type: "warning" });
+            resolve(axiosError.response.data as T);
+            return;
+          }
           message(axiosError.code, { type: "error" });
           console.log("HbHttp error:", error);
           resolve(defaultResult as T);

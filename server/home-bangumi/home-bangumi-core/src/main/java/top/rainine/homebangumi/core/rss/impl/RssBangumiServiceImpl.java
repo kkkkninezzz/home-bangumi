@@ -15,6 +15,7 @@ import top.rainine.homebangumi.api.common.BangumiInfoDto;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
 import top.rainine.homebangumi.common.utils.GsonUtils;
+import top.rainine.homebangumi.core.event.data.EpisodeFinishedEvent;
 import top.rainine.homebangumi.core.rss.data.RssBangumiParseConfig;
 import top.rainine.homebangumi.core.settings.DownloaderSettingsService;
 import top.rainine.homebangumi.core.settings.data.QbittorrentDownloaderSettings;
@@ -394,6 +395,8 @@ public class RssBangumiServiceImpl implements RssBangumiService, HbAdvisor<RssBa
 
         episode.setStatus(RssBangumiEpisodeStatusEnum.FINISHED.getStatus());
         hbRssBangumiEpisodeRepository.save(episode);
+
+        hbEventBus.publishEvent(new EpisodeFinishedEvent(episodeId));
     }
 
     @Override

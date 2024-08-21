@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.message.MessageService;
+import top.rainine.homebangumi.core.message.data.AddMessageInfo;
 import top.rainine.homebangumi.dao.po.HbRssBangumi;
 import top.rainine.homebangumi.dao.po.HbRssBangumiEpisode;
 import top.rainine.homebangumi.def.enums.MessageCategoryEnum;
@@ -43,7 +44,16 @@ public class RssBangumiAlterMessageComponent {
         String bangumiTitle = rssBangumiComponent.getBangumiTitle(rssBangumi.getBangumiId());
 
         String messageContent = messageContentGenerator.generate(episode, bangumiTitle);
-        messageService.addMessage(MessageCategoryEnum.RSS_BANGUMI_EPISODE, MessageTypeEnum.WARNING, title, messageContent, rssBangumi.getId().toString());
+
+        messageService.addMessage(AddMessageInfo.builder()
+                .category(MessageCategoryEnum.RSS_BANGUMI_EPISODE)
+                .type(MessageTypeEnum.WARNING)
+                .title(title)
+                .content(messageContent)
+                .subjectId(rssBangumi.getId().toString())
+                .addToBox(true)
+                .push(true)
+                .build());
     }
 
     /**
@@ -68,5 +78,27 @@ public class RssBangumiAlterMessageComponent {
     public void addTorrentDownloadFailedMessage(Long episodeId) {
         addWaringMessage(episodeId, "剧集种子下载失败",
                 (episode, bangumiTitle) -> STR."\{bangumiTitle} 下载种子失败，请手动处理。种子链接: \"\{episode.getTorrentLink()}\"");
+    }
+
+    /**
+     * 新增剧集完成的消息
+     * */
+    public void addEpisodeFinishedMessage(Long episodeId) {
+        HbRssBangumiEpisode episode = rssBangumiComponent.getRssBangumiEpisodeOrThrow(episodeId);
+        HbRssBangumi rssBangumi = rssBangumiComponent.getRssBangumiOrThrow(episode.getRssBangumiId());
+        String bangumiTitle = rssBangumiComponent.getBangumiTitle(rssBangumi.getBangumiId());
+
+        String title = "剧集有更新";
+        String messageContent = STR."\{bangumiTitle} 更新了第\{episode.getEpisodeNo()}集";
+
+        messageService.addMessage(AddMessageInfo.builder()
+                .category(MessageCategoryEnum.RSS_BANGUMI_EPISODE)
+                .type(MessageTypeEnum.INFO)
+                .title(title)
+                .content(messageContent)
+                .subjectId(rssBangumi.getId().toString())
+                .addToBox(false)
+                .push(true)
+                .build());
     }
 }

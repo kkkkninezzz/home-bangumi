@@ -110,6 +110,43 @@ export type UpdateScheduledTaskSettingsReq = {
   checkNotFinishedRenameTaskDuration: number;
 };
 
+/** 更新wecomchan的设置 */
+export type UpdateWecomchanSettingsReq = {
+  /**
+   * 是否可用
+   */
+  enable: boolean;
+
+  /**
+   * wecomchan的地址
+   */
+  url?: string;
+
+  /**
+   * sendKey
+   */
+  sendKey?: string;
+};
+
+export type WecomchanSettingsResp = {
+  data: {
+    /**
+     * 是否可用
+     */
+    enable: boolean;
+
+    /**
+     * wecomchan的地址
+     */
+    url: string;
+
+    /**
+     * sendKey
+     */
+    sendKey: string;
+  };
+} & ApiResult;
+
 /** 获取网络代理配置 */
 export const getNetworkProxySettings = () => {
   return hbHttp.request<NetworkProxySettingsResp>(
@@ -186,6 +223,24 @@ export const updateScheduledTaskSettings = (
   return hbHttp.request<ScheduledTaskSettingsResp>(
     "put",
     `/api/v1/system-settings/scheduled-task`,
+    { data }
+  );
+};
+
+/** 获取wecomchan配置 */
+export const getWecomchanSettings = () => {
+  return hbHttp.request<WecomchanSettingsResp>(
+    "get",
+    `/api/v1/system-settings/message-pusher/wecomchan`,
+    {}
+  );
+};
+
+/** 更新定时任务配置 */
+export const updateWecomchanSettings = (data: UpdateWecomchanSettingsReq) => {
+  return hbHttp.request<WecomchanSettingsResp>(
+    "put",
+    `/api/v1/system-settings/message-pusher/wecomchan`,
     { data }
   );
 };

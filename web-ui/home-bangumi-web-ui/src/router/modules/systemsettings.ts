@@ -58,6 +58,32 @@ export default {
         icon: "gridicons:scheduled",
         title: "定时任务"
       }
+    },
+    {
+      path: "/system-settings/message-pusher/index",
+      redirect: "/system-settings/message-pusher/wecomchan",
+      name: "MessagePusherSettings",
+      meta: {
+        icon: "ant-design:message-filled",
+        title: "消息推送"
+      },
+      children: [
+        {
+          path: "/system-settings/message-pusher/wecomchan",
+          component: () =>
+            import(
+              "@/views/systemsettings/messagepusher/components/WecomchanSettingsPage.vue"
+            ),
+          name: "WecomchanSettingsPage",
+          meta: {
+            title: "wecomchan",
+            icon: "ant-design:wechat-filled",
+
+            // 通过设置showParent为true，显示父级
+            showParent: true
+          }
+        }
+      ]
     }
     // {
     //   path: "/system-settings/scraped-pase/index",

@@ -123,6 +123,25 @@ public enum SystemSettingKeyEnum {
      * */
     CHECK_NOT_FINISHED_RENAME_TASK_DURATION("CHECK_NOT_FINISHED_RENAME_TASK_DURATION", Integer.class, 120),
     //endregion
+
+
+    //region wecomchan配置
+    /**
+     * wecomchan是否可用
+     * */
+    MESSAGE_PUSHER_WECOMCHAN_ENABLE("MESSAGE_PUSHER_WECOMCHAN_ENABLE", Boolean.class, Boolean.FALSE),
+
+    /**
+     * wecomchan的url
+     * */
+    MESSAGE_PUSHER_WECOMCHAN_URL("MESSAGE_PUSHER_WECOMCHAN_URL", String.class, ""),
+
+    /**
+     * wecomchan的sendKey
+     * */
+    MESSAGE_PUSHER_WECOMCHAN_SEND_KEY("MESSAGE_PUSHER_WECOMCHAN_SEND_KEY", String.class, ""),
+    //endregion
+
     // TODO 定义配置key
     ;
 

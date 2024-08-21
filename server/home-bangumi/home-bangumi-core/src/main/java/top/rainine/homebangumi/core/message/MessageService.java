@@ -1,6 +1,7 @@
 package top.rainine.homebangumi.core.message;
 
 import top.rainine.homebangumi.api.resp.MessagesResp;
+import top.rainine.homebangumi.core.message.data.AddMessageInfo;
 import top.rainine.homebangumi.def.enums.MessageCategoryEnum;
 import top.rainine.homebangumi.def.enums.MessageTypeEnum;
 
@@ -16,6 +17,17 @@ public interface MessageService {
      * */
     void addMessage(MessageCategoryEnum category, MessageTypeEnum type,
                     String title, String content, String subjectId);
+
+    /**
+     * 推送消息
+     * */
+    void pushMessage(MessageCategoryEnum category, MessageTypeEnum type,
+                     String title, String content);
+
+    /**
+     * 新增消息
+     * */
+    void addMessage(AddMessageInfo info);
 
     /**
      * 获取消息

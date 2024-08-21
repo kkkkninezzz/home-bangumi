@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq;
-import top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq;
-import top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq;
+import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
 
 /**
@@ -68,4 +65,16 @@ public interface SystemSettingsApi {
     @PutMapping(value = "/scheduled-task", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     Result<ScheduledTaskSettingsResp> updateScheduledTaskSettings(@Valid @RequestBody UpdateScheduledTaskSettingsReq req);
 
+
+    /**
+     * 获取wecomchan的消息推送配置
+     * */
+    @GetMapping(value = "/message-pusher/wecomchan", produces = MediaType.APPLICATION_JSON_VALUE)
+    Result<WecomchanSettingsResp> getWecomchanSettings();
+
+    /**
+     * 更新wecomchan的消息推送配置
+     * */
+    @PutMapping(value = "/message-pusher/wecomchan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    Result<WecomchanSettingsResp> updateWecomchanSettings(@Valid @RequestBody UpdateWecomchanSettingsReq req);
 }
