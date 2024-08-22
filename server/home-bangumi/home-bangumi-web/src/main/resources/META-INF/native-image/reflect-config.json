@@ -126,6 +126,15 @@
   "name":"[Lorg.hibernate.jpa.event.spi.Callback;"
 },
 {
+  "name":"[Lorg.hibernate.query.hql.spi.DotIdentifierConsumer;"
+},
+{
+  "name":"[Lorg.hibernate.query.hql.spi.SqmCreationProcessingState;"
+},
+{
+  "name":"[Lorg.hibernate.query.sqm.spi.ParameterDeclarationContext;"
+},
+{
   "name":"[Lorg.hibernate.query.sqm.sql.FromClauseIndex;"
 },
 {
@@ -431,7 +440,7 @@
   "name":"com.fasterxml.jackson.core.ObjectCodec",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","java.lang.Class"] }]
+  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.TypeReference"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","java.lang.Class"] }]
 },
 {
   "name":"com.fasterxml.jackson.core.TreeCodec",
@@ -498,6 +507,9 @@
   "name":"com.google.common.base.Optional"
 },
 {
+  "name":"com.google.common.collect.ImmutableSet"
+},
+{
   "name":"com.google.gson.Gson",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -533,6 +545,14 @@
   "name":"com.querydsl.core.types.Predicate"
 },
 {
+  "name":"com.querydsl.jpa.EclipseLinkHandler",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.querydsl.jpa.HibernateHandler",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.querydsl.jpa.JPQLQueryFactory",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true,
@@ -543,6 +563,9 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"delete","parameterTypes":["com.querydsl.core.types.EntityPath"] }, {"name":"from","parameterTypes":["com.querydsl.core.types.EntityPath"] }, {"name":"from","parameterTypes":["com.querydsl.core.types.EntityPath[]"] }, {"name":"insert","parameterTypes":["com.querydsl.core.types.EntityPath"] }, {"name":"query","parameterTypes":[] }, {"name":"select","parameterTypes":["com.querydsl.core.types.Expression"] }, {"name":"select","parameterTypes":["com.querydsl.core.types.Expression[]"] }, {"name":"selectDistinct","parameterTypes":["com.querydsl.core.types.Expression"] }, {"name":"selectDistinct","parameterTypes":["com.querydsl.core.types.Expression[]"] }, {"name":"selectFrom","parameterTypes":["com.querydsl.core.types.EntityPath"] }, {"name":"selectOne","parameterTypes":[] }, {"name":"selectZero","parameterTypes":[] }, {"name":"shutdown","parameterTypes":[] }, {"name":"update","parameterTypes":["com.querydsl.core.types.EntityPath"] }]
+},
+{
+  "name":"com.querydsl.spatial.hibernate.HibernateSpatialSupport"
 },
 {
   "name":"com.rabbitmq.client.Channel"
@@ -580,19 +603,7 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"com.sun.crypto.provider.DHParameters",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"com.sun.crypto.provider.GaloisCounterMode$AESGCM",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"com.sun.crypto.provider.TlsMasterSecretGenerator",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -1151,7 +1162,7 @@
 },
 {
   "name":"jakarta.persistence.Query",
-  "methods":[{"name":"getParameters","parameterTypes":[] }]
+  "methods":[{"name":"getParameter","parameterTypes":["int"] }, {"name":"getParameters","parameterTypes":[] }]
 },
 {
   "name":"jakarta.persistence.Table",
@@ -1227,6 +1238,12 @@
   "queryAllDeclaredMethods":true
 },
 {
+  "name":"jakarta.validation.ConstraintValidator",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"initialize","parameterTypes":["java.lang.annotation.Annotation"] }]
+},
+{
   "name":"jakarta.validation.ConstraintViolation"
 },
 {
@@ -1245,6 +1262,21 @@
 },
 {
   "name":"jakarta.validation.bootstrap.GenericBootstrap"
+},
+{
+  "name":"jakarta.validation.constraints.NotBlank",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"groups","parameterTypes":[] }, {"name":"message","parameterTypes":[] }, {"name":"payload","parameterTypes":[] }]
+},
+{
+  "name":"jakarta.validation.constraints.NotEmpty",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"groups","parameterTypes":[] }, {"name":"message","parameterTypes":[] }, {"name":"payload","parameterTypes":[] }]
+},
+{
+  "name":"jakarta.validation.constraints.NotNull",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"groups","parameterTypes":[] }, {"name":"message","parameterTypes":[] }, {"name":"payload","parameterTypes":[] }]
 },
 {
   "name":"jakarta.validation.executable.ExecutableValidator"
@@ -1592,12 +1624,6 @@
   "name":"java.security.SecurityPermission"
 },
 {
-  "name":"java.security.interfaces.ECPrivateKey"
-},
-{
-  "name":"java.security.interfaces.ECPublicKey"
-},
-{
   "name":"java.sql.Date"
 },
 {
@@ -1816,6 +1842,12 @@
   "name":"java.util.Hashtable"
 },
 {
+  "name":"java.util.ImmutableCollections$AbstractImmutableCollection"
+},
+{
+  "name":"java.util.ImmutableCollections$AbstractImmutableMap"
+},
+{
   "name":"java.util.LinkedHashMap"
 },
 {
@@ -1876,12 +1908,20 @@
   "name":"java.util.Vector"
 },
 {
+  "name":"java.util.concurrent.Callable",
+  "methods":[{"name":"call","parameterTypes":[] }]
+},
+{
   "name":"java.util.concurrent.ConcurrentHashMap"
 },
 {
   "name":"java.util.concurrent.Executor",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
+},
+{
+  "name":"java.util.concurrent.ForkJoinTask",
+  "fields":[{"name":"aux"}, {"name":"status"}]
 },
 {
   "name":"java.util.concurrent.ScheduledExecutorService"
@@ -1908,6 +1948,10 @@
 {
   "name":"java.util.concurrent.atomic.Striped64",
   "fields":[{"name":"base"}, {"name":"cellsBusy"}]
+},
+{
+  "name":"java.util.concurrent.atomic.Striped64$Cell",
+  "fields":[{"name":"value"}]
 },
 {
   "name":"java.util.function.Supplier",
@@ -2011,6 +2055,9 @@
 {
   "name":"jdk.internal.loader.ClassLoaders$PlatformClassLoader",
   "methods":[{"name":"clearCache","parameterTypes":[] }]
+},
+{
+  "name":"jdk.internal.misc.Unsafe"
 },
 {
   "name":"kotlin.Metadata"
@@ -2271,6 +2318,9 @@
   "name":"org.apache.logging.slf4j.SLF4JProvider"
 },
 {
+  "name":"org.apache.openjpa.persistence.OpenJPAEntityManager"
+},
+{
   "name":"org.apache.pulsar.client.api.PulsarClient"
 },
 {
@@ -2334,6 +2384,9 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"org.batoo.jpa.core.impl.manager.EntityManagerImpl"
+},
+{
   "name":"org.cache2k.Cache2kBuilder"
 },
 {
@@ -2341,6 +2394,15 @@
 },
 {
   "name":"org.crac.Resource"
+},
+{
+  "name":"org.datanucleus.ObjectManager"
+},
+{
+  "name":"org.datanucleus.ObjectManagerImpl"
+},
+{
+  "name":"org.datanucleus.jpa.EntityManagerImpl"
 },
 {
   "name":"org.dom4j.DocumentFactory",
@@ -2474,6 +2536,9 @@
   "name":"org.hibernate.dialect.PostgreSQL95Dialect"
 },
 {
+  "name":"org.hibernate.ejb.HibernateEntityManager"
+},
+{
   "name":"org.hibernate.engine.config.internal.ConfigurationServiceImpl",
   "queryAllPublicMethods":true
 },
@@ -2585,6 +2650,12 @@
   "name":"org.hibernate.internal.EntityManagerMessageLogger_$logger_zh_CN"
 },
 {
+  "name":"org.hibernate.jpa.HibernateEntityManager"
+},
+{
+  "name":"org.hibernate.jpa.HibernatePersistenceProvider"
+},
+{
   "name":"org.hibernate.metamodel.mapping.MappingModelCreationLogging_$logger",
   "methods":[{"name":"<init>","parameterTypes":["org.jboss.logging.Logger"] }]
 },
@@ -2650,6 +2721,20 @@
 },
 {
   "name":"org.hibernate.query.TypedParameterValue"
+},
+{
+  "name":"org.hibernate.query.hql.HqlLogging_$logger",
+  "methods":[{"name":"<init>","parameterTypes":["org.jboss.logging.Logger"] }]
+},
+{
+  "name":"org.hibernate.query.hql.HqlLogging_$logger_zh"
+},
+{
+  "name":"org.hibernate.query.hql.HqlLogging_$logger_zh_CN"
+},
+{
+  "name":"org.hibernate.query.hql.spi.SqmQueryImplementor",
+  "methods":[{"name":"setFirstResult","parameterTypes":["int"] }, {"name":"setMaxResults","parameterTypes":["int"] }, {"name":"setParameter","parameterTypes":["int","java.lang.Object"] }, {"name":"setResultTransformer","parameterTypes":["org.hibernate.transform.ResultTransformer"] }]
 },
 {
   "name":"org.hibernate.resource.beans.container.spi.BeanContainer"
@@ -2726,6 +2811,35 @@
 {
   "name":"org.hibernate.type.SqlTypes",
   "allPublicFields":true
+},
+{
+  "name":"org.hibernate.validator.group.GroupSequenceProvider",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"value","parameterTypes":[] }]
+},
+{
+  "name":"org.hibernate.validator.internal.constraintvalidators.bv.NotBlankValidator",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"isValid","parameterTypes":["java.lang.Object","jakarta.validation.ConstraintValidatorContext"] }]
+},
+{
+  "name":"org.hibernate.validator.internal.constraintvalidators.bv.NotNullValidator",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"isValid","parameterTypes":["java.lang.Object","jakarta.validation.ConstraintValidatorContext"] }]
+},
+{
+  "name":"org.hibernate.validator.internal.constraintvalidators.bv.notempty.NotEmptyValidatorForCharSequence",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"isValid","parameterTypes":["java.lang.Object","jakarta.validation.ConstraintValidatorContext"] }]
 },
 {
   "name":"org.hibernate.validator.internal.engine.AbstractConfigurationImpl",
@@ -2892,6 +3006,10 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"equals","parameterTypes":["java.lang.Object"] }, {"name":"getOrder","parameterTypes":[] }, {"name":"hashCode","parameterTypes":[] }, {"name":"setOrder","parameterTypes":["int"] }]
+},
+{
+  "name":"org.springframework.aot.generate.Generated",
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"org.springframework.aot.hint.annotation.Reflective",
@@ -4971,17 +5089,8 @@
   "name":"org.springframework.cache.interceptor.CacheAspectSupport"
 },
 {
-  "name":"org.springframework.cglib.proxy.Dispatcher"
-},
-{
   "name":"org.springframework.cglib.proxy.Factory",
   "queryAllDeclaredMethods":true
-},
-{
-  "name":"org.springframework.cglib.proxy.MethodInterceptor"
-},
-{
-  "name":"org.springframework.cglib.proxy.NoOp"
 },
 {
   "name":"org.springframework.context.ApplicationContextAware",
@@ -5384,8 +5493,7 @@
 },
 {
   "name":"org.springframework.data.jpa.repository.support.CrudMethodMetadata",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getComment","parameterTypes":[] }, {"name":"getEntityGraph","parameterTypes":[] }, {"name":"getLockModeType","parameterTypes":[] }, {"name":"getQueryHints","parameterTypes":[] }]
+  "queryAllDeclaredMethods":true
 },
 {
   "name":"org.springframework.data.jpa.repository.support.DefaultJpaContext",
@@ -5426,7 +5534,7 @@
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["org.springframework.data.jpa.repository.support.JpaEntityInformation","jakarta.persistence.EntityManager"] }, {"name":"count","parameterTypes":[] }, {"name":"count","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"count","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"delete","parameterTypes":["java.lang.Object"] }, {"name":"delete","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"deleteAll","parameterTypes":[] }, {"name":"deleteAll","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllById","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllByIdInBatch","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllInBatch","parameterTypes":[] }, {"name":"deleteAllInBatch","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteById","parameterTypes":["java.lang.Object"] }, {"name":"exists","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"exists","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"existsById","parameterTypes":["java.lang.Object"] }, {"name":"findAll","parameterTypes":[] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example","org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example","org.springframework.data.domain.Sort"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Sort"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification","org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification","org.springframework.data.domain.Sort"] }, {"name":"findAllById","parameterTypes":["java.lang.Iterable"] }, {"name":"findAllByRssBangumiId","parameterTypes":["java.lang.Long"] }, {"name":"findAllByRssBangumiIdAndStatus","parameterTypes":["java.lang.Long","java.lang.Integer"] }, {"name":"findAllBySettingKeyIn","parameterTypes":["java.util.List"] }, {"name":"findAllByStatus","parameterTypes":["java.lang.Integer"] }, {"name":"findAllByStatusAndHandleMethod","parameterTypes":["java.lang.Integer","java.lang.Integer"] }, {"name":"findBy","parameterTypes":["org.springframework.data.domain.Example","java.util.function.Function"] }, {"name":"findBy","parameterTypes":["org.springframework.data.jpa.domain.Specification","java.util.function.Function"] }, {"name":"findById","parameterTypes":["java.lang.Object"] }, {"name":"findBySettingKey","parameterTypes":["java.lang.String"] }, {"name":"findByUsername","parameterTypes":["java.lang.String"] }, {"name":"findOne","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"findOne","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"flush","parameterTypes":[] }, {"name":"getById","parameterTypes":["java.lang.Object"] }, {"name":"getOne","parameterTypes":["java.lang.Object"] }, {"name":"getReferenceById","parameterTypes":["java.lang.Object"] }, {"name":"save","parameterTypes":["java.lang.Object"] }, {"name":"saveAll","parameterTypes":["java.lang.Iterable"] }, {"name":"saveAllAndFlush","parameterTypes":["java.lang.Iterable"] }, {"name":"saveAndFlush","parameterTypes":["java.lang.Object"] }, {"name":"setEscapeCharacter","parameterTypes":["org.springframework.data.jpa.repository.query.EscapeCharacter"] }, {"name":"setProjectionFactory","parameterTypes":["org.springframework.data.projection.ProjectionFactory"] }, {"name":"setRepositoryMethodMetadata","parameterTypes":["org.springframework.data.jpa.repository.support.CrudMethodMetadata"] }]
+  "methods":[{"name":"<init>","parameterTypes":["org.springframework.data.jpa.repository.support.JpaEntityInformation","jakarta.persistence.EntityManager"] }, {"name":"count","parameterTypes":[] }, {"name":"count","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"count","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"countByCreatedTimeGreaterThanEqualAndStatusIn","parameterTypes":["java.lang.Long","java.util.List"] }, {"name":"countByHandleMethod","parameterTypes":["java.lang.Integer"] }, {"name":"countByHandleMethodAndCreatedTimeBetween","parameterTypes":["java.lang.Integer","java.lang.Long","java.lang.Long"] }, {"name":"countByStatus","parameterTypes":["java.lang.Integer"] }, {"name":"delete","parameterTypes":["java.lang.Object"] }, {"name":"delete","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"deleteAll","parameterTypes":[] }, {"name":"deleteAll","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllById","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllByIdInBatch","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteAllInBatch","parameterTypes":[] }, {"name":"deleteAllInBatch","parameterTypes":["java.lang.Iterable"] }, {"name":"deleteById","parameterTypes":["java.lang.Object"] }, {"name":"exists","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"exists","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"existsById","parameterTypes":["java.lang.Object"] }, {"name":"findAll","parameterTypes":[] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example","org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Example","org.springframework.data.domain.Sort"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.domain.Sort"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification","org.springframework.data.domain.Pageable"] }, {"name":"findAll","parameterTypes":["org.springframework.data.jpa.domain.Specification","org.springframework.data.domain.Sort"] }, {"name":"findAllById","parameterTypes":["java.lang.Iterable"] }, {"name":"findAllByReadAndCreatedTimeGreaterThanOrderByCreatedTimeDesc","parameterTypes":["java.lang.Boolean","java.lang.Long","org.springframework.data.domain.Pageable"] }, {"name":"findAllBySettingKeyIn","parameterTypes":["java.util.List"] }, {"name":"findAllByStatus","parameterTypes":["java.lang.Integer"] }, {"name":"findAllByStatusAndHandleMethod","parameterTypes":["java.lang.Integer","java.lang.Integer"] }, {"name":"findAllByTaskStatusIn","parameterTypes":["java.util.List"] }, {"name":"findBy","parameterTypes":["org.springframework.data.domain.Example","java.util.function.Function"] }, {"name":"findBy","parameterTypes":["org.springframework.data.jpa.domain.Specification","java.util.function.Function"] }, {"name":"findById","parameterTypes":["java.lang.Object"] }, {"name":"findBySettingKey","parameterTypes":["java.lang.String"] }, {"name":"findByUsername","parameterTypes":["java.lang.String"] }, {"name":"findOne","parameterTypes":["org.springframework.data.domain.Example"] }, {"name":"findOne","parameterTypes":["org.springframework.data.jpa.domain.Specification"] }, {"name":"flush","parameterTypes":[] }, {"name":"getById","parameterTypes":["java.lang.Object"] }, {"name":"getOne","parameterTypes":["java.lang.Object"] }, {"name":"getReferenceById","parameterTypes":["java.lang.Object"] }, {"name":"save","parameterTypes":["java.lang.Object"] }, {"name":"saveAll","parameterTypes":["java.lang.Iterable"] }, {"name":"saveAllAndFlush","parameterTypes":["java.lang.Iterable"] }, {"name":"saveAndFlush","parameterTypes":["java.lang.Object"] }, {"name":"setEscapeCharacter","parameterTypes":["org.springframework.data.jpa.repository.query.EscapeCharacter"] }, {"name":"setProjectionFactory","parameterTypes":["org.springframework.data.projection.ProjectionFactory"] }, {"name":"setRepositoryMethodMetadata","parameterTypes":["org.springframework.data.jpa.repository.support.CrudMethodMetadata"] }]
 },
 {
   "name":"org.springframework.data.jpa.util.HibernateProxyDetector",
@@ -5456,7 +5564,7 @@
   "name":"org.springframework.data.mapping.context.MappingContext",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"from","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"getPersistentEntity","parameterTypes":["java.lang.Class"] }, {"name":"getPersistentEntity","parameterTypes":["org.springframework.data.util.TypeInformation"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["java.lang.Class"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["org.springframework.data.mapping.PersistentProperty"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["org.springframework.data.util.TypeInformation"] }, {"name":"of","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"valueOf","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }]
+  "methods":[{"name":"<init>","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"from","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"getPersistentEntity","parameterTypes":["org.springframework.data.mapping.PersistentProperty"] }, {"name":"getPersistentEntity","parameterTypes":["org.springframework.data.util.TypeInformation"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["java.lang.Class"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["org.springframework.data.mapping.PersistentProperty"] }, {"name":"getRequiredPersistentEntity","parameterTypes":["org.springframework.data.util.TypeInformation"] }, {"name":"of","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }, {"name":"valueOf","parameterTypes":["org.springframework.data.jpa.mapping.JpaMetamodelMappingContext"] }]
 },
 {
   "name":"org.springframework.data.querydsl.QuerydslPredicateExecutor"
@@ -6887,23 +6995,7 @@
   "methods":[{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
 },
 {
-  "name":"sun.security.provider.DSA$SHA224withDSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.DSA$SHA256withDSA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.MD5",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.provider.SHA",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.SHA2$SHA224",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -6911,35 +7003,11 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.provider.SHA5$SHA384",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.provider.SHA5$SHA512",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.provider.X509Factory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
-  "name":"sun.security.provider.certpath.PKIXCertPathValidator",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.rsa.PSSParameters",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
   "name":"sun.security.rsa.RSAKeyFactory$Legacy",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.rsa.RSAPSSSignature",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
-},
-{
-  "name":"sun.security.rsa.RSASignature$SHA224withRSA",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -7021,6 +7089,11 @@
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }, {"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
 },
 {
+  "name":"top.rainine.homebangumi.api.EpisodeRenameTaskApi",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
   "name":"top.rainine.homebangumi.api.LoginApi",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
@@ -7051,10 +7124,82 @@
   "queryAllPublicMethods":true
 },
 {
-  "name":"top.rainine.homebangumi.core.aync.HbAsyncConfigurer",
+  "name":"top.rainine.homebangumi.api.req.LoginByPasswordReq",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setPassword","parameterTypes":["java.lang.String"] }, {"name":"setUsername","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.req.UpdateWecomchanSettingsReq",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setEnable","parameterTypes":["java.lang.Boolean"] }, {"name":"setSendKey","parameterTypes":["java.lang.String"] }, {"name":"setUrl","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.req.UpdateWecomchanSettingsReq$WecomchanGroupSequenceProvider",
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.LoginResp",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"accessToken","parameterTypes":[] }, {"name":"uid","parameterTypes":[] }, {"name":"username","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.MessageDto",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getCategory","parameterTypes":[] }, {"name":"getContent","parameterTypes":[] }, {"name":"getCreatedTime","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getRead","parameterTypes":[] }, {"name":"getSubjectId","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }, {"name":"getType","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.MessagesResp",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getMessages","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.Result",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"code","parameterTypes":[] }, {"name":"data","parameterTypes":[] }, {"name":"isSuccess","parameterTypes":[] }, {"name":"msg","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.RssBangumiStatisticOnHomeResp",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getCollectedBangumiCount","parameterTypes":[] }, {"name":"getCollectedBangumiCountToday","parameterTypes":[] }, {"name":"getDownloadingEpisodesCount","parameterTypes":[] }, {"name":"getFailedEpisodesCount","parameterTypes":[] }, {"name":"getSubscriptionsCountInCurQuarter","parameterTypes":[] }, {"name":"getSubscriptionsCountInPreQuarter","parameterTypes":[] }, {"name":"getUpdatedBangumiCountInWeek","parameterTypes":[] }, {"name":"getUpdatedBangumiCountToday","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.UpdatedBangumisResp",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getBangumis","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.UpdatedDate2BangumisDto",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getBangumis","parameterTypes":[] }, {"name":"getDate","parameterTypes":[] }, {"name":"getDayOfWeek","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.api.resp.WecomchanSettingsResp",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"getEnable","parameterTypes":[] }, {"name":"getSendKey","parameterTypes":[] }, {"name":"getUrl","parameterTypes":[] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.aync.HbAsyncConfigurer",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getAsyncExecutor","parameterTypes":[] }, {"name":"getAsyncUncaughtExceptionHandler","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7069,7 +7214,6 @@
   "name":"top.rainine.homebangumi.core.configuration.GlobalConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7084,7 +7228,6 @@
   "name":"top.rainine.homebangumi.core.configuration.PropertiesConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7132,11 +7275,124 @@
   "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.net.OkHttpService","top.rainine.homebangumi.core.settings.DownloaderSettingsService"] }, {"name":"addTorrent","parameterTypes":["java.lang.String","java.lang.String","boolean"] }, {"name":"afterPropertiesSet","parameterTypes":[] }, {"name":"auth","parameterTypes":[] }, {"name":"getCategory","parameterTypes":[] }, {"name":"getTorrentDownloadStatus","parameterTypes":["java.lang.String"] }, {"name":"removeTorrent","parameterTypes":["java.lang.String","boolean"] }, {"name":"renameFile","parameterTypes":["java.lang.String","java.lang.String","java.lang.String"] }]
 },
 {
+  "name":"top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertor",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertorImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"toEpisodeRenameTaskDetailResp","parameterTypes":["top.rainine.homebangumi.dao.po.HbEpisodeRenameTask"] }, {"name":"toEpisodeRenameTaskItemDto","parameterTypes":["top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem"] }, {"name":"toHbEpisodeRenameTask","parameterTypes":["top.rainine.homebangumi.api.req.CreateEpisodeRenameTaskReq"] }, {"name":"toHbEpisodeRenameTaskItem","parameterTypes":["java.lang.Long","top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo"] }, {"name":"toPagedEpisodeRenameTaskItemDto","parameterTypes":["top.rainine.homebangumi.dao.po.HbEpisodeRenameTask","long","long","long","long"] }, {"name":"updateHbEpisodeRenameTask","parameterTypes":["top.rainine.homebangumi.dao.po.HbEpisodeRenameTask","top.rainine.homebangumi.api.req.UpdateEpisodeRenameTaskReq"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.message.MessageService","top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskComponent"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskComponent",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository","top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskExecutor",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository","top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository","top.rainine.homebangumi.core.event.HbEventBus"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskExecutor$$SpringCGLIB$$0",
+  "fields":[{"name":"CGLIB$CALLBACK_FILTER"}, {"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskFacadeServiceImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository","top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository","top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser","top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertor","com.querydsl.jpa.impl.JPAQueryFactory","top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager","top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskComponent"] }, {"name":"createTask","parameterTypes":["top.rainine.homebangumi.api.req.CreateEpisodeRenameTaskReq"] }, {"name":"getTaskDetail","parameterTypes":["java.lang.Long"] }, {"name":"getTaskItems","parameterTypes":["java.lang.Long"] }, {"name":"ignoreTaskItem","parameterTypes":["java.lang.Long","java.lang.Long"] }, {"name":"loadPagedTasks","parameterTypes":["top.rainine.homebangumi.api.req.PagedReq"] }, {"name":"manualParseTaskItem","parameterTypes":["java.lang.Long","java.lang.Long","top.rainine.homebangumi.api.req.ManualParseRenameTaskItemReq"] }, {"name":"reparseTaskItems","parameterTypes":["java.lang.Long"] }, {"name":"submitTask","parameterTypes":["java.lang.Long"] }, {"name":"updateTask","parameterTypes":["java.lang.Long","top.rainine.homebangumi.api.req.UpdateEpisodeRenameTaskReq"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskFacadeServiceImpl$$SpringCGLIB$$0",
+  "fields":[{"name":"CGLIB$CALLBACK_FILTER"}, {"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskItemParserImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.titleparser.EpisodeTitleParser","top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapterFactory"] }, {"name":"parse","parameterTypes":["top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskManagerImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository","top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository","top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskExecutor","top.rainine.homebangumi.core.event.HbEventBus"] }, {"name":"checkAllNotFinishedTasks","parameterTypes":[] }, {"name":"onTaskExecuteEnd","parameterTypes":["java.lang.Long"] }, {"name":"onTaskExecuteFailed","parameterTypes":["java.lang.Long"] }, {"name":"submitTask","parameterTypes":["java.lang.Long"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskManagerImpl$$SpringCGLIB$$0",
+  "fields":[{"name":"CGLIB$CALLBACK_FILTER"}, {"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.listener.EpisodeRenameTaskEventListener",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager","top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.listener.EpisodeRenameTaskEventListener$$SpringCGLIB$$0",
+  "fields":[{"name":"CGLIB$CALLBACK_FILTER"}, {"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.episode.rename.scheduler.CheckNotFinishedTaskScheduledTask",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager","top.rainine.homebangumi.core.settings.ScheduledTaskSettingsService"] }, {"name":"getTaskId","parameterTypes":[] }, {"name":"getTrigger","parameterTypes":[] }, {"name":"task","parameterTypes":[] }]
+},
+{
   "name":"top.rainine.homebangumi.core.event.HbEventBus",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["org.springframework.context.ApplicationContext"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.message.MessagePushManager",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.message.MessagePusher",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
 },
 {
   "name":"top.rainine.homebangumi.core.message.MessageService",
@@ -7153,14 +7409,40 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"toMessageDto","parameterTypes":["top.rainine.homebangumi.dao.po.HbMessageEntity"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"toMessageDto","parameterTypes":["top.rainine.homebangumi.dao.po.HbMessage"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.message.impl.MessagePushManagerImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["org.springframework.context.ApplicationContext"] }, {"name":"afterPropertiesSet","parameterTypes":[] }, {"name":"asyncPushMessage","parameterTypes":["java.lang.String"] }]
 },
 {
   "name":"top.rainine.homebangumi.core.message.impl.MessageServiceImpl",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbMessageRepository","com.querydsl.jpa.impl.JPAQueryFactory","top.rainine.homebangumi.core.message.data.convertor.MessageConvertor"] }, {"name":"addMessage","parameterTypes":["top.rainine.homebangumi.def.enums.MessageCategoryEnum","top.rainine.homebangumi.def.enums.MessageTypeEnum","java.lang.String","java.lang.String","java.lang.String"] }, {"name":"loadMessages","parameterTypes":["java.lang.Integer","java.lang.Integer"] }, {"name":"readAllMessages","parameterTypes":[] }, {"name":"readMessage","parameterTypes":["java.lang.Long"] }]
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.dao.repository.HbMessageRepository","com.querydsl.jpa.impl.JPAQueryFactory","top.rainine.homebangumi.core.message.data.convertor.MessageConvertor","top.rainine.homebangumi.core.message.MessagePushManager"] }, {"name":"addMessage","parameterTypes":["top.rainine.homebangumi.core.message.data.AddMessageInfo"] }, {"name":"addMessage","parameterTypes":["top.rainine.homebangumi.def.enums.MessageCategoryEnum","top.rainine.homebangumi.def.enums.MessageTypeEnum","java.lang.String","java.lang.String","java.lang.String"] }, {"name":"loadMessages","parameterTypes":["java.lang.Integer","java.lang.Integer"] }, {"name":"pushMessage","parameterTypes":["top.rainine.homebangumi.def.enums.MessageCategoryEnum","top.rainine.homebangumi.def.enums.MessageTypeEnum","java.lang.String","java.lang.String"] }, {"name":"readAllMessages","parameterTypes":[] }, {"name":"readMessage","parameterTypes":["java.lang.Long"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.message.listener.MessageEventListener",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.message.pusher.WecomchanPusher"] }, {"name":"onWecomchanConfigModifiedEvent","parameterTypes":["top.rainine.homebangumi.core.event.data.WecomchanConfigModifiedEvent"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.message.listener.MessageEventListener$$SpringCGLIB$$0",
+  "fields":[{"name":"CGLIB$CALLBACK_FILTER"}, {"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.message.pusher.WecomchanPusher",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.net.OkHttpService","top.rainine.homebangumi.core.settings.MessagePusherSettingsService"] }, {"name":"afterPropertiesSet","parameterTypes":[] }, {"name":"pushMessage","parameterTypes":["java.lang.String"] }, {"name":"pushMethod","parameterTypes":[] }]
 },
 {
   "name":"top.rainine.homebangumi.core.net.OkHttpService",
@@ -7398,7 +7680,6 @@
   "name":"top.rainine.homebangumi.core.runtimehints.CustomEnumRuntimeHints",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7413,10 +7694,26 @@
   "name":"top.rainine.homebangumi.core.runtimehints.CustomEnumRuntimeHints$CustomEnumRegistrar"
 },
 {
-  "name":"top.rainine.homebangumi.core.runtimehints.CustomValidRuntimeHints",
+  "name":"top.rainine.homebangumi.core.runtimehints.CustomGsonObjectRuntimeHints",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.runtimehints.CustomGsonObjectRuntimeHints$$SpringCGLIB$$0",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
+  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }, {"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
+},
+{
+  "name":"top.rainine.homebangumi.core.runtimehints.CustomGsonObjectRuntimeHints$CustomGsonObjectRegistrar"
+},
+{
+  "name":"top.rainine.homebangumi.core.runtimehints.CustomValidRuntimeHints",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7434,7 +7731,6 @@
   "name":"top.rainine.homebangumi.core.runtimehints.MikanXmlRuntimeHints",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"afterPropertiesSet","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7462,7 +7758,6 @@
   "name":"top.rainine.homebangumi.core.scheduler.configuration.HbScheduledConfigurer",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":["org.springframework.context.ApplicationContext","top.rainine.homebangumi.core.scheduler.ScheduledTaskService"] }, {"name":"configureTasks","parameterTypes":["org.springframework.scheduling.config.ScheduledTaskRegistrar"] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7487,6 +7782,11 @@
 },
 {
   "name":"top.rainine.homebangumi.core.settings.EpisodeFilterRulesSettingsService",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.core.settings.MessagePusherSettingsService",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
 },
@@ -7521,7 +7821,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"toEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"toEpisodeFilterRulesSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.EpisodeFilterRulesSettings"] }, {"name":"toHttpProxySettings","parameterTypes":["top.rainine.homebangumi.api.common.HttpProxySettingsDto"] }, {"name":"toHttpProxySettingsDto","parameterTypes":["top.rainine.homebangumi.core.settings.data.HttpProxySettings"] }, {"name":"toNetProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"toNetworkProxySettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.NetProxySettings"] }, {"name":"toQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"toQbittorrentDownloaderSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.QbittorrentDownloaderSettings"] }, {"name":"toScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }, {"name":"toScheduledTaskSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.ScheduledTaskSettings"] }, {"name":"toSocks5ProxySettings","parameterTypes":["top.rainine.homebangumi.api.common.Socks5ProxySettingsDto"] }, {"name":"toSocks5ProxySettingsDto","parameterTypes":["top.rainine.homebangumi.core.settings.data.Socks5ProxySettings"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"toEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"toEpisodeFilterRulesSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.EpisodeFilterRulesSettings"] }, {"name":"toHttpProxySettings","parameterTypes":["top.rainine.homebangumi.api.common.HttpProxySettingsDto"] }, {"name":"toHttpProxySettingsDto","parameterTypes":["top.rainine.homebangumi.core.settings.data.HttpProxySettings"] }, {"name":"toNetProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"toNetworkProxySettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.NetProxySettings"] }, {"name":"toQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"toQbittorrentDownloaderSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.QbittorrentDownloaderSettings"] }, {"name":"toScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }, {"name":"toScheduledTaskSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.ScheduledTaskSettings"] }, {"name":"toSocks5ProxySettings","parameterTypes":["top.rainine.homebangumi.api.common.Socks5ProxySettingsDto"] }, {"name":"toSocks5ProxySettingsDto","parameterTypes":["top.rainine.homebangumi.core.settings.data.Socks5ProxySettings"] }, {"name":"toWecomchanSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateWecomchanSettingsReq"] }, {"name":"toWecomchanSettingsResp","parameterTypes":["top.rainine.homebangumi.core.settings.data.WecomchanSettings"] }]
 },
 {
   "name":"top.rainine.homebangumi.core.settings.impl.DownloaderSettingsServiceImpl",
@@ -7538,6 +7838,13 @@
   "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsService"] }, {"name":"getSettings","parameterTypes":[] }, {"name":"updateSettings","parameterTypes":["top.rainine.homebangumi.core.settings.data.EpisodeFilterRulesSettings"] }]
 },
 {
+  "name":"top.rainine.homebangumi.core.settings.impl.MessagePusherSettingsServiceImpl",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsService","top.rainine.homebangumi.core.event.HbEventBus"] }, {"name":"getWecomchanSettings","parameterTypes":[] }, {"name":"updateWecomchanSettings","parameterTypes":["top.rainine.homebangumi.core.settings.data.WecomchanSettings"] }]
+},
+{
   "name":"top.rainine.homebangumi.core.settings.impl.NetProxySettingsServiceImpl",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -7549,14 +7856,14 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsService"] }, {"name":"getCheckEpisodeDownloadStatusDuration","parameterTypes":[] }, {"name":"getPushParsedEpisodesToDownloaderDuration","parameterTypes":[] }, {"name":"getRenameEpisodesDuration","parameterTypes":[] }, {"name":"getSettings","parameterTypes":[] }, {"name":"getUpdateRssSubscriptionDuration","parameterTypes":[] }, {"name":"updateSettings","parameterTypes":["top.rainine.homebangumi.core.settings.data.ScheduledTaskSettings"] }]
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsService"] }, {"name":"getCheckEpisodeDownloadStatusDuration","parameterTypes":[] }, {"name":"getCheckNotFinishedRenameTaskDuration","parameterTypes":[] }, {"name":"getPushParsedEpisodesToDownloaderDuration","parameterTypes":[] }, {"name":"getRenameEpisodesDuration","parameterTypes":[] }, {"name":"getSettings","parameterTypes":[] }, {"name":"getUpdateRssSubscriptionDuration","parameterTypes":[] }, {"name":"updateSettings","parameterTypes":["top.rainine.homebangumi.core.settings.data.ScheduledTaskSettings"] }]
 },
 {
   "name":"top.rainine.homebangumi.core.settings.impl.SystemSettingsApiFacadeServiceImpl",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.NetProxySettingsService","top.rainine.homebangumi.core.settings.DownloaderSettingsService","top.rainine.homebangumi.core.settings.EpisodeFilterRulesSettingsService","top.rainine.homebangumi.core.settings.impl.ScheduledTaskSettingsServiceImpl","top.rainine.homebangumi.core.settings.data.convertor.SystemSettingsConvertor"] }, {"name":"getEpisodeFilterRulesSettings","parameterTypes":[] }, {"name":"getNetworkProxySettings","parameterTypes":[] }, {"name":"getQbittorrentDownloaderSettings","parameterTypes":[] }, {"name":"getScheduledTaskSettings","parameterTypes":[] }, {"name":"updateEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"updateNetworkProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"updateQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"updateScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }]
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.NetProxySettingsService","top.rainine.homebangumi.core.settings.DownloaderSettingsService","top.rainine.homebangumi.core.settings.EpisodeFilterRulesSettingsService","top.rainine.homebangumi.core.settings.ScheduledTaskSettingsService","top.rainine.homebangumi.core.settings.MessagePusherSettingsService","top.rainine.homebangumi.core.settings.data.convertor.SystemSettingsConvertor"] }, {"name":"getEpisodeFilterRulesSettings","parameterTypes":[] }, {"name":"getNetworkProxySettings","parameterTypes":[] }, {"name":"getQbittorrentDownloaderSettings","parameterTypes":[] }, {"name":"getScheduledTaskSettings","parameterTypes":[] }, {"name":"getWecomchanSettings","parameterTypes":[] }, {"name":"updateEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"updateNetworkProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"updateQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"updateScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }, {"name":"updateWecomchanSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateWecomchanSettingsReq"] }]
 },
 {
   "name":"top.rainine.homebangumi.core.settings.impl.SystemSettingsServiceImpl",
@@ -7597,6 +7904,12 @@
   "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.user.configuration.DefaultAccountProperties","top.rainine.homebangumi.dao.repository.HbUserAccountRepository"] }, {"name":"afterPropertiesSet","parameterTypes":[] }, {"name":"getSelfInfo","parameterTypes":["java.lang.Long"] }, {"name":"login","parameterTypes":["top.rainine.homebangumi.api.req.LoginByPasswordReq"] }]
 },
 {
+  "name":"top.rainine.homebangumi.core.utils.HbAdvisor",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"self","parameterTypes":[] }]
+},
+{
   "name":"top.rainine.homebangumi.core.utils.SpringContextUtils",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
@@ -7607,7 +7920,6 @@
   "name":"top.rainine.homebangumi.dao.configuration.JPAQueryFactoryConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"jpaQueryFactory","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7630,7 +7942,6 @@
   "name":"top.rainine.homebangumi.dao.configuration.PersistenceConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7662,7 +7973,7 @@
   "name":"top.rainine.homebangumi.dao.po.HbBangumi_"
 },
 {
-  "name":"top.rainine.homebangumi.dao.po.HbMessageEntity",
+  "name":"top.rainine.homebangumi.dao.po.HbEpisodeRenameTask",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true,
@@ -7670,7 +7981,29 @@
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"setId","parameterTypes":["java.lang.Long"] }]
 },
 {
-  "name":"top.rainine.homebangumi.dao.po.HbMessageEntity_"
+  "name":"top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"setId","parameterTypes":["java.lang.Long"] }]
+},
+{
+  "name":"top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem_"
+},
+{
+  "name":"top.rainine.homebangumi.dao.po.HbEpisodeRenameTask_"
+},
+{
+  "name":"top.rainine.homebangumi.dao.po.HbMessage",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"setId","parameterTypes":["java.lang.Long"] }]
+},
+{
+  "name":"top.rainine.homebangumi.dao.po.HbMessage_"
 },
 {
   "name":"top.rainine.homebangumi.dao.po.HbRssBangumi",
@@ -7725,6 +8058,16 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskItemRepository",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"top.rainine.homebangumi.dao.repository.HbEpisodeRenameTaskRepository",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
   "name":"top.rainine.homebangumi.dao.repository.HbMessageRepository",
   "queryAllDeclaredMethods":true,
   "queryAllPublicMethods":true
@@ -7754,13 +8097,12 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"handleNotLoginException","parameterTypes":["java.lang.Exception"] }]
 },
 {
   "name":"top.rainine.homebangumi.web.configuration.SaTokenConfigure",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"addInterceptors","parameterTypes":["org.springframework.web.servlet.config.annotation.InterceptorRegistry"] }, {"name":"getSaServletFilter","parameterTypes":[] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
@@ -7778,6 +8120,13 @@
 {
   "name":"top.rainine.homebangumi.web.configuration.SaTokenConfigure$$SpringCGLIB$$FastClass$$1",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
+},
+{
+  "name":"top.rainine.homebangumi.web.controller.EpisodeRenameTaskController",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService"] }, {"name":"createTask","parameterTypes":["top.rainine.homebangumi.api.req.CreateEpisodeRenameTaskReq"] }, {"name":"getTaskDetail","parameterTypes":["java.lang.Long"] }, {"name":"getTaskItems","parameterTypes":["java.lang.Long"] }, {"name":"ignoreTaskItem","parameterTypes":["java.lang.Long","java.lang.Long"] }, {"name":"loadPagedTasks","parameterTypes":["top.rainine.homebangumi.api.req.PagedReq"] }, {"name":"manualParseTaskItem","parameterTypes":["java.lang.Long","java.lang.Long","top.rainine.homebangumi.api.req.ManualParseRenameTaskItemReq"] }, {"name":"reparseTaskItems","parameterTypes":["java.lang.Long"] }, {"name":"submitTask","parameterTypes":["java.lang.Long"] }, {"name":"updateTask","parameterTypes":["java.lang.Long","top.rainine.homebangumi.api.req.UpdateEpisodeRenameTaskReq"] }]
 },
 {
   "name":"top.rainine.homebangumi.web.controller.IndexController",
@@ -7819,7 +8168,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsApiFacadeService"] }, {"name":"getEpisodeFilterRulesSettings","parameterTypes":[] }, {"name":"getNetworkProxySettings","parameterTypes":[] }, {"name":"getQbittorrentDownloaderSettings","parameterTypes":[] }, {"name":"getScheduledTaskSettings","parameterTypes":[] }, {"name":"updateEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"updateNetworkProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"updateQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"updateScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }]
+  "methods":[{"name":"<init>","parameterTypes":["top.rainine.homebangumi.core.settings.SystemSettingsApiFacadeService"] }, {"name":"getEpisodeFilterRulesSettings","parameterTypes":[] }, {"name":"getNetworkProxySettings","parameterTypes":[] }, {"name":"getQbittorrentDownloaderSettings","parameterTypes":[] }, {"name":"getScheduledTaskSettings","parameterTypes":[] }, {"name":"getWecomchanSettings","parameterTypes":[] }, {"name":"updateEpisodeFilterRulesSettings","parameterTypes":["top.rainine.homebangumi.api.req.EpisodeFilterRulesSettingsReq"] }, {"name":"updateNetworkProxySettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateNetworkProxySettingsReq"] }, {"name":"updateQbittorrentDownloaderSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateQbittorrentDownloaderSettingsReq"] }, {"name":"updateScheduledTaskSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateScheduledTaskSettingsReq"] }, {"name":"updateWecomchanSettings","parameterTypes":["top.rainine.homebangumi.api.req.UpdateWecomchanSettingsReq"] }]
 },
 {
   "name":"top.rainine.homebangumi.web.controller.UserController",
