@@ -17,6 +17,8 @@
   }, {
     "pattern":"\\QMETA-INF/services/jakarta.el.ExpressionFactory\\E"
   }, {
+    "pattern":"\\QMETA-INF/services/jakarta.persistence.spi.PersistenceProvider\\E"
+  }, {
     "pattern":"\\QMETA-INF/services/jakarta.validation.ConstraintValidator\\E"
   }, {
     "pattern":"\\QMETA-INF/services/jakarta.validation.spi.ValidationProvider\\E"
@@ -24,8 +26,6 @@
     "pattern":"\\QMETA-INF/services/jakarta.validation.valueextraction.ValueExtractor\\E"
   }, {
     "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
-  }, {
-    "pattern":"\\QMETA-INF/services/java.net.spi.InetAddressResolverProvider\\E"
   }, {
     "pattern":"\\QMETA-INF/services/java.net.spi.URLStreamHandlerProvider\\E"
   }, {
@@ -693,6 +693,8 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/api/EpisodeRenameTaskApi.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/api/LoginApi.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/api/MessageApi.class\\E"
@@ -723,7 +725,37 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/downloader/qbittorrent/QbittorrentEpisodeDownloadAdapter.class\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/EpisodeRenameTaskFacadeService.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/EpisodeRenameTaskItemParser.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/EpisodeRenameTaskManager.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/data/convertor/EpisodeRenameTaskConvertor.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/data/convertor/EpisodeRenameTaskConvertorImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskAlterMessageComponent.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskComponent.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskExecutor.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskFacadeServiceImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskItemParserImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/impl/EpisodeRenameTaskManagerImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/listener/EpisodeRenameTaskEventListener.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/episode/rename/scheduler/CheckNotFinishedTaskScheduledTask.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/event/HbEventBus.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/MessagePushManager.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/MessagePusher.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/message/MessageService.class\\E"
   }, {
@@ -731,7 +763,15 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/message/data/convertor/MessageConvertorImpl.class\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/impl/MessagePushManagerImpl.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/message/impl/MessageServiceImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/listener/MessageEventListener.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/pusher/WecomchanPusher$WecomchanPushResponse.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/message/pusher/WecomchanPusher.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/net/OkHttpService.class\\E"
   }, {
@@ -795,6 +835,10 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/runtimehints/CustomEnumRuntimeHints.class\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/runtimehints/CustomGsonObjectRuntimeHints$CustomGsonObjectRegistrar.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/runtimehints/CustomGsonObjectRuntimeHints.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/runtimehints/CustomValidRuntimeHints$CustomValidRegistrar.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/runtimehints/CustomValidRuntimeHints.class\\E"
@@ -815,6 +859,8 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/EpisodeFilterRulesSettingsService.class\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/settings/MessagePusherSettingsService.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/NetProxySettingsService.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/ScheduledTaskSettingsService.class\\E"
@@ -830,6 +876,8 @@
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/impl/DownloaderSettingsServiceImpl.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/impl/EpisodeFilterRulesSettingsServiceImpl.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/settings/impl/MessagePusherSettingsServiceImpl.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/settings/impl/NetProxySettingsServiceImpl.class\\E"
   }, {
@@ -847,6 +895,8 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/user/impl/UserServiceImpl.class\\E"
   }, {
+    "pattern":"\\Qtop/rainine/homebangumi/core/utils/HbAdvisor.class\\E"
+  }, {
     "pattern":"\\Qtop/rainine/homebangumi/core/utils/SpringContextUtils.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/dao/configuration/JPAQueryFactoryConfiguration.class\\E"
@@ -857,7 +907,11 @@
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbBangumi.class\\E"
   }, {
-    "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbMessageEntity.class\\E"
+    "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbEpisodeRenameTask.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbEpisodeRenameTaskItem.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbMessage.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/dao/po/HbRssBangumi.class\\E"
   }, {
@@ -870,6 +924,10 @@
     "pattern":"\\Qtop/rainine/homebangumi/dao/po/\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/dao/repository/HbBangumiRepository.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/dao/repository/HbEpisodeRenameTaskItemRepository.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/dao/repository/HbEpisodeRenameTaskRepository.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/dao/repository/HbMessageRepository.class\\E"
   }, {
@@ -886,6 +944,8 @@
     "pattern":"\\Qtop/rainine/homebangumi/web/configuration/GlobalExceptionHandler.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/web/configuration/SaTokenConfigure.class\\E"
+  }, {
+    "pattern":"\\Qtop/rainine/homebangumi/web/controller/EpisodeRenameTaskController.class\\E"
   }, {
     "pattern":"\\Qtop/rainine/homebangumi/web/controller/IndexController.class\\E"
   }, {
@@ -904,19 +964,21 @@
     "pattern":"java.base:\\Qjava/util/currency.data\\E"
   }, {
     "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/nfkc.nrm\\E"
-  }, {
-    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/uprops.icu\\E"
-  }, {
-    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
   }]},
   "bundles":[{
     "name":"com.sun.org.apache.xerces.internal.impl.msg.SAXMessages",
     "locales":["", "zh-CN"]
   }, {
+    "name":"jakarta.servlet.LocalStrings",
+    "locales":[""]
+  }, {
     "name":"jakarta.servlet.http.LocalStrings",
     "locales":[""]
   }, {
     "name":"org.apache.catalina.authenticator.LocalStrings",
+    "locales":[""]
+  }, {
+    "name":"org.apache.catalina.authenticator.jaspic.LocalStrings",
     "locales":[""]
   }, {
     "name":"org.apache.catalina.connector.LocalStrings",
@@ -964,6 +1026,9 @@
     "name":"org.apache.coyote.http11.LocalStrings",
     "locales":[""]
   }, {
+    "name":"org.apache.coyote.http11.filters.LocalStrings",
+    "locales":[""]
+  }, {
     "name":"org.apache.naming.LocalStrings",
     "locales":[""]
   }, {
@@ -980,6 +1045,9 @@
     "locales":[""]
   }, {
     "name":"org.apache.tomcat.util.http.LocalStrings",
+    "locales":[""]
+  }, {
+    "name":"org.apache.tomcat.util.http.parser.LocalStrings",
     "locales":[""]
   }, {
     "name":"org.apache.tomcat.util.modeler.LocalStrings",
