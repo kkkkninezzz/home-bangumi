@@ -19,6 +19,8 @@ docker run -d \
   --name home-bangumi \
   -v /data/home-bangumi:/data/home-bangumi \
   -v /logs:/logs \
+  -v /rename-tasks:/rename-tasks \
+  -v /out/rename-tasks:/out/rename-tasks \
   -p 80:80 \
   rainine/home-bangumi
 ```
@@ -27,6 +29,8 @@ docker run -d \
 #### 挂载目录：
 * `/data/home-bangumi`：挂载到容器内的`/data/home-bangumi`目录，用于存储持久化数据。
 * `/logs`：挂载到容器内的`/logs`目录，用于存储应用程序的日志文件。
+* `/rename-tasks`：挂载到容器内的`/rename-tasks`目录，作为重命名任务的根目录。
+* `/out/rename-tasks`：挂载到容器内的`/out/rename-tasks`目录，用于输出重命名任务的结果。
 
 #### 端口映射：
 容器内的 80 端口映射到主机的 80 端口，用户可以通过`http://<主机IP或域名>` 访问 web 界面。

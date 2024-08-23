@@ -12,6 +12,10 @@ EXPOSE 80
 # 声明数据的挂载点
 VOLUME /data/home-bangumi
 VOLUME /logs
+# 重命名任务源文件挂载点
+VOLUME /rename-tasks
+# 重命名任务输出挂载点
+VOLUME /out/rename-tasks
 
 ENV TZ=Asia/Shanghai
 
