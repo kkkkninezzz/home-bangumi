@@ -49,7 +49,7 @@ function handleReadMessage(messageId: number) {
     <div class="alter-message-box-content">
       <el-empty v-if="messageList.length == 0" description="no data" />
       <el-scrollbar v-else max-height="800px">
-        <el-space direction="vertical" :size="20" :fill="true">
+        <el-space direction="vertical" :size="20" fill style="width: 100%">
           <template v-for="(message, index) in messageList">
             <alter-message-card
               :message-card="message"
