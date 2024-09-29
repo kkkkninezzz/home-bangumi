@@ -126,7 +126,7 @@ public class EpisodeRenameTaskExecutor {
         // 如果要删除源文件，那么直接使用move
         if (deleteSourceFile) {
             try {
-                Files.move(episodePath, renamedEpisodeOutputPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+                Files.move(episodePath, renamedEpisodeOutputPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 log.error("[EpisodeRenameTaskExecutor]move episode file failed.", e);
                 taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());

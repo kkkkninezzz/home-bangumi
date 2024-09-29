@@ -3,6 +3,7 @@ import { computed, PropType } from "vue";
 import More2Fill from "@iconify-icons/ri/more-2-fill";
 import { EpisodeRenameTaskStatusTagMap } from "../enums";
 import { EpisodeRenameTaskCardPropType } from "../props";
+import { ReText } from "@/components/ReText";
 
 defineOptions({
   name: "EpisodeRenameTaskCard"
