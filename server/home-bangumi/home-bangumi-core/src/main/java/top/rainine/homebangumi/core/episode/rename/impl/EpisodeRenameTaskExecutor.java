@@ -132,20 +132,22 @@ public class EpisodeRenameTaskExecutor {
                 taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());
                 taskItem.setErrorMessage(STR."rename episode file failed.\n\{e.getMessage()}");
                 taskItemRepository.save(taskItem);
+                return;
             }
-            return;
+        } else {
+            // 如果不删除源文件，那么就使用copy
+            try {
+                Files.copy(episodePath, renamedEpisodeOutputPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+            } catch (IOException e) {
+                log.error("[EpisodeRenameTaskExecutor]copy episode file failed.", e);
+                taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());
+                taskItem.setErrorMessage(STR."rename episode file failed.\n\{e.getMessage()}");
+                taskItemRepository.save(taskItem);
+                return;
+            }
         }
 
-        // 如果不删除源文件，那么就使用copy
-        try {
-            Files.copy(episodePath, renamedEpisodeOutputPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-        } catch (IOException e) {
-            log.error("[EpisodeRenameTaskExecutor]copy episode file failed.", e);
-            taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.FAILED.getStatus());
-            taskItem.setErrorMessage(STR."rename episode file failed.\n\{e.getMessage()}");
-            taskItemRepository.save(taskItem);
-            return;
-        }
+
 
         taskItem.setStatus(EpisodeRenameTaskItemStatusEnum.SUCCESS.getStatus());
         taskItemRepository.save(taskItem);
