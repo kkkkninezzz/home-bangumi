@@ -149,6 +149,8 @@ public enum HbCodeEnum {
 
     EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID(ErrorCode.EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID, "episode rename task outDirPath invalid"),
 
+    PRE_VIEW_FILES_PATH_INVALID(ErrorCode.PRE_VIEW_FILES_PATH_INVALID, "preViewFiles path invalid"),
+
 
     ;
     private final String code;
@@ -400,6 +402,11 @@ public enum HbCodeEnum {
          * 剧集重命名任务输出目录路径字段无效
          * */
         String EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID = "HB400039";
+
+        /**
+         * 预览文件路径字段无效
+         * */
+        String PRE_VIEW_FILES_PATH_INVALID = "HB400040";
         //endregion
 
 
