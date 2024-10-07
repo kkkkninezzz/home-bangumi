@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, Ref, onBeforeMount, computed } from "vue";
-import { ElMessageBox } from "element-plus";
+import { ref, Ref, onBeforeMount, computed, h } from "vue";
+import { ElMessageBox, ElSwitch } from "element-plus";
 import "plus-pro-components/es/components/form/style/css";
 import {
   type PlusColumn,
@@ -383,23 +383,44 @@ const handleSubmit = async (values: FieldValues) => {
 
 // 处理归档
 const handleArchive = async () => {
-  ElMessageBox.confirm(
-    "确认归档吗？归档后不可恢复，提交到下载器的种子与下载完成的剧集文件都将删除",
-    "归档",
-    {
-      type: "warning",
-      center: true
-    }
-  )
+  const deleteFile = ref<boolean>(false);
+  ElMessageBox({
+    title: "归档rss番剧",
+    message: () =>
+      h("div", null, [
+        h("p", null, [
+          h(
+            "span",
+            null,
+            "确定要归档吗？归档后不可恢复，同时会删除提交到下载器中的种子文件"
+          )
+        ]),
+        h("p", null, [
+          h(ElSwitch, {
+            modelValue: deleteFile.value,
+            "onUpdate:modelValue": (val: boolean) => {
+              deleteFile.value = val;
+            },
+            activeText: "删除下载完成的剧集文件"
+          })
+        ])
+      ]),
+    showCancelButton: true,
+    confirmButtonText: "确认",
+    cancelButtonText: "取消"
+  })
     .then(() => {
-      doHandleArchive();
+      doHandleArchive(deleteFile.value);
     })
     .catch(() => {});
 };
 
-const doHandleArchive = async () => {
+const doHandleArchive = async (deleteFile: boolean) => {
   beforeReqForButton(archiveLoading);
-  const resp: ApiResult = await archiveRssBangumi(props.rssBangumiId);
+  const resp: ApiResult = await archiveRssBangumi(
+    props.rssBangumiId,
+    deleteFile
+  );
   afterReqForButton(archiveLoading);
   if (!resp.success) {
     return;
@@ -474,7 +495,7 @@ const handleActive = async () => {
   emit("active-success");
 };
 
-// 处理禁用
+// 处理暂停
 const handleInactive = async () => {
   beforeReqForButton(inactiveLoading);
   const resp: ApiResult = await inactiveRssBangumi(props.rssBangumiId);
@@ -554,7 +575,7 @@ const handleInactive = async () => {
             :loading="inactiveLoading"
             :disabled="reqButtonDisable"
             @click="handleInactive"
-            >禁用</el-button
+            >暂停</el-button
           >
         </template>
 
