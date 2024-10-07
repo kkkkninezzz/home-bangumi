@@ -74,7 +74,7 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
         if (baseUrl.endsWith("/")) {
             req.setBaseUrl(baseUrl.substring(0, baseUrl.length() -1));
         }
-        
+
         QbittorrentDownloaderSettings settings = systemSettingsConvertor.toQbittorrentDownloaderSettings(req);
         downloaderSettingsService.updateQbittorrentDownloaderSettings(settings);
         return getQbittorrentDownloaderSettings();

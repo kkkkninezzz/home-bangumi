@@ -14,6 +14,11 @@ import {
 } from "@/api/renameTask";
 
 import {
+  EpisodeRenameTaskSettingsResp,
+  getEpisodeRenameTaskSettings
+} from "@/api/systemSettings";
+
+import {
   EpisodeTitleRenameMethodEnum,
   EpisodeTitleRenameMethodOptions
 } from "../enums";
@@ -60,8 +65,21 @@ function initTaskState() {
   taskState.value.overwriteExistingFile = false;
 }
 
+// 初始化路径配置
+async function initPathSettings() {
+  const resp: EpisodeRenameTaskSettingsResp =
+    await getEpisodeRenameTaskSettings();
+  if (!resp.success) {
+    return;
+  }
+
+  taskState.value.episodeDirPath = resp.data.sourceDirPath ?? "";
+  taskState.value.renamedOutputDirPath = resp.data.outDirPath ?? "";
+}
+
 onBeforeMount(() => {
   initTaskState();
+  initPathSettings();
 });
 
 // 任务表单相关规则
