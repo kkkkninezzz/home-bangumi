@@ -65,12 +65,16 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
 
     @Override
     public QbittorrentDownloaderSettingsResp updateQbittorrentDownloaderSettings(UpdateQbittorrentDownloaderSettingsReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getDownloadDir())) {
+            throw new HbBizException(HbCodeEnum.QBITTORRENT_DOWNLOAD_DIR_INVALID);
+        }
+
         String baseUrl = req.getBaseUrl();
         // 末尾不需要有 /
         if (baseUrl.endsWith("/")) {
             req.setBaseUrl(baseUrl.substring(0, baseUrl.length() -1));
         }
-
+        
         QbittorrentDownloaderSettings settings = systemSettingsConvertor.toQbittorrentDownloaderSettings(req);
         downloaderSettingsService.updateQbittorrentDownloaderSettings(settings);
         return getQbittorrentDownloaderSettings();
