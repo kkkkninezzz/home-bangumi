@@ -6,7 +6,7 @@ import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskManager;
-import top.rainine.homebangumi.core.scheduler.HbScheduledTask;
+import top.rainine.homebangumi.core.common.scheduler.HbScheduledTask;
 import top.rainine.homebangumi.core.settings.ScheduledTaskSettingsService;
 import top.rainine.homebangumi.def.enums.ScheduledTaskIdEnum;
 

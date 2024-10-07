@@ -10,15 +10,13 @@ import okhttp3.Request;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.common.utils.GsonUtils;
-import top.rainine.homebangumi.core.downloader.data.TorrentDownloadStatusInfo;
 import top.rainine.homebangumi.core.message.MessagePusher;
-import top.rainine.homebangumi.core.net.OkHttpService;
+import top.rainine.homebangumi.core.common.net.OkHttpService;
 import top.rainine.homebangumi.core.settings.MessagePusherSettingsService;
 import top.rainine.homebangumi.core.settings.data.WecomchanSettings;
 import top.rainine.homebangumi.def.enums.MessagePushMethodEnum;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 /**

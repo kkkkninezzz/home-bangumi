@@ -20,7 +20,7 @@ import top.rainine.homebangumi.core.rename.episode.rename.data.convertor.Episode
 import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
 import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
-import top.rainine.homebangumi.core.utils.PageRequestUtils;
+import top.rainine.homebangumi.core.common.utils.PageRequestUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 import top.rainine.homebangumi.dao.po.QHbEpisodeRenameTask;

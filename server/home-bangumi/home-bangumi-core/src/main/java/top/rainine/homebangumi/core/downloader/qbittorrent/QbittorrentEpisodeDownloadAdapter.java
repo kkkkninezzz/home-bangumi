@@ -13,7 +13,7 @@ import top.rainine.homebangumi.core.settings.data.QbittorrentDownloaderSettings;
 import top.rainine.homebangumi.core.downloader.EpisodeDownloadAdapter;
 import top.rainine.homebangumi.core.downloader.data.TorrentDownloadStatusInfo;
 import top.rainine.homebangumi.core.downloader.data.TorrentFileRenameResultInfo;
-import top.rainine.homebangumi.core.net.OkHttpService;
+import top.rainine.homebangumi.core.common.net.OkHttpService;
 import top.rainine.homebangumi.def.enums.DownloaderCategoryEnum;
 import top.rainine.homebangumi.def.enums.TorrentDownloadStatusEnum;
 import top.rainine.homebangumi.def.enums.TorrentFileRenameResultEnum;

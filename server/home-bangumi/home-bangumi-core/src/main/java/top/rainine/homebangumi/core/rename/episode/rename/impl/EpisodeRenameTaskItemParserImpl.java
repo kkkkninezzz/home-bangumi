@@ -5,13 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import top.rainine.homebangumi.common.utils.HbFileNameUtils;
 import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskItemParser;
 import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
 import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
-import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapter;
-import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapterFactory;
-import top.rainine.homebangumi.core.titleparser.EpisodeTitleParser;
-import top.rainine.homebangumi.core.titleparser.data.EpisodeTitleInfo;
+import top.rainine.homebangumi.core.common.episoderenamer.EpisodeTitleRenameAdapter;
+import top.rainine.homebangumi.core.common.episoderenamer.EpisodeTitleRenameAdapterFactory;
+import top.rainine.homebangumi.core.common.titleparser.EpisodeTitleParser;
+import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 import top.rainine.homebangumi.def.exception.HbBizException;
@@ -102,6 +103,9 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         } else {
             renamedTitleFileName = renamedTitle;
         }
+
+        // 对名字进行过滤
+        renamedTitleFileName = HbFileNameUtils.filterIllegalChars(renamedTitleFileName);
 
         return builder.episodeNo(episodeTitleInfo.episode())
                 .season(episodeTitleInfo.season())
