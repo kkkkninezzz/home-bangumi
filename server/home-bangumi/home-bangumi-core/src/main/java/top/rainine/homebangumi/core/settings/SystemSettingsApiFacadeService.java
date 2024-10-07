@@ -29,4 +29,8 @@ public interface SystemSettingsApiFacadeService {
     WecomchanSettingsResp getWecomchanSettings();
 
     WecomchanSettingsResp updateWecomchanSettings(UpdateWecomchanSettingsReq req);
+
+    EpisodeRenameTaskSettingsResp getEpisodeRenameTaskSettings();
+
+    EpisodeRenameTaskSettingsResp updateEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq    req);
 }

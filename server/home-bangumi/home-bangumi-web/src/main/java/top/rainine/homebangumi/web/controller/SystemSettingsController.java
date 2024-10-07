@@ -67,4 +67,14 @@ public class SystemSettingsController implements SystemSettingsApi {
     public Result<WecomchanSettingsResp> updateWecomchanSettings(UpdateWecomchanSettingsReq req) {
         return Result.createSuccess(apiFacadeService.updateWecomchanSettings(req));
     }
+
+    @Override
+    public Result<EpisodeRenameTaskSettingsResp> getEpisodeRenameTaskSettings() {
+        return Result.createSuccess(apiFacadeService.getEpisodeRenameTaskSettings());
+    }
+
+    @Override
+    public Result<EpisodeRenameTaskSettingsResp> updateEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq req) {
+        return Result.createSuccess(apiFacadeService.updateEpisodeRenameTaskSettings(req));
+    }
 }

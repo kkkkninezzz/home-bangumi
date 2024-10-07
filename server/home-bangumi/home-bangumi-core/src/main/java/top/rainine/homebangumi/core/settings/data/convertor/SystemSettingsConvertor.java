@@ -76,4 +76,8 @@ public interface SystemSettingsConvertor {
     WecomchanSettingsResp toWecomchanSettingsResp(WecomchanSettings settings);
 
     WecomchanSettings toWecomchanSettings(UpdateWecomchanSettingsReq req);
+
+    EpisodeRenameTaskSettingsResp toEpisodeRenameTaskSettingsResp(EpisodeRenameTaskSettings settings);
+
+    EpisodeRenameTaskSettings toEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq req);
 }

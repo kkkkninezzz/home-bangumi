@@ -77,4 +77,17 @@ public interface SystemSettingsApi {
      * */
     @PutMapping(value = "/message-pusher/wecomchan", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     Result<WecomchanSettingsResp> updateWecomchanSettings(@Valid @RequestBody UpdateWecomchanSettingsReq req);
+
+
+    /**
+     * 获取重命名任务的配置
+     * */
+    @GetMapping(value = "/rename-task/episode", produces = MediaType.APPLICATION_JSON_VALUE)
+    Result<EpisodeRenameTaskSettingsResp> getEpisodeRenameTaskSettings();
+
+    /**
+     * 更新重命名任务的配置
+     * */
+    @PutMapping(value = "/rename-task/episode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    Result<EpisodeRenameTaskSettingsResp> updateEpisodeRenameTaskSettings(@Valid @RequestBody UpdateEpisodeRenameTaskSettingsReq req);
 }

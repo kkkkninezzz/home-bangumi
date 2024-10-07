@@ -142,6 +142,19 @@ public enum SystemSettingKeyEnum {
     MESSAGE_PUSHER_WECOMCHAN_SEND_KEY("MESSAGE_PUSHER_WECOMCHAN_SEND_KEY", String.class, ""),
     //endregion
 
+    //region 剧集重命名任务配置
+    /**
+     * 剧集重命名任务的源目录路径
+     * */
+    EPISODE_RENAME_TASK_SOURCE_DIR_PATH("EPISODE_RENAME_TASK_SOURCE_DIR_PATH", String.class, "/rename-tasks"),
+
+    /**
+     * 剧集重命名任务的输出目录路径
+     * */
+    EPISODE_RENAME_TASK_OUT_DIR_PATH("EPISODE_RENAME_TASK_OUT_DIR_PATH", String.class, "/out/rename-tasks"),
+
+    //endregion
+
     // TODO 定义配置key
     ;
 

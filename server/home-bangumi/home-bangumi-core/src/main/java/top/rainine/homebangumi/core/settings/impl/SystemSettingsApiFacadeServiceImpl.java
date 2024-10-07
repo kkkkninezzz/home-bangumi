@@ -33,6 +33,8 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
 
     private final MessagePusherSettingsService messagePusherSettingsService;
 
+    private final RenameTaskSettingsService renameTaskSettingsService;
+
     private final SystemSettingsConvertor systemSettingsConvertor;
 
     @Override
@@ -110,6 +112,19 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
         WecomchanSettings wecomchanSettings = systemSettingsConvertor.toWecomchanSettings(req);
         messagePusherSettingsService.updateWecomchanSettings(wecomchanSettings);
         return getWecomchanSettings();
+    }
+
+    @Override
+    public EpisodeRenameTaskSettingsResp getEpisodeRenameTaskSettings() {
+        EpisodeRenameTaskSettings settings = renameTaskSettingsService.getEpisodeRenameTaskSettings();
+        return systemSettingsConvertor.toEpisodeRenameTaskSettingsResp(settings);
+    }
+
+    @Override
+    public EpisodeRenameTaskSettingsResp updateEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq req) {
+        EpisodeRenameTaskSettings settings = systemSettingsConvertor.toEpisodeRenameTaskSettings(req);
+        renameTaskSettingsService.updateEpisodeRenameTaskSettings(settings);
+        return getEpisodeRenameTaskSettings();
     }
 }
 

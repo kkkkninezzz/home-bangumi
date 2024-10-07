@@ -144,6 +144,12 @@ public enum HbCodeEnum {
     WECOMCHAN_SETTINGS_URL_INVALID(ErrorCode.WECOMCHAN_SETTINGS_URL_INVALID, "wecomchan settings url invalid"),
 
     WECOMCHAN_SETTINGS_SEND_KEY_INVALID(ErrorCode.WECOMCHAN_SETTINGS_SEND_KEY_INVALID, "wecomchan settings sendKey invalid"),
+
+    EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID(ErrorCode.EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID, "episode rename task sourceDirPath invalid"),
+
+    EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID(ErrorCode.EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID, "episode rename task outDirPath invalid"),
+
+
     ;
     private final String code;
 
@@ -384,6 +390,16 @@ public enum HbCodeEnum {
          * 更新wecomchan的sendKey字段无效
          * */
         String WECOMCHAN_SETTINGS_SEND_KEY_INVALID = "HB400037";
+
+        /**
+         * 剧集重命名任务源目录路径字段无效
+         * */
+        String EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID = "HB400038";
+
+        /**
+         * 剧集重命名任务输出目录路径字段无效
+         * */
+        String EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID = "HB400039";
         //endregion
 
 
