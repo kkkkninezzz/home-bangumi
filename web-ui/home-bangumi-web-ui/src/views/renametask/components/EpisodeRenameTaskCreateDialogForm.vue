@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, h } from "vue";
 import "plus-pro-components/es/components/form/style/css";
 import {
   type PlusColumn,
@@ -25,12 +25,17 @@ import {
 
 import { message } from "@/utils/message";
 
+import { ElButton } from "element-plus";
+
 defineOptions({
   name: "EpisodeRenameTaskCreateDialogForm"
 });
 
 const visible = ref(true);
 const createLoading = ref(false);
+
+const globalSourceDirPath = ref("");
+const globalOutDirPath = ref("");
 
 // 关闭表单时通知父组件
 const emit = defineEmits<{
@@ -73,9 +78,49 @@ async function initPathSettings() {
     return;
   }
 
-  taskState.value.episodeDirPath = resp.data.sourceDirPath ?? "";
-  taskState.value.renamedOutputDirPath = resp.data.outDirPath ?? "";
+  globalSourceDirPath.value = resp.data.sourceDirPath ?? "";
+  globalOutDirPath.value = resp.data.outDirPath ?? "";
+
+  taskState.value.episodeDirPath = globalSourceDirPath.value;
+  taskState.value.renamedOutputDirPath = globalOutDirPath.value;
 }
+
+function getLastPartOfPath(filePath: string) {
+  const lastSlashIndex = Math.max(
+    filePath.lastIndexOf("/"),
+    filePath.lastIndexOf("\\")
+  );
+
+  if (lastSlashIndex !== -1) {
+    return filePath.substring(lastSlashIndex + 1);
+  }
+  return filePath; // 如果路径中没有斜杠或反斜杠，直接返回整个路径
+}
+
+const autoGenerateRenamedOutputDirPath = () => {
+  if (
+    taskState.value.renamedOutputDirPath != globalOutDirPath.value ||
+    taskState.value.renamedOutputDirPath == ""
+  ) {
+    return;
+  }
+
+  if (
+    taskState.value.episodeDirPath == "" ||
+    taskState.value.episodeDirPath == globalSourceDirPath.value
+  ) {
+    return;
+  }
+
+  const dirName = getLastPartOfPath(taskState.value.episodeDirPath as string);
+  if (globalOutDirPath.value.lastIndexOf("/") > 0) {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "/" + dirName;
+  } else {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "\\" + dirName;
+  }
+};
 
 onBeforeMount(() => {
   initTaskState();
@@ -143,7 +188,29 @@ const taskColumns: PlusColumn[] = [
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     valueType: "copy",
     colProps: {
-      span: 24
+      span: 22
+    },
+    fieldProps: {
+      onChange: autoGenerateRenamedOutputDirPath
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "loadEpisodeDirPreViewButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          onClick: handleClickLoadEpisodeDirPreViewButton
+        },
+        () => "..."
+      );
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -153,7 +220,26 @@ const taskColumns: PlusColumn[] = [
     valueType: "copy",
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     colProps: {
-      span: 24
+      span: 22
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "loadRenamedOutputDirPreViewButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          onClick: handleClickLoadRenamedOutputDirPreViewButton
+        },
+        () => "..."
+      );
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -250,6 +336,14 @@ const handleCloseForm = async (handleReset: () => void) => {
   //initRssLinkState();
   visible.value = false;
   emit("close-form");
+};
+
+const handleClickLoadEpisodeDirPreViewButton = () => {
+  console.log("handleClickLoadEpisodeDirPreViewButton");
+};
+
+const handleClickLoadRenamedOutputDirPreViewButton = () => {
+  console.log("handleClickLoadRenamedOutputDirPreViewButton");
 };
 </script>
 <template>
