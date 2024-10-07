@@ -154,7 +154,7 @@ const dateFormat = (dateMills: number) => {
                       v-if="showInactiveButton"
                       @click="handleClickInactive(rssBangumiCard.id)"
                     >
-                      禁用</el-dropdown-item
+                      暂停</el-dropdown-item
                     >
                     <el-dropdown-item
                       v-if="showActiveButton"
