@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename;
+package top.rainine.homebangumi.core.rename.episode.rename;
 
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;

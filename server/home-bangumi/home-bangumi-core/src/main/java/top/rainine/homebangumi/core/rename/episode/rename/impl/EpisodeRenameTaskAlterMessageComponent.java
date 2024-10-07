@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename.impl;
+package top.rainine.homebangumi.core.rename.episode.rename.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

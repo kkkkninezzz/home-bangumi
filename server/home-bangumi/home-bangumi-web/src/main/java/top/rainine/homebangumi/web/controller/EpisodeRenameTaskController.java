@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.rainine.homebangumi.api.EpisodeRenameTaskApi;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskFacadeService;
 
 /**
  * @author rainine

@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename.impl;
+package top.rainine.homebangumi.core.rename.episode.rename.impl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -13,12 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
 import top.rainine.homebangumi.common.utils.GsonUtils;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskFacadeService;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig;
-import top.rainine.homebangumi.core.episode.rename.data.convertor.EpisodeRenameTaskConvertor;
+import top.rainine.homebangumi.common.utils.HbFileNameUtils;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskFacadeService;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskItemParser;
+import top.rainine.homebangumi.core.rename.episode.rename.data.convertor.EpisodeRenameTaskConvertor;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskManager;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 import top.rainine.homebangumi.core.utils.PageRequestUtils;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
@@ -60,6 +61,13 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
     @Override
     @Transactional
     public CreateEpisodeRenameTaskResp createTask(CreateEpisodeRenameTaskReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_DIR_PATH_INVALID);
+        }
+
+        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())) {
+            throw new HbBizException(HbCodeEnum.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID);
+        }
 
         EpisodeTitleRenameMethodEnum episodeTitleRenameMethod = EpisodeTitleRenameMethodEnum.of(req.getEpisodeTitleRenameMethod());
         if (EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE.equals(episodeTitleRenameMethod)
@@ -166,6 +174,20 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public EpisodeRenameTaskDetailResp updateTask(Long id, UpdateEpisodeRenameTaskReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_DIR_PATH_INVALID);
+        }
+
+        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())) {
+            throw new HbBizException(HbCodeEnum.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID);
+        }
+
+        EpisodeTitleRenameMethodEnum episodeTitleRenameMethod = EpisodeTitleRenameMethodEnum.of(req.getEpisodeTitleRenameMethod());
+        if (EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE.equals(episodeTitleRenameMethod)
+                && StringUtils.isEmpty(req.getCustomizeRenamedEpisodeTitleFormat())) {
+            throw new HbBizException(HbCodeEnum.CUSTOMIZE_RENAMED_EPISODE_TITLE_FORMAT_INVALID);
+        }
+
         HbEpisodeRenameTask renameTask = getAndCheckTaskStatus(id);
 
         episodeRenameTaskConvertor.updateHbEpisodeRenameTask(renameTask, req);

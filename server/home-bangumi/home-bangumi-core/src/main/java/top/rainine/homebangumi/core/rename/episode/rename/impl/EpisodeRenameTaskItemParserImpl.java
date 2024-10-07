@@ -1,13 +1,13 @@
-package top.rainine.homebangumi.core.episode.rename.impl;
+package top.rainine.homebangumi.core.rename.episode.rename.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskItemParser;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskItemParser;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapter;
 import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapterFactory;
 import top.rainine.homebangumi.core.titleparser.EpisodeTitleParser;
@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**

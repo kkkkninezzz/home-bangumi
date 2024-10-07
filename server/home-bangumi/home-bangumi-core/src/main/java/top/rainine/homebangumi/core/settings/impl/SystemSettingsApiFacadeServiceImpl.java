@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
+import top.rainine.homebangumi.common.utils.HbFileNameUtils;
 import top.rainine.homebangumi.core.settings.*;
 import top.rainine.homebangumi.core.settings.data.*;
 import top.rainine.homebangumi.core.settings.data.convertor.SystemSettingsConvertor;
@@ -122,6 +123,14 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
 
     @Override
     public EpisodeRenameTaskSettingsResp updateEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getSourceDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID);
+        }
+
+        if (!HbFileNameUtils.isValidFileName(req.getOutDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID);
+        }
+
         EpisodeRenameTaskSettings settings = systemSettingsConvertor.toEpisodeRenameTaskSettings(req);
         renameTaskSettingsService.updateEpisodeRenameTaskSettings(settings);
         return getEpisodeRenameTaskSettings();

@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename.impl;
+package top.rainine.homebangumi.core.rename.episode.rename.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,9 +6,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 import top.rainine.homebangumi.common.utils.HbDateUtils;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.event.HbEventBus;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;
 import top.rainine.homebangumi.core.utils.HbAdvisor;
@@ -22,7 +21,6 @@ import top.rainine.homebangumi.def.enums.EpisodeRenameTaskStatusEnum;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.*;
 

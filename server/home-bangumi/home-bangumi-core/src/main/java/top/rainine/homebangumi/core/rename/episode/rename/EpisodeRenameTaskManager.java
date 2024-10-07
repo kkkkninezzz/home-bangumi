@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename;
+package top.rainine.homebangumi.core.rename.episode.rename;
 
 /**
  * @author rainine

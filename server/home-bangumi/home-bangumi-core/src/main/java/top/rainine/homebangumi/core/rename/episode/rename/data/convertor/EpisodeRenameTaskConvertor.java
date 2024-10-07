@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename.data.convertor;
+package top.rainine.homebangumi.core.rename.episode.rename.data.convertor;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,7 +9,7 @@ import top.rainine.homebangumi.api.req.UpdateEpisodeRenameTaskReq;
 import top.rainine.homebangumi.api.resp.EpisodeRenameTaskDetailResp;
 import top.rainine.homebangumi.api.resp.EpisodeRenameTaskItemDto;
 import top.rainine.homebangumi.api.resp.PagedEpisodeRenameTaskItemDto;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 

@@ -1,12 +1,12 @@
-package top.rainine.homebangumi.core.episode.rename.listener;
+package top.rainine.homebangumi.core.rename.episode.rename.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import top.rainine.homebangumi.core.episode.rename.EpisodeRenameTaskManager;
-import top.rainine.homebangumi.core.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent;
+import top.rainine.homebangumi.core.rename.episode.rename.impl.EpisodeRenameTaskAlterMessageComponent;
+import top.rainine.homebangumi.core.rename.episode.rename.EpisodeRenameTaskManager;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteEndEvent;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecuteFailedEvent;
 import top.rainine.homebangumi.core.event.data.EpisodeRenameTaskExecutionTimeTooLongEvent;

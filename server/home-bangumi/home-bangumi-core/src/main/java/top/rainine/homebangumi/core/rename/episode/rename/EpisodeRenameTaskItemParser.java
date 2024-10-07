@@ -1,7 +1,7 @@
-package top.rainine.homebangumi.core.episode.rename;
+package top.rainine.homebangumi.core.rename.episode.rename;
 
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
-import top.rainine.homebangumi.core.episode.rename.data.EpisodeRenameTaskItemParserConfig;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 
 import java.util.List;
 

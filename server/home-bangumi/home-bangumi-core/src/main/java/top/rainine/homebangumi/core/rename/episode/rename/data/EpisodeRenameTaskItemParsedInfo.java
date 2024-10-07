@@ -1,4 +1,4 @@
-package top.rainine.homebangumi.core.episode.rename.data;
+package top.rainine.homebangumi.core.rename.episode.rename.data;
 
 import lombok.Builder;
 import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
