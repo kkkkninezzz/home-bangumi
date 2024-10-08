@@ -29,9 +29,9 @@ public class PreViewFilesResp {
     private String name;
 
     /**
-     * 是否为目录
+     * 是否为文件
      * */
-    private Boolean isDir;
+    private Boolean isFile;
 
     /**
      * 如果是目录，那么返回目录下的文件列表
@@ -57,6 +57,6 @@ public class PreViewFilesResp {
         /**
          * 是否为目录
          * */
-        private Boolean isDir;
+        private Boolean isFile;
     }
 }
