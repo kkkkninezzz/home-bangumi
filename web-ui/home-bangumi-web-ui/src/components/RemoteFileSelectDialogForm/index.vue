@@ -15,12 +15,16 @@ import {
 
 import type Node from "element-plus/es/components/tree/src/model/node";
 
-import { message } from "@/utils/message";
-import { array, string } from "vue-types";
-
 defineOptions({
   name: "RemoteFileSelectDialogForm"
 });
+
+const props = withDefaults(
+  defineProps<{
+    rootPath: string;
+  }>(),
+  {}
+);
 
 const visible = ref(true);
 const previewLoading = ref(false);
@@ -37,7 +41,9 @@ const formState = ref<FieldValues>({
 });
 
 /** 初始化表单 */
-function initFormState() {}
+function initFormState() {
+  formState.value.path = null;
+}
 
 onBeforeMount(() => {
   initFormState();
@@ -47,32 +53,70 @@ onBeforeMount(() => {
 const fileNodeProps = {
   label: "name",
   children: "children",
-  isLeaf: "isDir"
+  isLeaf: "isFile",
+  value: "path",
+  disabled: "disabled"
 };
 
-// 获取父节点的名字列表
-const getParentNodeFileNames = (node: Node): Array<string> => {
-  if (node.parent == null) {
-    return [node.label];
-  }
+type FileInfoProps = {
+  /**
+   * 绝对路径
+   */
+  path: string;
 
-  const result = [];
-  let n = node;
-  while (n != null) {
-    result.push(n.label);
-    n = n.parent;
-  }
-  return result.reverse();
+  /**
+   * 当前的文件名或者目录名
+   *
+   * */
+  name: string;
+
+  /**
+   * 是否为文件
+   * */
+  isFile: boolean;
+
+  /**
+   * 是否禁用
+   */
+  disabled: boolean;
 };
 
-const loadFileChildren = (
+const loadFileChildren = async (
   node: Node,
-  resolve: (data: ChildFileInfo[]) => void
+  resolve: (data: FileInfoProps[]) => void
 ) => {
   if (node.level === 0) {
-    return resolve([{ path: "region", name: "", isFile: false }]);
+    return resolve([
+      {
+        path: props.rootPath,
+        name: props.rootPath,
+        isFile: false,
+        disabled: false
+      }
+    ]);
   }
-  // TODO 进行请求
+
+  const path = node.data.path;
+  const resp: PreViewFilesResp = await preViewFiles(path);
+  if (!resp.success) {
+    return resolve([]);
+  }
+
+  // 如果当前路径是文件
+  if (resp.data.isFile) {
+    return resolve([]);
+  }
+
+  const children: Array<FileInfoProps> = resp.data.children.map(child => {
+    return {
+      path: child.path,
+      name: child.name,
+      isFile: child.isFile,
+      disabled: child.isFile
+    };
+  });
+
+  resolve(children);
 };
 
 // 表单相关规则
@@ -95,7 +139,8 @@ const rssLinkColumns: PlusColumn[] = [
       props: fileNodeProps,
       accordion: true,
       lazy: true,
-      load: loadFileChildren
+      load: loadFileChildren,
+      checkStrictly: true
     }
   }
 ];
@@ -110,7 +155,7 @@ const handleSelect = async (
   }
   handleCloseForm(handleReset);
   // 抛出选择成功事件
-  emit("select-success", "resp.data.id");
+  emit("select-success", formState.value.path as string);
 };
 
 const handleCloseForm = async (handleReset: () => void) => {

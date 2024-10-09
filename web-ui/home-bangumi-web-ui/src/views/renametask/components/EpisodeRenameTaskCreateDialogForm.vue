@@ -27,6 +27,8 @@ import { message } from "@/utils/message";
 
 import { ElButton } from "element-plus";
 
+import RemoteFileSelectDialogForm from "@/components/RemoteFileSelectDialogForm/index.vue";
+
 defineOptions({
   name: "EpisodeRenameTaskCreateDialogForm"
 });
@@ -199,12 +201,12 @@ const taskColumns: PlusColumn[] = [
     renderLabel: () => {
       return "";
     },
-    prop: "loadEpisodeDirPreViewButton",
+    prop: "handleClickSelectLoadEpisodeDirButton",
     renderField: () => {
       return h(
         ElButton,
         {
-          onClick: handleClickLoadEpisodeDirPreViewButton
+          onClick: handleClickSelectLoadEpisodeDirButton
         },
         () => "..."
       );
@@ -338,9 +340,18 @@ const handleCloseForm = async (handleReset: () => void) => {
   emit("close-form");
 };
 
-const handleClickLoadEpisodeDirPreViewButton = () => {
-  console.log("handleClickLoadEpisodeDirPreViewButton");
+const selectLoadEpisodeDirFormVisible = ref(false);
+const handleClickSelectLoadEpisodeDirButton = () => {
+  selectLoadEpisodeDirFormVisible.value = true;
 };
+
+function closeSelectLoadEpisodeDirForm() {
+  selectLoadEpisodeDirFormVisible.value = false;
+}
+
+function onSelectLoadEpisodeDirSuccess(path: string) {
+  console.log(path);
+}
 
 const handleClickLoadRenamedOutputDirPreViewButton = () => {
   console.log("handleClickLoadRenamedOutputDirPreViewButton");
@@ -372,4 +383,11 @@ const handleClickLoadRenamedOutputDirPreViewButton = () => {
       >
     </template>
   </PlusDialogForm>
+
+  <remote-file-select-dialog-form
+    v-if="selectLoadEpisodeDirFormVisible"
+    :root-path="globalSourceDirPath"
+    @closeForm="closeSelectLoadEpisodeDirForm"
+    @select-success="onSelectLoadEpisodeDirSuccess"
+  />
 </template>
