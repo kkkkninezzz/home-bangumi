@@ -61,11 +61,13 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
     @Override
     @Transactional
     public CreateEpisodeRenameTaskResp createTask(CreateEpisodeRenameTaskReq req) {
-        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())) {
+        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())
+                || !HbFileNameUtils.isDir(req.getEpisodeDirPath())) {
             throw new HbBizException(HbCodeEnum.EPISODE_DIR_PATH_INVALID);
         }
 
-        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())) {
+        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())
+         || !HbFileNameUtils.isDir(req.getRenamedOutputDirPath())) {
             throw new HbBizException(HbCodeEnum.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID);
         }
 
@@ -174,13 +176,16 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
     @Override
     public EpisodeRenameTaskDetailResp updateTask(Long id, UpdateEpisodeRenameTaskReq req) {
-        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())) {
+        if (!HbFileNameUtils.isValidFileName(req.getEpisodeDirPath())
+                || !HbFileNameUtils.isDir(req.getEpisodeDirPath())) {
             throw new HbBizException(HbCodeEnum.EPISODE_DIR_PATH_INVALID);
         }
 
-        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())) {
+        if (!HbFileNameUtils.isValidFileName(req.getRenamedOutputDirPath())
+                || !HbFileNameUtils.isDir(req.getRenamedOutputDirPath())) {
             throw new HbBizException(HbCodeEnum.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID);
         }
+
 
         EpisodeTitleRenameMethodEnum episodeTitleRenameMethod = EpisodeTitleRenameMethodEnum.of(req.getEpisodeTitleRenameMethod());
         if (EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE.equals(episodeTitleRenameMethod)
