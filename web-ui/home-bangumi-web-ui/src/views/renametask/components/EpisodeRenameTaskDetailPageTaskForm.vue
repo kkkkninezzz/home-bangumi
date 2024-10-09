@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref, onBeforeMount, computed } from "vue";
+import { ref, Ref, onBeforeMount, computed, h } from "vue";
 import { ElMessageBox } from "element-plus";
 import "plus-pro-components/es/components/form/style/css";
 import {
@@ -24,7 +24,15 @@ import {
   submitTask,
   reparseTaskItems
 } from "@/api/renameTask";
+
+import {
+  EpisodeRenameTaskSettingsResp,
+  getEpisodeRenameTaskSettings
+} from "@/api/systemSettings";
+
 import { message } from "@/utils/message";
+import { ElButton } from "element-plus";
+import RemoteFileSelectDialogForm from "@/components/RemoteFileSelectDialogForm/index.vue";
 
 defineOptions({
   name: "EpisodeRenameTaskDetailPageTaskForm"
@@ -93,9 +101,61 @@ function setTaskState(resp: EpisodeRenameTaskDetailResp) {
   taskState.value.createdTime = resp.data.createdTime;
 }
 
+const globalSourceDirPath = ref("");
+const globalOutDirPath = ref("");
+// 获取全局路径配置
+async function getGloablPathSettings() {
+  const resp: EpisodeRenameTaskSettingsResp =
+    await getEpisodeRenameTaskSettings();
+  if (!resp.success) {
+    return;
+  }
+
+  globalSourceDirPath.value = resp.data.sourceDirPath ?? "";
+  globalOutDirPath.value = resp.data.outDirPath ?? "";
+}
+
 onBeforeMount(() => {
   initTaskForm(props.taskId);
+  getGloablPathSettings();
 });
+
+function getLastPartOfPath(filePath: string) {
+  const lastSlashIndex = Math.max(
+    filePath.lastIndexOf("/"),
+    filePath.lastIndexOf("\\")
+  );
+
+  if (lastSlashIndex !== -1) {
+    return filePath.substring(lastSlashIndex + 1);
+  }
+  return filePath; // 如果路径中没有斜杠或反斜杠，直接返回整个路径
+}
+
+const autoGenerateRenamedOutputDirPath = () => {
+  if (
+    taskState.value.renamedOutputDirPath != globalOutDirPath.value ||
+    taskState.value.renamedOutputDirPath == ""
+  ) {
+    return;
+  }
+
+  if (
+    taskState.value.episodeDirPath == "" ||
+    taskState.value.episodeDirPath == globalSourceDirPath.value
+  ) {
+    return;
+  }
+
+  const dirName = getLastPartOfPath(taskState.value.episodeDirPath as string);
+  if (globalOutDirPath.value.lastIndexOf("/") > 0) {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "/" + dirName;
+  } else {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "\\" + dirName;
+  }
+};
 
 // 任务表单相关规则
 const taskRules = {
@@ -167,7 +227,29 @@ const taskColumns: PlusColumn[] = [
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     valueType: "copy",
     colProps: {
-      span: 24
+      span: 22
+    },
+    fieldProps: {
+      onChange: autoGenerateRenamedOutputDirPath
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "handleClickSelectLoadEpisodeDirButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          onClick: handleClickSelectLoadEpisodeDirButton
+        },
+        () => "..."
+      );
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -322,6 +404,20 @@ const doHandleReparse = async () => {
   message("重新解析成功", { type: "success" });
   emit("reparse-success");
 };
+
+const selectLoadEpisodeDirFormVisible = ref(false);
+const handleClickSelectLoadEpisodeDirButton = () => {
+  selectLoadEpisodeDirFormVisible.value = true;
+};
+
+function closeSelectLoadEpisodeDirForm() {
+  selectLoadEpisodeDirFormVisible.value = false;
+}
+
+function onSelectLoadEpisodeDirSuccess(path: string) {
+  taskState.value.episodeDirPath = path;
+  autoGenerateRenamedOutputDirPath();
+}
 </script>
 <template>
   <span :key="key" />
@@ -365,4 +461,11 @@ const doHandleReparse = async () => {
       </div>
     </template>
   </PlusForm>
+
+  <remote-file-select-dialog-form
+    v-if="selectLoadEpisodeDirFormVisible"
+    :root-path="globalSourceDirPath"
+    @closeForm="closeSelectLoadEpisodeDirForm"
+    @select-success="onSelectLoadEpisodeDirSuccess"
+  />
 </template>

@@ -151,6 +151,8 @@ public enum HbCodeEnum {
 
     PRE_VIEW_FILES_PATH_INVALID(ErrorCode.PRE_VIEW_FILES_PATH_INVALID, "preViewFiles path invalid"),
 
+    WALK_FILE_PATH_FAILED(ErrorCode.WALK_FILE_PATH_FAILED, "walk file path failed"),
+
 
     ;
     private final String code;
@@ -533,6 +535,11 @@ public enum HbCodeEnum {
          * 当前状态不允许更新
          * */
         String EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE = "HB100023";
+
+        /**
+         * 遍历预览路径失败
+         * */
+        String WALK_FILE_PATH_FAILED = "HB100024";
         //endregion
     }
 }

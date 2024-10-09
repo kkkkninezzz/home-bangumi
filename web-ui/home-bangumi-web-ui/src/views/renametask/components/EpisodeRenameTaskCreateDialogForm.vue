@@ -222,26 +222,7 @@ const taskColumns: PlusColumn[] = [
     valueType: "copy",
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     colProps: {
-      span: 22
-    }
-  },
-  {
-    label: "",
-    renderLabel: () => {
-      return "";
-    },
-    prop: "loadRenamedOutputDirPreViewButton",
-    renderField: () => {
-      return h(
-        ElButton,
-        {
-          onClick: handleClickLoadRenamedOutputDirPreViewButton
-        },
-        () => "..."
-      );
-    },
-    colProps: {
-      span: 2
+      span: 24
     }
   },
   {
@@ -350,12 +331,9 @@ function closeSelectLoadEpisodeDirForm() {
 }
 
 function onSelectLoadEpisodeDirSuccess(path: string) {
-  console.log(path);
+  taskState.value.episodeDirPath = path;
+  autoGenerateRenamedOutputDirPath();
 }
-
-const handleClickLoadRenamedOutputDirPreViewButton = () => {
-  console.log("handleClickLoadRenamedOutputDirPreViewButton");
-};
 </script>
 <template>
   <PlusDialogForm
