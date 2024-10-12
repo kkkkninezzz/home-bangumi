@@ -77,20 +77,11 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
             throw new HbBizException(HbCodeEnum.CUSTOMIZE_RENAMED_EPISODE_TITLE_FORMAT_INVALID);
         }
 
-        List<String> filteredOutRules = Optional.ofNullable(req.getFilteredOutRules()).orElseGet(ArrayList::new);
+        HbEpisodeRenameTask episodeRenameTask = episodeRenameTaskConvertor.toHbEpisodeRenameTask(req);
 
-        EpisodeRenameTaskItemParserConfig config = EpisodeRenameTaskItemParserConfig
-                .builder()
-                .season(req.getSeason())
-                .episodeDirPath(req.getEpisodeDirPath())
-                .filteredOutRules(filteredOutRules)
-                .episodeTitleRenameMethod(episodeTitleRenameMethod)
-                .customizeRenamedEpisodeTitleFormat(req.getCustomizeRenamedEpisodeTitleFormat())
-                .build();
+        EpisodeRenameTaskItemParserConfig config = episodeRenameTaskConvertor.toEpisodeRenameTaskItemParserConfig(episodeRenameTask);
 
         List<EpisodeRenameTaskItemParsedInfo> itemParsedInfoList = taskItemParser.parse(config);
-
-        HbEpisodeRenameTask episodeRenameTask = episodeRenameTaskConvertor.toHbEpisodeRenameTask(req);
         taskRepository.save(episodeRenameTask);
 
         Path episodeDirPath = Paths.get(req.getEpisodeDirPath());
@@ -224,14 +215,7 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
 
         taskItemRepository.deleteAllByTaskId(id);
 
-        EpisodeRenameTaskItemParserConfig config = EpisodeRenameTaskItemParserConfig
-                .builder()
-                .season(renameTask.getSeason())
-                .episodeDirPath(renameTask.getEpisodeDirPath())
-                .filteredOutRules(GsonUtils.toList(renameTask.getFilteredOutRules(), String.class))
-                .episodeTitleRenameMethod(EpisodeTitleRenameMethodEnum.of(renameTask.getEpisodeTitleRenameMethod()))
-                .customizeRenamedEpisodeTitleFormat(renameTask.getCustomizeRenamedEpisodeTitleFormat())
-                .build();
+        EpisodeRenameTaskItemParserConfig config = episodeRenameTaskConvertor.toEpisodeRenameTaskItemParserConfig(renameTask);
 
         List<EpisodeRenameTaskItemParsedInfo> itemParsedInfoList = taskItemParser.parse(config);
 

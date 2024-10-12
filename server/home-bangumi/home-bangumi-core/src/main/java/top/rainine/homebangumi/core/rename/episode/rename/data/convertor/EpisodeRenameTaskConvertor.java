@@ -10,6 +10,7 @@ import top.rainine.homebangumi.api.resp.EpisodeRenameTaskDetailResp;
 import top.rainine.homebangumi.api.resp.EpisodeRenameTaskItemDto;
 import top.rainine.homebangumi.api.resp.PagedEpisodeRenameTaskItemDto;
 import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParsedInfo;
+import top.rainine.homebangumi.core.rename.episode.rename.data.EpisodeRenameTaskItemParserConfig;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTask;
 import top.rainine.homebangumi.dao.po.HbEpisodeRenameTaskItem;
 
@@ -51,4 +52,8 @@ public interface EpisodeRenameTaskConvertor {
     void updateHbEpisodeRenameTask(@MappingTarget HbEpisodeRenameTask task, UpdateEpisodeRenameTaskReq req);
 
     PagedEpisodeRenameTaskItemDto toPagedEpisodeRenameTaskItemDto(HbEpisodeRenameTask task, long totalCount, long pendingCount, long successCount, long failedCount);
+
+    @Mapping(target = "filteredOutRules", expression = "java(top.rainine.homebangumi.common.utils.GsonUtils.toList(renameTask.getFilteredOutRules(), String.class))")
+    @Mapping(target = "episodeTitleRenameMethod", expression = "java(top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum.of(renameTask.getEpisodeTitleRenameMethod()))")
+    EpisodeRenameTaskItemParserConfig toEpisodeRenameTaskItemParserConfig(HbEpisodeRenameTask renameTask);
 }

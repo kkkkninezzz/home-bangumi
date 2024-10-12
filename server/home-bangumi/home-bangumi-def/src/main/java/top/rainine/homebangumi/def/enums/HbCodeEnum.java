@@ -153,6 +153,8 @@ public enum HbCodeEnum {
 
     WALK_FILE_PATH_FAILED(ErrorCode.WALK_FILE_PATH_FAILED, "walk file path failed"),
 
+    EPISODE_DIR_PATH_MAX_DEPTH_INVALID(ErrorCode.EPISODE_DIR_PATH_MAX_DEPTH_INVALID, "episodeDirPathMaxDepth invalid"),
+
 
     ;
     private final String code;
@@ -409,6 +411,11 @@ public enum HbCodeEnum {
          * 预览文件路径字段无效
          * */
         String PRE_VIEW_FILES_PATH_INVALID = "HB400040";
+
+        /**
+         * 剧集的目录路径最大深度无效
+         * */
+        String EPISODE_DIR_PATH_MAX_DEPTH_INVALID = "HB400041";
         //endregion
 
 

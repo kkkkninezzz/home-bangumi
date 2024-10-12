@@ -63,7 +63,7 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         }
 
         List<EpisodeRenameTaskItemParsedInfo> parsedInfoList;
-        try (Stream<Path> paths = Files.walk(episodeDirPath, 1)) {
+        try (Stream<Path> paths = Files.walk(episodeDirPath, config.episodeDirPathMaxDepth())) {
             parsedInfoList = paths
                     .filter(path -> !Files.isDirectory(path))
                     .map(path -> parseItem(config, path, episodeTitleRenameAdapter))
