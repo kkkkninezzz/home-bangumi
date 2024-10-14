@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, Ref, onBeforeMount, computed, h } from "vue";
+import { Check } from "@element-plus/icons-vue";
 import { ElMessageBox } from "element-plus";
 import "plus-pro-components/es/components/form/style/css";
 import {
@@ -29,6 +30,8 @@ import {
   EpisodeRenameTaskSettingsResp,
   getEpisodeRenameTaskSettings
 } from "@/api/systemSettings";
+
+import { IsEmptyDirResp, checkIsEmptyDir } from "@/api/filePreView";
 
 import { message } from "@/utils/message";
 import { ElButton } from "element-plus";
@@ -246,7 +249,7 @@ const taskColumns: PlusColumn[] = [
     renderLabel: () => {
       return "";
     },
-    prop: "handleClickSelectLoadEpisodeDirButton",
+    prop: "selectLoadEpisodeDirButton",
     renderField: () => {
       return h(
         ElButton,
@@ -276,7 +279,23 @@ const taskColumns: PlusColumn[] = [
     valueType: "copy",
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     colProps: {
-      span: 24
+      span: 22
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "checkRenamedOutputDirPathButton",
+    renderField: () => {
+      return h(ElButton, {
+        onClick: handleClickCheckRenamedOutputDirPathButton,
+        icon: Check
+      });
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -436,6 +455,28 @@ function onSelectLoadEpisodeDirSuccess(path: string) {
   taskState.value.episodeDirPath = path;
   autoGenerateRenamedOutputDirPath();
 }
+
+const handleClickCheckRenamedOutputDirPathButton = async () => {
+  const renamedOutputDirPath = taskState.value.renamedOutputDirPath as string;
+  const resp: IsEmptyDirResp = await checkIsEmptyDir(renamedOutputDirPath);
+  if (!resp.success) {
+    return;
+  }
+
+  if (resp.data.isFile) {
+    message(renamedOutputDirPath + " is file, please reinput", {
+      type: "error"
+    });
+  } else if (resp.data.isEmpty) {
+    message(renamedOutputDirPath + " is empty dir", {
+      type: "success"
+    });
+  } else {
+    message(renamedOutputDirPath + " is not empty dir", {
+      type: "warning"
+    });
+  }
+};
 </script>
 <template>
   <span :key="key" />

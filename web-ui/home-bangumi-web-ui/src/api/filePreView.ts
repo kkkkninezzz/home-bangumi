@@ -46,13 +46,46 @@ type PreViewFilesReq = {
   path: string;
 };
 
-/** 获取消息列表 */
+export type IsEmptyDirResp = {
+  data: {
+    /**
+     * 是否为文件
+     * */
+    isFile: boolean;
+
+    /**
+     * 表明当前目录是否为空
+     */
+    isEmpty: boolean;
+  };
+} & ApiResult;
+
+/** 预览列表 */
 export const preViewFiles = (path: string) => {
   const data: PreViewFilesReq = {
     path: path
   };
 
-  return hbHttp.request<PreViewFilesResp>("post", `/api/v1/file/pre-view`, {
-    data
-  });
+  return hbHttp.request<PreViewFilesResp>(
+    "post",
+    `/api/v1/file/pre-view/files`,
+    {
+      data
+    }
+  );
+};
+
+/** 获取消息列表 */
+export const checkIsEmptyDir = (path: string) => {
+  const data: PreViewFilesReq = {
+    path: path
+  };
+
+  return hbHttp.request<IsEmptyDirResp>(
+    "post",
+    `/api/v1/file/pre-view/is-empty-dir`,
+    {
+      data
+    }
+  );
 };

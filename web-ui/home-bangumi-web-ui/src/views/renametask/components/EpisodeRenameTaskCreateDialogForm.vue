@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, computed, h } from "vue";
+import { Check } from "@element-plus/icons-vue";
 import "plus-pro-components/es/components/form/style/css";
 import {
   type PlusColumn,
@@ -23,6 +24,8 @@ import {
   EpisodeTitleRenameMethodOptions
 } from "../enums";
 
+import { IsEmptyDirResp, checkIsEmptyDir } from "@/api/filePreView";
+
 import { message } from "@/utils/message";
 
 import { ElButton } from "element-plus";
@@ -35,6 +38,7 @@ defineOptions({
 
 const visible = ref(true);
 const createLoading = ref(false);
+const checkLoading = ref(false);
 
 const globalSourceDirPath = ref("");
 const globalOutDirPath = ref("");
@@ -209,7 +213,7 @@ const taskColumns: PlusColumn[] = [
     renderLabel: () => {
       return "";
     },
-    prop: "handleClickSelectLoadEpisodeDirButton",
+    prop: "selectLoadEpisodeDirButton",
     renderField: () => {
       return h(
         ElButton,
@@ -239,7 +243,24 @@ const taskColumns: PlusColumn[] = [
     valueType: "copy",
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     colProps: {
-      span: 24
+      span: 22
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "checkRenamedOutputDirPathButton",
+    renderField: () => {
+      return h(ElButton, {
+        onClick: handleClickCheckRenamedOutputDirPathButton,
+        icon: Check,
+        loading: checkLoading
+      });
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -352,6 +373,30 @@ function onSelectLoadEpisodeDirSuccess(path: string) {
   taskState.value.episodeDirPath = path;
   autoGenerateRenamedOutputDirPath();
 }
+
+const handleClickCheckRenamedOutputDirPathButton = async () => {
+  checkLoading.value = true;
+  const renamedOutputDirPath = taskState.value.renamedOutputDirPath as string;
+  const resp: IsEmptyDirResp = await checkIsEmptyDir(renamedOutputDirPath);
+  checkLoading.value = false;
+  if (!resp.success) {
+    return;
+  }
+
+  if (resp.data.isFile) {
+    message(renamedOutputDirPath + " is file, please reinput", {
+      type: "error"
+    });
+  } else if (resp.data.isEmpty) {
+    message(renamedOutputDirPath + " is empty dir", {
+      type: "success"
+    });
+  } else {
+    message(renamedOutputDirPath + " is not empty dir", {
+      type: "warning"
+    });
+  }
+};
 </script>
 <template>
   <PlusDialogForm

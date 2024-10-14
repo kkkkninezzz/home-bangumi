@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.rainine.homebangumi.api.req.PreViewFilesReq;
+import top.rainine.homebangumi.api.resp.IsEmptyDirResp;
 import top.rainine.homebangumi.api.resp.PreViewFilesResp;
 import top.rainine.homebangumi.common.utils.HbFileNameUtils;
 import top.rainine.homebangumi.core.common.file.FilePreViewService;
@@ -72,6 +73,36 @@ public class FilePreViewServiceImpl implements FilePreViewService {
 
 
         return resp;
+    }
+
+    @Override
+    public IsEmptyDirResp isEmptyDir(PreViewFilesReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getPath())) {
+            throw new HbBizException(HbCodeEnum.PRE_VIEW_FILES_PATH_INVALID);
+        }
+
+        Path rootPath = Paths.get(req.getPath());
+
+        IsEmptyDirResp resp = new IsEmptyDirResp();
+
+        // 如果不存在，也视为合法的目录
+        if (Files.notExists(rootPath)) {
+            return resp.setIsFile(false).setIsEmpty(true);
+        }
+
+        // 如果不是目录
+        if (!Files.isDirectory(rootPath)) {
+            return resp.setIsFile(true);
+        }
+
+        try (Stream<Path> paths = Files.list(rootPath)) {
+            return resp.setIsFile(false)
+                    .setIsEmpty(paths.findFirst().isEmpty());
+        } catch (IOException e) {
+            log.error("[FilePreViewServiceImpl]check is empty dir failed, path: {}", req.getPath(), e);
+            throw new HbBizException(HbCodeEnum.WALK_FILE_PATH_FAILED);
+        }
+
     }
 }
 
