@@ -78,7 +78,8 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
 
         EpisodeRenameTaskItemParsedInfo.EpisodeRenameTaskItemParsedInfoBuilder builder = EpisodeRenameTaskItemParsedInfo
                 .builder()
-                .episodeFileName(episodeFileName);
+                .episodeFileName(episodeFileName)
+                .episodeFilePath(episodeFilePath.toString());
         if (isFilteredOut(episodeFileName, config.filteredOutRules())) {
             builder.status(EpisodeRenameTaskItemStatusEnum.FILTERED_OUT);
             return builder.build();

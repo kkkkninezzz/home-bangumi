@@ -17,6 +17,11 @@ export type CreateEpisodeRenameTaskReq = {
   episodeDirPath: string;
 
   /**
+   * 遍历剧集目录路径的最大深度
+   */
+  episodeDirPathMaxDepth: number;
+
+  /**
    * 重命名后输出的目录路径
    */
   renamedOutputDirPath: string;
@@ -86,6 +91,11 @@ export type EpisodeRenameTaskDetailResp = {
      * 剧集目录路径
      */
     episodeDirPath: string;
+
+    /**
+     * 遍历剧集目录路径的最大深度
+     */
+    episodeDirPathMaxDepth: number;
 
     /**
      * 重命名后输出的目录路径
@@ -200,6 +210,11 @@ export type UpdateEpisodeRenameTaskReq = {
    * 剧集目录路径
    */
   episodeDirPath: string;
+
+  /**
+   * 遍历剧集目录路径的最大深度
+   */
+  episodeDirPathMaxDepth: number;
 
   /**
    * 重命名后输出的目录路径

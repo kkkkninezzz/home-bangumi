@@ -50,6 +50,7 @@ const taskState = ref<FieldValues>({
   taskName: "", // 任务鸣潮
   season: 1, // 剧集季度
   episodeDirPath: "", // 剧集目录路径
+  episodeDirPathMaxDepth: 1, // 目录最大深度
   renamedOutputDirPath: "", // 重命名后输出的目录路径
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
   customizeRenamedEpisodeTitleFormat: "", // 自定义的重命名后标题格式
@@ -63,6 +64,7 @@ function initTaskState() {
   taskState.value.taskName = "";
   taskState.value.season = 1;
   taskState.value.episodeDirPath = "";
+  taskState.value.episodeDirPathMaxDepth = 1;
   taskState.value.renamedOutputDirPath = "";
   taskState.value.episodeTitleRenameMethod =
     EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE;
@@ -149,6 +151,12 @@ const taskRules = {
       message: "请输入剧集所在目录"
     }
   ],
+  episodeDirPathMaxDepth: [
+    {
+      required: true,
+      message: "请输入剧集所在目录的最大深度"
+    }
+  ],
   renamedOutputDirPath: [
     {
       required: true,
@@ -190,7 +198,7 @@ const taskColumns: PlusColumn[] = [
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     valueType: "copy",
     colProps: {
-      span: 22
+      span: 18
     },
     fieldProps: {
       onChange: autoGenerateRenamedOutputDirPath
@@ -213,6 +221,15 @@ const taskColumns: PlusColumn[] = [
     },
     colProps: {
       span: 2
+    }
+  },
+  {
+    label: "目录最大深度",
+    width: 120,
+    prop: "episodeDirPathMaxDepth",
+    valueType: "input-number",
+    colProps: {
+      span: 4
     }
   },
   {
@@ -292,6 +309,7 @@ const handleCreate = async (
     taskName: taskState.value.taskName as string,
     season: taskState.value.season as number,
     episodeDirPath: taskState.value.episodeDirPath as string,
+    episodeDirPathMaxDepth: taskState.value.episodeDirPathMaxDepth as number,
     renamedOutputDirPath: taskState.value.renamedOutputDirPath as string,
     episodeTitleRenameMethod: taskState.value
       .episodeTitleRenameMethod as number,

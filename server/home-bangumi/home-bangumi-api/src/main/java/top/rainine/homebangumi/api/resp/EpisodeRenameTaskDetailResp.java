@@ -47,6 +47,11 @@ public class EpisodeRenameTaskDetailResp {
     private String episodeDirPath;
 
     /**
+     * 遍历剧集目录路径的最大深度
+     * */
+    private Integer episodeDirPathMaxDepth;
+
+    /**
      * 重命名后输出的目录路径
      * */
     private String renamedOutputDirPath;

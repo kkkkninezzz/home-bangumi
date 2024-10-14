@@ -80,14 +80,13 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
         HbEpisodeRenameTask episodeRenameTask = episodeRenameTaskConvertor.toHbEpisodeRenameTask(req);
 
         EpisodeRenameTaskItemParserConfig config = episodeRenameTaskConvertor.toEpisodeRenameTaskItemParserConfig(episodeRenameTask);
-
         List<EpisodeRenameTaskItemParsedInfo> itemParsedInfoList = taskItemParser.parse(config);
+
         taskRepository.save(episodeRenameTask);
 
-        Path episodeDirPath = Paths.get(req.getEpisodeDirPath());
         Path renamedOutputDirPath = Paths.get(req.getRenamedOutputDirPath());
         List<HbEpisodeRenameTaskItem> taskItemList = itemParsedInfoList.stream()
-                .map(parsedInfo -> toHbEpisodeRenameTaskItem(episodeRenameTask.getId(), episodeDirPath, renamedOutputDirPath, parsedInfo))
+                .map(parsedInfo -> toHbEpisodeRenameTaskItem(episodeRenameTask.getId(), renamedOutputDirPath, parsedInfo))
                 .toList();
         taskItemRepository.saveAll(taskItemList);
 
@@ -95,13 +94,12 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
                 .setTaskId(episodeRenameTask.getId());
     }
 
-    private HbEpisodeRenameTaskItem toHbEpisodeRenameTaskItem(Long taskId,
-                                                              Path episodeDirPath, Path renamedOutputDirPath,
+    private HbEpisodeRenameTaskItem toHbEpisodeRenameTaskItem(Long taskId, Path renamedOutputDirPath,
                                                               EpisodeRenameTaskItemParsedInfo parsedInfo) {
         HbEpisodeRenameTaskItem taskItem = episodeRenameTaskConvertor.toHbEpisodeRenameTaskItem(taskId, parsedInfo);
 
-        if (StringUtils.isNotBlank(parsedInfo.episodeFileName())) {
-            taskItem.setEpisodePath(episodeDirPath.resolve(parsedInfo.episodeFileName()).toString());
+        if (StringUtils.isNotBlank(parsedInfo.episodeFilePath())) {
+            taskItem.setEpisodePath(parsedInfo.episodeFilePath());
         }
 
         if (StringUtils.isNotBlank(parsedInfo.renamedEpisodeFileName())) {
@@ -216,13 +214,11 @@ public class EpisodeRenameTaskFacadeServiceImpl implements EpisodeRenameTaskFaca
         taskItemRepository.deleteAllByTaskId(id);
 
         EpisodeRenameTaskItemParserConfig config = episodeRenameTaskConvertor.toEpisodeRenameTaskItemParserConfig(renameTask);
-
         List<EpisodeRenameTaskItemParsedInfo> itemParsedInfoList = taskItemParser.parse(config);
 
-        Path episodeDirPath = Paths.get(renameTask.getEpisodeDirPath());
         Path renamedOutputDirPath = Paths.get(renameTask.getRenamedOutputDirPath());
         List<HbEpisodeRenameTaskItem> taskItemList = itemParsedInfoList.stream()
-                .map(parsedInfo -> toHbEpisodeRenameTaskItem(renameTask.getId(), episodeDirPath, renamedOutputDirPath, parsedInfo))
+                .map(parsedInfo -> toHbEpisodeRenameTaskItem(renameTask.getId(), renamedOutputDirPath, parsedInfo))
                 .toList();
         taskItemRepository.saveAll(taskItemList);
     }
