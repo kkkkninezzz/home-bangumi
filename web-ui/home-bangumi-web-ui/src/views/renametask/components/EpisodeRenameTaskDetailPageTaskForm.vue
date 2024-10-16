@@ -61,6 +61,7 @@ const updateLoading = ref(false);
 const reparseLoading = ref(false);
 const submitTaskLoading = ref(false);
 const reqButtonDisable = ref(false);
+const checkLoading = ref(false);
 
 // 提交任务相关的表单
 const taskState = ref<FieldValues>({
@@ -291,7 +292,8 @@ const taskColumns: PlusColumn[] = [
     renderField: () => {
       return h(ElButton, {
         onClick: handleClickCheckRenamedOutputDirPathButton,
-        icon: Check
+        icon: Check,
+        loading: checkLoading.value
       });
     },
     colProps: {
@@ -457,8 +459,10 @@ function onSelectLoadEpisodeDirSuccess(path: string) {
 }
 
 const handleClickCheckRenamedOutputDirPathButton = async () => {
+  checkLoading.value = true;
   const renamedOutputDirPath = taskState.value.renamedOutputDirPath as string;
   const resp: IsEmptyDirResp = await checkIsEmptyDir(renamedOutputDirPath);
+  checkLoading.value = false;
   if (!resp.success) {
     return;
   }
