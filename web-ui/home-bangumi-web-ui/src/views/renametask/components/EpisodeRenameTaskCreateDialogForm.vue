@@ -256,9 +256,7 @@ const taskColumns: PlusColumn[] = [
       return h(ElButton, {
         onClick: handleClickCheckRenamedOutputDirPathButton,
         icon: Check,
-        props: {
-          loading: checkLoading
-        }
+        loading: checkLoading.value
       });
     },
     colProps: {
@@ -380,9 +378,6 @@ const handleClickCheckRenamedOutputDirPathButton = async () => {
   checkLoading.value = true;
   const renamedOutputDirPath = taskState.value.renamedOutputDirPath as string;
   const resp: IsEmptyDirResp = await checkIsEmptyDir(renamedOutputDirPath);
-  setTimeout(() => {
-    checkLoading.value = false;
-  }, 2000); // 假设请求耗时2秒
   checkLoading.value = false;
   if (!resp.success) {
     return;
