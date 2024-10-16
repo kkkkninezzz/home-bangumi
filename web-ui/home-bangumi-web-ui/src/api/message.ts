@@ -1,4 +1,4 @@
-import { ApiResult, hbHttp } from "./base";
+import { type ApiResult, hbHttp } from "./base";
 
 export type MessageDto = {
   id: number;
@@ -39,27 +39,25 @@ export type MessageDto = {
    * 创建时间
    * */
   createdTime: number;
-}
+};
 
 export type MessagesResp = {
   data: {
     messages: Array<MessageDto>;
-  }
+  };
 } & ApiResult;
 
-
 /** 获取消息列表 */
-export const getMessages = () => { 
-  return hbHttp.request<MessagesResp>("get", `/api/v1/message/list`, { });
-}
+export const getMessages = () => {
+  return hbHttp.request<MessagesResp>("get", `/api/v1/message/list`, {});
+};
 
 /** 读消息 */
-export const readMessage = (id: number) => { 
-  return hbHttp.request<ApiResult>("put", `/api/v1/message/read/${id}`, { });
-}
-
+export const readMessage = (id: number) => {
+  return hbHttp.request<ApiResult>("put", `/api/v1/message/read/${id}`, {});
+};
 
 /** 读所有的消息 */
-export const readAllMessages = () => { 
-  return hbHttp.request<ApiResult>("put", `/api/v1/message/read/all`, { });
-}
+export const readAllMessages = () => {
+  return hbHttp.request<ApiResult>("put", `/api/v1/message/read/all`, {});
+};

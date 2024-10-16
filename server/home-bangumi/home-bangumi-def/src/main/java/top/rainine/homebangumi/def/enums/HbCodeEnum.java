@@ -144,6 +144,18 @@ public enum HbCodeEnum {
     WECOMCHAN_SETTINGS_URL_INVALID(ErrorCode.WECOMCHAN_SETTINGS_URL_INVALID, "wecomchan settings url invalid"),
 
     WECOMCHAN_SETTINGS_SEND_KEY_INVALID(ErrorCode.WECOMCHAN_SETTINGS_SEND_KEY_INVALID, "wecomchan settings sendKey invalid"),
+
+    EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID(ErrorCode.EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID, "episode rename task sourceDirPath invalid"),
+
+    EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID(ErrorCode.EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID, "episode rename task outDirPath invalid"),
+
+    PRE_VIEW_FILES_PATH_INVALID(ErrorCode.PRE_VIEW_FILES_PATH_INVALID, "preViewFiles path invalid"),
+
+    WALK_FILE_PATH_FAILED(ErrorCode.WALK_FILE_PATH_FAILED, "walk file path failed"),
+
+    EPISODE_DIR_PATH_MAX_DEPTH_INVALID(ErrorCode.EPISODE_DIR_PATH_MAX_DEPTH_INVALID, "episodeDirPathMaxDepth invalid"),
+
+
     ;
     private final String code;
 
@@ -384,6 +396,26 @@ public enum HbCodeEnum {
          * 更新wecomchan的sendKey字段无效
          * */
         String WECOMCHAN_SETTINGS_SEND_KEY_INVALID = "HB400037";
+
+        /**
+         * 剧集重命名任务源目录路径字段无效
+         * */
+        String EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID = "HB400038";
+
+        /**
+         * 剧集重命名任务输出目录路径字段无效
+         * */
+        String EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID = "HB400039";
+
+        /**
+         * 预览文件路径字段无效
+         * */
+        String PRE_VIEW_FILES_PATH_INVALID = "HB400040";
+
+        /**
+         * 剧集的目录路径最大深度无效
+         * */
+        String EPISODE_DIR_PATH_MAX_DEPTH_INVALID = "HB400041";
         //endregion
 
 
@@ -510,6 +542,11 @@ public enum HbCodeEnum {
          * 当前状态不允许更新
          * */
         String EPISODE_RENAME_TASK_ITEM_STATUS_NOT_ALLOW_OPERATE = "HB100023";
+
+        /**
+         * 遍历预览路径失败
+         * */
+        String WALK_FILE_PATH_FAILED = "HB100024";
         //endregion
     }
 }

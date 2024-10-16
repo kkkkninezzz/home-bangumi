@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.rainine.homebangumi.api.req.*;
 import top.rainine.homebangumi.api.resp.*;
+import top.rainine.homebangumi.common.utils.HbFileNameUtils;
 import top.rainine.homebangumi.core.settings.*;
 import top.rainine.homebangumi.core.settings.data.*;
 import top.rainine.homebangumi.core.settings.data.convertor.SystemSettingsConvertor;
@@ -32,6 +33,8 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
     private final ScheduledTaskSettingsService scheduledTaskSettingsService;
 
     private final MessagePusherSettingsService messagePusherSettingsService;
+
+    private final RenameTaskSettingsService renameTaskSettingsService;
 
     private final SystemSettingsConvertor systemSettingsConvertor;
 
@@ -62,6 +65,10 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
 
     @Override
     public QbittorrentDownloaderSettingsResp updateQbittorrentDownloaderSettings(UpdateQbittorrentDownloaderSettingsReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getDownloadDir())) {
+            throw new HbBizException(HbCodeEnum.QBITTORRENT_DOWNLOAD_DIR_INVALID);
+        }
+
         String baseUrl = req.getBaseUrl();
         // 末尾不需要有 /
         if (baseUrl.endsWith("/")) {
@@ -110,6 +117,27 @@ public class SystemSettingsApiFacadeServiceImpl implements SystemSettingsApiFaca
         WecomchanSettings wecomchanSettings = systemSettingsConvertor.toWecomchanSettings(req);
         messagePusherSettingsService.updateWecomchanSettings(wecomchanSettings);
         return getWecomchanSettings();
+    }
+
+    @Override
+    public EpisodeRenameTaskSettingsResp getEpisodeRenameTaskSettings() {
+        EpisodeRenameTaskSettings settings = renameTaskSettingsService.getEpisodeRenameTaskSettings();
+        return systemSettingsConvertor.toEpisodeRenameTaskSettingsResp(settings);
+    }
+
+    @Override
+    public EpisodeRenameTaskSettingsResp updateEpisodeRenameTaskSettings(UpdateEpisodeRenameTaskSettingsReq req) {
+        if (!HbFileNameUtils.isValidFileName(req.getSourceDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_SOURCE_DIR_PATH_INVALID);
+        }
+
+        if (!HbFileNameUtils.isValidFileName(req.getOutDirPath())) {
+            throw new HbBizException(HbCodeEnum.EPISODE_RENAME_TASK_OUT_DIR_PATH_INVALID);
+        }
+
+        EpisodeRenameTaskSettings settings = systemSettingsConvertor.toEpisodeRenameTaskSettings(req);
+        renameTaskSettingsService.updateEpisodeRenameTaskSettings(settings);
+        return getEpisodeRenameTaskSettings();
     }
 }
 

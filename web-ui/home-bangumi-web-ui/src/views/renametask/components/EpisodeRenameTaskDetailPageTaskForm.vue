@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, Ref, onBeforeMount, computed } from "vue";
+import { ref, Ref, onBeforeMount, computed, h } from "vue";
+import { Check } from "@element-plus/icons-vue";
 import { ElMessageBox } from "element-plus";
 import "plus-pro-components/es/components/form/style/css";
 import {
@@ -24,7 +25,17 @@ import {
   submitTask,
   reparseTaskItems
 } from "@/api/renameTask";
+
+import {
+  EpisodeRenameTaskSettingsResp,
+  getEpisodeRenameTaskSettings
+} from "@/api/systemSettings";
+
+import { IsEmptyDirResp, checkIsEmptyDir } from "@/api/filePreView";
+
 import { message } from "@/utils/message";
+import { ElButton } from "element-plus";
+import RemoteFileSelectDialogForm from "@/components/RemoteFileSelectDialogForm/index.vue";
 
 defineOptions({
   name: "EpisodeRenameTaskDetailPageTaskForm"
@@ -50,6 +61,7 @@ const updateLoading = ref(false);
 const reparseLoading = ref(false);
 const submitTaskLoading = ref(false);
 const reqButtonDisable = ref(false);
+const checkLoading = ref(false);
 
 // 提交任务相关的表单
 const taskState = ref<FieldValues>({
@@ -58,6 +70,7 @@ const taskState = ref<FieldValues>({
   taskName: "", // 任务名称
   season: 1, // 剧集季度
   episodeDirPath: "", // 剧集目录路径
+  episodeDirPathMaxDepth: 1, // 目录最大深度
   renamedOutputDirPath: "", // 重命名后输出的目录路径
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
   customizeRenamedEpisodeTitleFormat: "", // 自定义的重命名后标题格式
@@ -83,6 +96,7 @@ function setTaskState(resp: EpisodeRenameTaskDetailResp) {
   taskState.value.season = resp.data.season;
   taskState.value.taskStatus = resp.data.taskStatus;
   taskState.value.episodeDirPath = resp.data.episodeDirPath;
+  taskState.value.episodeDirPathMaxDepth = resp.data.episodeDirPathMaxDepth;
   taskState.value.renamedOutputDirPath = resp.data.renamedOutputDirPath;
   taskState.value.episodeTitleRenameMethod = resp.data.episodeTitleRenameMethod;
   taskState.value.customizeRenamedEpisodeTitleFormat =
@@ -93,9 +107,61 @@ function setTaskState(resp: EpisodeRenameTaskDetailResp) {
   taskState.value.createdTime = resp.data.createdTime;
 }
 
+const globalSourceDirPath = ref("");
+const globalOutDirPath = ref("");
+// 获取全局路径配置
+async function getGloablPathSettings() {
+  const resp: EpisodeRenameTaskSettingsResp =
+    await getEpisodeRenameTaskSettings();
+  if (!resp.success) {
+    return;
+  }
+
+  globalSourceDirPath.value = resp.data.sourceDirPath ?? "";
+  globalOutDirPath.value = resp.data.outDirPath ?? "";
+}
+
 onBeforeMount(() => {
   initTaskForm(props.taskId);
+  getGloablPathSettings();
 });
+
+function getLastPartOfPath(filePath: string) {
+  const lastSlashIndex = Math.max(
+    filePath.lastIndexOf("/"),
+    filePath.lastIndexOf("\\")
+  );
+
+  if (lastSlashIndex !== -1) {
+    return filePath.substring(lastSlashIndex + 1);
+  }
+  return filePath; // 如果路径中没有斜杠或反斜杠，直接返回整个路径
+}
+
+const autoGenerateRenamedOutputDirPath = () => {
+  if (
+    taskState.value.renamedOutputDirPath != globalOutDirPath.value ||
+    taskState.value.renamedOutputDirPath == ""
+  ) {
+    return;
+  }
+
+  if (
+    taskState.value.episodeDirPath == "" ||
+    taskState.value.episodeDirPath == globalSourceDirPath.value
+  ) {
+    return;
+  }
+
+  const dirName = getLastPartOfPath(taskState.value.episodeDirPath as string);
+  if (globalOutDirPath.value.lastIndexOf("/") > 0) {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "/" + dirName;
+  } else {
+    taskState.value.renamedOutputDirPath =
+      globalOutDirPath.value + "\\" + dirName;
+  }
+};
 
 // 任务表单相关规则
 const taskRules = {
@@ -115,6 +181,12 @@ const taskRules = {
     {
       required: true,
       message: "请输入剧集所在目录"
+    }
+  ],
+  episodeDirPathMaxDepth: [
+    {
+      required: true,
+      message: "请输入剧集所在目录的最大深度"
     }
   ],
   renamedOutputDirPath: [
@@ -167,7 +239,38 @@ const taskColumns: PlusColumn[] = [
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     valueType: "copy",
     colProps: {
-      span: 24
+      span: 18
+    },
+    fieldProps: {
+      onChange: autoGenerateRenamedOutputDirPath
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "selectLoadEpisodeDirButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          onClick: handleClickSelectLoadEpisodeDirButton
+        },
+        () => "..."
+      );
+    },
+    colProps: {
+      span: 2
+    }
+  },
+  {
+    label: "目录最大深度",
+    width: 120,
+    prop: "episodeDirPathMaxDepth",
+    valueType: "input-number",
+    colProps: {
+      span: 4
     }
   },
   {
@@ -177,7 +280,24 @@ const taskColumns: PlusColumn[] = [
     valueType: "copy",
     tooltip: "如果使用容器部署，注意路径为容器中的路径",
     colProps: {
-      span: 24
+      span: 22
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "checkRenamedOutputDirPathButton",
+    renderField: () => {
+      return h(ElButton, {
+        onClick: handleClickCheckRenamedOutputDirPathButton,
+        icon: Check,
+        loading: checkLoading.value
+      });
+    },
+    colProps: {
+      span: 2
     }
   },
   {
@@ -250,6 +370,7 @@ const handleUpdateTask = async (values: FieldValues) => {
     taskName: taskState.value.taskName as string,
     season: taskState.value.season as number,
     episodeDirPath: taskState.value.episodeDirPath as string,
+    episodeDirPathMaxDepth: taskState.value.episodeDirPathMaxDepth as number,
     renamedOutputDirPath: taskState.value.renamedOutputDirPath as string,
     episodeTitleRenameMethod: taskState.value
       .episodeTitleRenameMethod as number,
@@ -322,6 +443,44 @@ const doHandleReparse = async () => {
   message("重新解析成功", { type: "success" });
   emit("reparse-success");
 };
+
+const selectLoadEpisodeDirFormVisible = ref(false);
+const handleClickSelectLoadEpisodeDirButton = () => {
+  selectLoadEpisodeDirFormVisible.value = true;
+};
+
+function closeSelectLoadEpisodeDirForm() {
+  selectLoadEpisodeDirFormVisible.value = false;
+}
+
+function onSelectLoadEpisodeDirSuccess(path: string) {
+  taskState.value.episodeDirPath = path;
+  autoGenerateRenamedOutputDirPath();
+}
+
+const handleClickCheckRenamedOutputDirPathButton = async () => {
+  checkLoading.value = true;
+  const renamedOutputDirPath = taskState.value.renamedOutputDirPath as string;
+  const resp: IsEmptyDirResp = await checkIsEmptyDir(renamedOutputDirPath);
+  checkLoading.value = false;
+  if (!resp.success) {
+    return;
+  }
+
+  if (resp.data.isFile) {
+    message(renamedOutputDirPath + " is file, please reinput", {
+      type: "error"
+    });
+  } else if (resp.data.isEmpty) {
+    message(renamedOutputDirPath + " is empty dir", {
+      type: "success"
+    });
+  } else {
+    message(renamedOutputDirPath + " is not empty dir", {
+      type: "warning"
+    });
+  }
+};
 </script>
 <template>
   <span :key="key" />
@@ -365,4 +524,11 @@ const doHandleReparse = async () => {
       </div>
     </template>
   </PlusForm>
+
+  <remote-file-select-dialog-form
+    v-if="selectLoadEpisodeDirFormVisible"
+    :root-path="globalSourceDirPath"
+    @closeForm="closeSelectLoadEpisodeDirForm"
+    @select-success="onSelectLoadEpisodeDirSuccess"
+  />
 </template>

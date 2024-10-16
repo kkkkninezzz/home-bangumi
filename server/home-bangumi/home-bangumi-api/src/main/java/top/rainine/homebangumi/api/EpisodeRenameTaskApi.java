@@ -11,7 +11,7 @@ import top.rainine.homebangumi.api.resp.*;
  * @description 剧集重命名任务api
  * @date 2024/7/17 14:59:45
  */
-@RequestMapping("/api/v1/episode/rename/task")
+@RequestMapping("/api/v1/rename/task/episode")
 public interface EpisodeRenameTaskApi {
 
     /**

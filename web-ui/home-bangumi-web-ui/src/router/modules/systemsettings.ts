@@ -84,6 +84,32 @@ export default {
           }
         }
       ]
+    },
+    {
+      path: "/system-settings/rename-task/index",
+      redirect: "/system-settings/rename-task/episode",
+      name: "RenameTaskSettings",
+      meta: {
+        icon: "fluent:task-list-square-settings-20-regular",
+        title: "重命名任务"
+      },
+      children: [
+        {
+          path: "/system-settings/rename-task/episode",
+          component: () =>
+            import(
+              "@/views/systemsettings/renametask/components/EpisodeRenameTaskSettingsPage.vue"
+            ),
+          name: "EpisodeRenameTaskSettingsPage",
+          meta: {
+            title: "剧集重命名",
+            icon: "mdi:rename-outline",
+
+            // 通过设置showParent为true，显示父级
+            showParent: true
+          }
+        }
+      ]
     }
     // {
     //   path: "/system-settings/scraped-pase/index",

@@ -17,6 +17,11 @@ export type CreateEpisodeRenameTaskReq = {
   episodeDirPath: string;
 
   /**
+   * 遍历剧集目录路径的最大深度
+   */
+  episodeDirPathMaxDepth: number;
+
+  /**
    * 重命名后输出的目录路径
    */
   renamedOutputDirPath: string;
@@ -86,6 +91,11 @@ export type EpisodeRenameTaskDetailResp = {
      * 剧集目录路径
      */
     episodeDirPath: string;
+
+    /**
+     * 遍历剧集目录路径的最大深度
+     */
+    episodeDirPathMaxDepth: number;
 
     /**
      * 重命名后输出的目录路径
@@ -202,6 +212,11 @@ export type UpdateEpisodeRenameTaskReq = {
   episodeDirPath: string;
 
   /**
+   * 遍历剧集目录路径的最大深度
+   */
+  episodeDirPathMaxDepth: number;
+
+  /**
    * 重命名后输出的目录路径
    */
   renamedOutputDirPath: string;
@@ -313,7 +328,7 @@ export type LoadPagedEpisodeRenameTaskItemsResp = {
 export const createRenameTask = (data: CreateEpisodeRenameTaskReq) => {
   return hbHttp.request<CreateEpisodeRenameTaskResp>(
     "post",
-    "/api/v1/episode/rename/task/create",
+    "/api/v1/rename/task/episode/create",
     { data }
   );
 };
@@ -326,7 +341,7 @@ export const createRenameTask = (data: CreateEpisodeRenameTaskReq) => {
 export const getTaskDetail = (id: number) => {
   return hbHttp.request<EpisodeRenameTaskDetailResp>(
     "get",
-    `/api/v1/episode/rename/task/detail/${id}`,
+    `/api/v1/rename/task/episode/detail/${id}`,
     {}
   );
 };
@@ -339,7 +354,7 @@ export const getTaskDetail = (id: number) => {
 export const getTaskItems = (id: number) => {
   return hbHttp.request<EpisodeRenameTaskItemsResp>(
     "get",
-    `/api/v1/episode/rename/task/detail/${id}/items`,
+    `/api/v1/rename/task/episode/detail/${id}/items`,
     {}
   );
 };
@@ -351,7 +366,7 @@ export const updateRssBangumi = (
 ) => {
   return hbHttp.request<EpisodeRenameTaskDetailResp>(
     "put",
-    `/api/v1/episode/rename/task/${id}`,
+    `/api/v1/rename/task/episode/${id}`,
     { data }
   );
 };
@@ -364,7 +379,7 @@ export const updateRssBangumi = (
 export const submitTask = (id: number) => {
   return hbHttp.request<ApiResult>(
     "post",
-    `/api/v1/episode/rename/task/${id}/submit`,
+    `/api/v1/rename/task/episode/${id}/submit`,
     {}
   );
 };
@@ -378,7 +393,7 @@ export const submitTask = (id: number) => {
 export const reparseTaskItems = (id: number) => {
   return hbHttp.request<ApiResult>(
     "post",
-    `/api/v1/episode/rename/task/${id}/items/reparse`,
+    `/api/v1/rename/task/episode/${id}/items/reparse`,
     {}
   );
 };
@@ -391,7 +406,7 @@ export const reparseTaskItems = (id: number) => {
 export const ignoreTaskItem = (id: number, itemId: number) => {
   return hbHttp.request<ApiResult>(
     "put",
-    `/api/v1/episode/rename/task/${id}/item/${itemId}/ignore`,
+    `/api/v1/rename/task/episode/${id}/item/${itemId}/ignore`,
     {}
   );
 };
@@ -408,7 +423,7 @@ export const manualParseTaskItem = (
 ) => {
   return hbHttp.request<ApiResult>(
     "put",
-    `/api/v1/episode/rename/task/${id}/item/${itemId}/manual-parse`,
+    `/api/v1/rename/task/episode/${id}/item/${itemId}/manual-parse`,
     { data }
   );
 };
@@ -417,7 +432,7 @@ export const manualParseTaskItem = (
 export const loadPagedTasks = (data: LoadPagedTasksReq) => {
   return hbHttp.request<LoadPagedEpisodeRenameTaskItemsResp>(
     "post",
-    "/api/v1/episode/rename/task/paged/list",
+    "/api/v1/rename/task/episode/paged/list",
     { data }
   );
 };

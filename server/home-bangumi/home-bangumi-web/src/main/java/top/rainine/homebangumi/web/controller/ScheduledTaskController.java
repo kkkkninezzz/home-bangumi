@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.rainine.homebangumi.api.ScheduledTaskApi;
 import top.rainine.homebangumi.api.req.RunOnceScheduledTaskReq;
 import top.rainine.homebangumi.api.resp.Result;
-import top.rainine.homebangumi.core.scheduler.ScheduledTaskService;
+import top.rainine.homebangumi.core.common.scheduler.ScheduledTaskService;
 import top.rainine.homebangumi.def.enums.ScheduledTaskIdEnum;
 
 /**

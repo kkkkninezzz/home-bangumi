@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.common.utils.GsonUtils;
+import top.rainine.homebangumi.common.utils.HbFileNameUtils;
 import top.rainine.homebangumi.core.downloader.EpisodeDownloadAdapter;
 import top.rainine.homebangumi.core.rss.data.RssBangumiEpisodePreviewInfo;
 import top.rainine.homebangumi.core.rss.data.convertor.RssBangumiEpisodeConvertor;
@@ -155,6 +156,8 @@ public class RssBangumiComponent {
         HbRssBangumiEpisode hbRssBangumiEpisode = rssBangumiEpisodeConvertor.toHbRssBangumiEpisode(episodePreviewInfo);
         hbRssBangumiEpisode.setRssBangumiId(hbRssBangumiId);
 
+        // 做一次过滤，防止存在非法字符
+        bangumiTitle = HbFileNameUtils.filterIllegalChars(bangumiTitle);
         if (StringUtils.isNotBlank(hbRssBangumiEpisode.getEpisodeFileName())) {
             String episodeStoredPath = downloadDir.resolve(bangumiTitle).resolve(hbRssBangumiEpisode.getEpisodeFileName()).toString();
             // 强制转换为unix系统的路径

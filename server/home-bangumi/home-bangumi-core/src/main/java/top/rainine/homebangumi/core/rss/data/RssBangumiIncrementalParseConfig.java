@@ -1,8 +1,7 @@
 package top.rainine.homebangumi.core.rss.data;
 
 import lombok.Builder;
-import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapter;
-import top.rainine.homebangumi.def.enums.EpisodeTitleRenameMethodEnum;
+import top.rainine.homebangumi.core.common.episoderenamer.EpisodeTitleRenameAdapter;
 import top.rainine.homebangumi.def.enums.RssCategoryEnum;
 
 import java.util.List;

@@ -44,6 +44,13 @@ public class CreateEpisodeRenameTaskReq {
     private String episodeDirPath;
 
     /**
+     * 遍历剧集目录路径的最大深度
+     * */
+    @NotNull(message = HbCodeEnum.ErrorCode.EPISODE_DIR_PATH_MAX_DEPTH_INVALID)
+    @Min(value = 1, message = HbCodeEnum.ErrorCode.EPISODE_DIR_PATH_MAX_DEPTH_INVALID)
+    private Integer episodeDirPathMaxDepth;
+
+    /**
      * 重命名后输出的目录路径
      * */
     @NotEmpty(message = HbCodeEnum.ErrorCode.RENAMED_EPISODE_OUTPUT_DIR_PATH_INVALID)

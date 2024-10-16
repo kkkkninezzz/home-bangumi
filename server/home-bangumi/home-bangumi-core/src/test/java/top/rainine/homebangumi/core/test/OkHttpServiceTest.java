@@ -4,8 +4,8 @@ import okhttp3.Request;
 import okhttp3.ResponseBody;
 import top.rainine.homebangumi.core.settings.NetProxySettingsService;
 import top.rainine.homebangumi.core.settings.impl.NetProxySettingsServiceImpl;
-import top.rainine.homebangumi.core.net.OkHttpResponseHandler;
-import top.rainine.homebangumi.core.net.impl.OkHttpServiceImpl;
+import top.rainine.homebangumi.core.common.net.OkHttpResponseHandler;
+import top.rainine.homebangumi.core.common.net.impl.OkHttpServiceImpl;
 
 import java.io.IOException;
 

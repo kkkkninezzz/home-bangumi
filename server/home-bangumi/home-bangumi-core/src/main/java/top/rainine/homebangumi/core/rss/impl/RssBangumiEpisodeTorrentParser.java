@@ -9,12 +9,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import top.rainine.homebangumi.common.data.TorrentInfo;
 import top.rainine.homebangumi.common.utils.BencodeUtils;
-import top.rainine.homebangumi.core.net.OkHttpService;
+import top.rainine.homebangumi.core.common.net.OkHttpService;
 import top.rainine.homebangumi.core.rss.data.RssBangumiEpisodeParsedInfo;
 import top.rainine.homebangumi.core.rss.data.RssBangumiEpisodePreviewInfo;
-import top.rainine.homebangumi.core.rss.episoderenamer.EpisodeTitleRenameAdapter;
-import top.rainine.homebangumi.core.titleparser.EpisodeTitleParser;
-import top.rainine.homebangumi.core.titleparser.data.EpisodeTitleInfo;
+import top.rainine.homebangumi.core.common.episoderenamer.EpisodeTitleRenameAdapter;
+import top.rainine.homebangumi.core.common.titleparser.EpisodeTitleParser;
+import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 import top.rainine.homebangumi.def.enums.RssBangumiEpisodeStatusEnum;
 
 import java.io.IOException;

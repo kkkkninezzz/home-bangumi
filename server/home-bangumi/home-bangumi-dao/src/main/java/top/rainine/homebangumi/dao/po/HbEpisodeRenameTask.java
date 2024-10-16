@@ -50,6 +50,12 @@ public class HbEpisodeRenameTask extends BaseEntity {
     private String episodeDirPath;
 
     /**
+     * 剧集目录路径，遍历时的深度，默认为1
+     * */
+    @Column(name = "episode_dir_path_max_depth", nullable = false, columnDefinition = "integer default 1")
+    private Integer episodeDirPathMaxDepth;
+
+    /**
      * 重命名后输出的目录路径
      * */
     @Column(name = "renamed_output_dir_path", length = 512, nullable = false)

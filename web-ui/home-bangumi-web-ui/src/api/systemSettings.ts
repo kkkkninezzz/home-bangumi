@@ -147,6 +147,33 @@ export type WecomchanSettingsResp = {
   };
 } & ApiResult;
 
+/** 更新剧集重命名任务的配置 */
+export type UpdateEpisodeRenameTaskSettingsReq = {
+  /**
+   * 源目录路径
+   */
+  sourceDirPath: string;
+
+  /**
+   * 输出目录路径
+   */
+  outDirPath: string;
+};
+
+export type EpisodeRenameTaskSettingsResp = {
+  data: {
+    /**
+     * 源目录路径
+     */
+    sourceDirPath: string;
+
+    /**
+     * 输出目录路径
+     */
+    outDirPath: string;
+  };
+} & ApiResult;
+
 /** 获取网络代理配置 */
 export const getNetworkProxySettings = () => {
   return hbHttp.request<NetworkProxySettingsResp>(
@@ -236,11 +263,31 @@ export const getWecomchanSettings = () => {
   );
 };
 
-/** 更新定时任务配置 */
+/** 更新wecomchan配置 */
 export const updateWecomchanSettings = (data: UpdateWecomchanSettingsReq) => {
   return hbHttp.request<WecomchanSettingsResp>(
     "put",
     `/api/v1/system-settings/message-pusher/wecomchan`,
+    { data }
+  );
+};
+
+/** 获取剧集重命名任务配置 */
+export const getEpisodeRenameTaskSettings = () => {
+  return hbHttp.request<EpisodeRenameTaskSettingsResp>(
+    "get",
+    `/api/v1/system-settings/rename-task/episode`,
+    {}
+  );
+};
+
+/** 更新剧集重命名任务配置 */
+export const updateEpisodeRenameTaskSettings = (
+  data: UpdateEpisodeRenameTaskSettingsReq
+) => {
+  return hbHttp.request<EpisodeRenameTaskSettingsResp>(
+    "put",
+    `/api/v1/system-settings/rename-task/episode`,
     { data }
   );
 };
