@@ -100,7 +100,26 @@ const settingsColumns: PlusColumn[] = [
     prop: "outDirPath",
     valueType: "copy",
     colProps: {
-      span: 24
+      span: 22
+    }
+  },
+  {
+    label: "",
+    renderLabel: () => {
+      return "";
+    },
+    prop: "selectOutDirButton",
+    renderField: () => {
+      return h(
+        ElButton,
+        {
+          onClick: handleClickSelectOutDirButton
+        },
+        () => "..."
+      );
+    },
+    colProps: {
+      span: 2
     }
   }
 ];
@@ -133,6 +152,19 @@ function closeSelectSourceDirForm() {
 function onSelectSourceDirSuccess(path: string) {
   settingsState.value.sourceDirPath = path;
 }
+
+const selectOutDirFormVisible = ref(false);
+const handleClickSelectOutDirButton = () => {
+  selectOutDirFormVisible.value = true;
+};
+
+function closeSelectOutDirForm() {
+  selectOutDirFormVisible.value = false;
+}
+
+function onSelectOutDirSuccess(path: string) {
+  settingsState.value.outDirPath = path;
+}
 </script>
 
 <template>
@@ -148,8 +180,15 @@ function onSelectSourceDirSuccess(path: string) {
 
   <remote-file-select-dialog-form
     v-if="selectSourceDirFormVisible"
-    root-path="C:\Users\18581\Desktop"
+    root-path="/rename-tasks"
     @closeForm="closeSelectSourceDirForm"
     @select-success="onSelectSourceDirSuccess"
+  />
+
+  <remote-file-select-dialog-form
+    v-if="selectOutDirFormVisible"
+    root-path="/out/rename-tasks"
+    @closeForm="closeSelectOutDirForm"
+    @select-success="onSelectOutDirSuccess"
   />
 </template>
