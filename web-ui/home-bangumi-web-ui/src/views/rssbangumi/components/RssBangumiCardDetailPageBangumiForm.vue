@@ -251,7 +251,6 @@ const rssBangumiColumns: PlusColumn[] = [
     width: 120,
     prop: "customizeRenamedEpisodeTitleFormat",
     valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
     fieldProps: computed(() => ({
       disabled:
         rssBangumiState.value.episodeTitleRenameMethod !==
@@ -259,7 +258,9 @@ const rssBangumiColumns: PlusColumn[] = [
     })),
     colProps: {
       span: 10
-    }
+    },
+    renderExtra: () =>
+      `支持的占位符: {title}, {season}, {episode}。 \n例如: {title} S{season}E{episode}`
   },
   {
     label: "季度",

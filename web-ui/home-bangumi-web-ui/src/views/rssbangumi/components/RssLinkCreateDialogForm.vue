@@ -197,7 +197,6 @@ const rssLinkColumns: PlusColumn[] = [
     width: 120,
     prop: "customizeRenamedEpisodeTitleFormat",
     valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
     fieldProps: computed(() => ({
       disabled:
         rssLinkState.value.episodeTitleRenameMethod !==
@@ -205,7 +204,9 @@ const rssLinkColumns: PlusColumn[] = [
     })),
     colProps: {
       span: 16
-    }
+    },
+    renderExtra: () =>
+      `支持的占位符: {title}, {season}, {episode}。 \n例如: {title} S{season}E{episode}`
   },
   {
     label: "过滤规则",
