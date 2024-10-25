@@ -51,7 +51,7 @@ const rssLinkState = ref<FieldValues>({
   handleMethod: RssBangumiHandleMethodEnum.SUBSCRIBE, // 处理方式  默认为订阅
   rssName: "", // 链接名
   rssLink: "", // 实际链接
-  episodeOffset: 0, // 剧集偏移量
+  skippedEpisodeNo: 0, // 跳过的剧集号
   filterRules: [], // 过滤规则
   downloaderCategory: DownloaderCategoryEnum.QBITTORRENT, // 下载器分类
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
@@ -64,7 +64,7 @@ function initRssLinkState() {
   rssLinkState.value.handleMethod = RssBangumiHandleMethodEnum.SUBSCRIBE;
   rssLinkState.value.rssName = "";
   rssLinkState.value.rssLink = "";
-  rssLinkState.value.episodeOffset = 0;
+  rssLinkState.value.skippedEpisodeNo = 0;
   //rssLinkState.value.filterRules = [];
   rssLinkState.value.downloaderCategory = DownloaderCategoryEnum.QBITTORRENT;
   rssLinkState.value.episodeTitleRenameMethod =
@@ -174,9 +174,9 @@ const rssLinkColumns: PlusColumn[] = [
     }
   },
   {
-    label: "剧集偏移",
+    label: "跳过的剧集",
     width: 120,
-    prop: "episodeOffset",
+    prop: "skippedEpisodeNo",
     valueType: "input-number",
     colProps: {
       span: 8
@@ -244,7 +244,7 @@ const handlePreview = async (
     rssLink: rssLinkState.value.rssLink as string,
     filterRules: rssLinkState.value.filterRules as Array<string>,
     handleMethod: rssLinkState.value.handleMethod as number,
-    episodeOffset: rssLinkState.value.episodeOffset as number,
+    skippedEpisodeNo: rssLinkState.value.skippedEpisodeNo as number,
     downloaderCategory: rssLinkState.value.downloaderCategory as number,
     episodeTitleRenameMethod: rssLinkState.value
       .episodeTitleRenameMethod as number,

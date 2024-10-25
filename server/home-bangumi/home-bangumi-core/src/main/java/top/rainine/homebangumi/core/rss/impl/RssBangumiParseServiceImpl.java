@@ -80,7 +80,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
         RssCategoryEnum rssCategory = config.rssCategory();
         String rssLink = config.rssLink();
         Integer season = config.season();
-        Integer episodeOffset = config.episodeOffset();
+        Integer skippedEpisodeNo = config.skippedEpisodeNo();
         List<String> filteredOutRules = config.filteredOutRules();
 
         // 计算出rssLikn的md5
@@ -115,7 +115,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
 
         // 生成需要解析的剧集预览信息
         List<RssBangumiEpisodePreviewInfo> previewInfoList = parseRssBangumiEpisodes(rssLinkMd5, parsedInfo.episodes(), season,
-                episodeOffset, filteredOutRules, episodeTitleRenameAdapter);
+                skippedEpisodeNo, filteredOutRules, episodeTitleRenameAdapter);
 
         // 如果没有指定季，且未解析出番剧的季信息
         // 那么尝试使用剧集中的季信息
@@ -160,7 +160,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
     }
 
     private List<RssBangumiEpisodePreviewInfo> parseRssBangumiEpisodes(String rssLinkMd5, List<RssBangumiEpisodeParsedInfo> episodeParsedInfoList,
-                                                                       Integer season, Integer episodeOffset, List<String> filteredOutRules,
+                                                                       Integer season, Integer skippedEpisodeNo, List<String> filteredOutRules,
                                                                        EpisodeTitleRenameAdapter episodeTitleRenameAdapter) {
         // 处理根据rss上解析到的剧集名进行过滤
         List<RssBangumiEpisodeParsedInfo> pendingEpisodeParsedInfoList;
@@ -202,7 +202,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
                 .map(previewInfo -> {
                     // 处理剧集偏移
                     if (previewInfo.status() == RssBangumiEpisodeStatusEnum.PARSED
-                            && Objects.nonNull(episodeOffset) && previewInfo.episodeNo() <= episodeOffset) {
+                            && Objects.nonNull(skippedEpisodeNo) && previewInfo.episodeNo() <= skippedEpisodeNo) {
                         return rssBangumiEpisodeConvertor.toRssBangumiEpisodePreviewInfo(previewInfo, RssBangumiEpisodeStatusEnum.SKIPPED);
                     }
 
@@ -298,7 +298,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
         RssCategoryEnum rssCategory = config.rssCategory();
         String rssLink = config.rssLink();
         Integer season = config.season();
-        Integer episodeOffset = config.episodeOffset();
+        Integer skippedEpisodeNo = config.skippedEpisodeNo();
         List<String> filteredOutRules = config.filteredOutRules();
         List<String> parsedTorrentLinks = config.parsedTorrentLinks();
 
@@ -331,7 +331,7 @@ public class RssBangumiParseServiceImpl implements RssBangumiParseService, Initi
         }
 
         // 生成需要解析的剧集预览信息
-        return parseRssBangumiEpisodes(rssLinkMd5, episodeParsedInfolist, season, episodeOffset, filteredOutRules, config.episodeTitleRenameAdapter());
+        return parseRssBangumiEpisodes(rssLinkMd5, episodeParsedInfolist, season, skippedEpisodeNo, filteredOutRules, config.episodeTitleRenameAdapter());
     }
 }
 

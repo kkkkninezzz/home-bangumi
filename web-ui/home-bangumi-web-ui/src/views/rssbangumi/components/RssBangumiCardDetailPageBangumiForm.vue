@@ -85,7 +85,7 @@ const rssBangumiState = ref<FieldValues>({
   rssName: "", // 链接名
   rssLink: "", // 实际链接
   filterRules: [], // 过滤规则
-  episodeOffset: 0, // 剧集偏移量
+  skippedEpisodeNo: 0, // 跳过的剧集号
   bangumiTitle: "", // 番剧名
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
   customizeRenamedEpisodeTitleFormat: "", // 自定义的重命名后标题格式
@@ -114,7 +114,7 @@ function setRssBangumiState(resp: RssBangumiDetailResp) {
   rssBangumiState.value.rssName = resp.data.rssName;
   rssBangumiState.value.rssLink = resp.data.rssLink;
   rssBangumiState.value.filterRules = resp.data.filterRules;
-  rssBangumiState.value.episodeOffset = resp.data.episodeOffset;
+  rssBangumiState.value.skippedEpisodeNo = resp.data.skippedEpisodeNo;
   rssBangumiState.value.episodeTitleRenameMethod =
     resp.data.episodeTitleRenameMethod;
   rssBangumiState.value.customizeRenamedEpisodeTitleFormat =
@@ -219,9 +219,9 @@ const rssBangumiColumns: PlusColumn[] = [
   },
 
   {
-    label: "剧集偏移",
+    label: "跳过的剧集",
     width: 120,
-    prop: "episodeOffset",
+    prop: "skippedEpisodeNo",
     valueType: "input-number",
     colProps: {
       span: 8
@@ -359,7 +359,7 @@ const handleSubmit = async (values: FieldValues) => {
   const req: RssBangumiUpdateReq = {
     rssName: rssBangumiState.value.rssName as string,
     filterRules: rssBangumiState.value.filterRules as Array<string>,
-    episodeOffset: rssBangumiState.value.episodeOffset as number,
+    skippedEpisodeNo: rssBangumiState.value.skippedEpisodeNo as number,
     downloaderCategory: rssBangumiState.value.downloaderCategory as number,
     episodeTitleRenameMethod: rssBangumiState.value
       .episodeTitleRenameMethod as number,
