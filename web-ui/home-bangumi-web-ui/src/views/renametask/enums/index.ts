@@ -140,11 +140,19 @@ export enum EpisodeTitleRenameMethodEnum {
   OFFICIAL_TITLE = 2,
 
   /** 基于自定义标题进行重命名 */
-  CUSTOMIZED_TITLE = 3
+  CUSTOMIZED_TITLE = 3,
+
+  /** 只解析出剧集号 */
+  ONLY_PARSE_EPISODE_NO = 4
 }
 
 // 剧集重命名方式options
 export const EpisodeTitleRenameMethodOptions = [
+  {
+    label: "NONE",
+    value: EpisodeTitleRenameMethodEnum.NONE,
+    color: "blue"
+  },
   {
     label: "Torrent parsed title",
     value: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE,
@@ -153,6 +161,11 @@ export const EpisodeTitleRenameMethodOptions = [
   {
     label: "Customized title",
     value: EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE,
+    color: "blue"
+  },
+  {
+    label: "Only parse episode no",
+    value: EpisodeTitleRenameMethodEnum.ONLY_PARSE_EPISODE_NO,
     color: "blue"
   }
 ];

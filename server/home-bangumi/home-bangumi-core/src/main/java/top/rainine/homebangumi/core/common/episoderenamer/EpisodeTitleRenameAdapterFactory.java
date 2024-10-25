@@ -32,6 +32,9 @@ public class EpisodeTitleRenameAdapterFactory {
             case CUSTOMIZED_TITLE -> {
                 return new EpisodeTitleRenameByCustomizeTitleAdapter(customizeRenamedEpisodeTitleFormat);
             }
+            case ONLY_PARSE_EPISODE_NO -> {
+                return new EpisodeTitleRenameOnlyParseEpisodeNoAdapter();
+            }
             default -> {
                 log.error("[EpisodeTitleRenameAdapterFactory]new rename adapter failed, not supported method: {}", renameMethod);
                 throw new HbBizException(HbCodeEnum.EPISODE_TITLE_RENAME_ADAPTER_NOT_FOUND);

@@ -5,15 +5,10 @@ import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 
 /**
  * @author rainine
- * @description 保存原始命名
+ * @description 保存原始命名，但需要解析出剧集号
  * @date 2024/6/26 11:18:47
  */
-public class EpisodeTitleRenameNoneAdapter implements EpisodeTitleRenameAdapter {
-
-    @Override
-    public boolean whitParseTitle() {
-        return false;
-    }
+public class EpisodeTitleRenameOnlyParseEpisodeNoAdapter implements EpisodeTitleRenameAdapter {
 
     @Override
     public String renameTitle(String episodeFileName, EpisodeTitleInfo episodeTitleInfo) {

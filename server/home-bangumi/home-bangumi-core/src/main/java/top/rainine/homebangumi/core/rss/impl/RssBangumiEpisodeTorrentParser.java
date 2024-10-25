@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @authoer rainine
@@ -36,6 +37,7 @@ public class RssBangumiEpisodeTorrentParser {
     private final EpisodeTitleParser episodeTitleParser;
 
     private final EpisodeTitleRenameAdapter episodeTitleRenameAdapter;
+
 
     /**
      * 根据种子进行解析
@@ -100,13 +102,23 @@ public class RssBangumiEpisodeTorrentParser {
         builder.episodeFileName(episodeFileName);
 
         EpisodeTitleInfo episodeTitleInfo;
-        try {
-            episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season);
-        } catch (Exception e) {
-            log.error("[RssBangumiEpisodeTorrentParser]parse title failed, torrentLink: {}, episodeFileName: {}",
-                    parsedInfo.torrentLink(), episodeFileName);
-            return builder
-                    .status(RssBangumiEpisodeStatusEnum.TITLE_PARSE_FAILED)
+        // 如果该解析器需要先进行title的解析
+        if (episodeTitleRenameAdapter.whitParseTitle()) {
+            try {
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season);
+            } catch (Exception e) {
+                log.error("[RssBangumiEpisodeTorrentParser]parse title failed, torrentLink: {}, episodeFileName: {}",
+                        parsedInfo.torrentLink(), episodeFileName);
+                return builder
+                        .status(RssBangumiEpisodeStatusEnum.TITLE_PARSE_FAILED)
+                        .build();
+            }
+        } else {
+            episodeTitleInfo = EpisodeTitleInfo
+                    .builder()
+                    .episode(1)
+                    .season(Optional.ofNullable(season).orElse(1))
+                    .title(FilenameUtils.getBaseName(episodeFileName))
                     .build();
         }
 

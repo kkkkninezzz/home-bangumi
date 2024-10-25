@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -86,13 +87,22 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         }
 
         EpisodeTitleInfo episodeTitleInfo;
-        try {
-            episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season());
-        } catch (Exception e) {
-            log.error("[EpisodeRenameTaskItemParser]parse title failed, episodeFilePath: {}, episodeFileName: {}",
-                    episodeFilePath, episodeFileName);
-            return builder
-                    .status(EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED)
+        if (episodeTitleRenameAdapter.whitParseTitle()) {
+            try {
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season());
+            } catch (Exception e) {
+                log.error("[EpisodeRenameTaskItemParser]parse title failed, episodeFilePath: {}, episodeFileName: {}",
+                        episodeFilePath, episodeFileName);
+                return builder
+                        .status(EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED)
+                        .build();
+            }
+        } else {
+            episodeTitleInfo = EpisodeTitleInfo
+                    .builder()
+                    .episode(1)
+                    .season(Optional.ofNullable(config.season()).orElse(1))
+                    .title(FilenameUtils.getBaseName(episodeFileName))
                     .build();
         }
 

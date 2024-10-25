@@ -36,6 +36,11 @@ public enum EpisodeTitleRenameMethodEnum {
      * 需要提供占位符{season} {episode}
      * */
     CUSTOMIZED_TITLE(3),
+
+    /**
+     * 在保留原始命名的基础上，需要解析出剧集号
+     * */
+    ONLY_PARSE_EPISODE_NO(4),
     ;
 
     private static final EpisodeTitleRenameMethodEnum[] ENUMS = values();
