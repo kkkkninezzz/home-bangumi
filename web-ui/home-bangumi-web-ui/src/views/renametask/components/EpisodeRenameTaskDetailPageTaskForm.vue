@@ -315,7 +315,6 @@ const taskColumns: PlusColumn[] = [
     width: 120,
     prop: "customizeRenamedEpisodeTitleFormat",
     valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
     fieldProps: computed(() => ({
       disabled:
         taskState.value.episodeTitleRenameMethod !==
@@ -323,7 +322,8 @@ const taskColumns: PlusColumn[] = [
     })),
     colProps: {
       span: 16
-    }
+    },
+    renderExtra: () => `支持的占位符: {season}, {episode}`
   },
   {
     label: "过滤规则",
