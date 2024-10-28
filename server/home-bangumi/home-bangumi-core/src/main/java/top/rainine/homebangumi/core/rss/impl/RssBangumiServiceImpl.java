@@ -106,6 +106,7 @@ public class RssBangumiServiceImpl implements RssBangumiService, HbAdvisor<RssBa
                 .rssLink(req.getRssLink())
                 .season(null)
                 .skippedEpisodeNo(req.getSkippedEpisodeNo())
+                .episodeNoOffset(req.getEpisodeNoOffset())
                 .filteredOutRules(filteredOutRules)
                 .episodeTitleRenameMethod(episodeTitleRenameMethod)
                 .customizeRenamedEpisodeTitleFormat(req.getCustomizeRenamedEpisodeTitleFormat())

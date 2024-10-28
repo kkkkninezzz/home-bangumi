@@ -49,6 +49,11 @@ public class PreviewRssBangumiReq {
     private Integer skippedEpisodeNo;
 
     /**
+     * 剧集的偏移量
+     * */
+    private Integer episodeNoOffset;
+
+    /**
      * 收集方式
      * */
     @NotNull(message = HbCodeEnum.ErrorCode.RSS_HANDLE_METHOD_INVALID)

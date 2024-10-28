@@ -66,6 +66,11 @@ public class RssBangumiDetailResp {
     private Integer skippedEpisodeNo;
 
     /**
+     * 剧集的偏移量
+     * */
+    private Integer episodeNoOffset;
+
+    /**
      * 剧集标题重命名方式
      * @see EpisodeTitleRenameMethodEnum#getMethod()
      * */

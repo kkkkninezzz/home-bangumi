@@ -73,6 +73,13 @@ public class HbRssBangumi extends BaseEntity {
     private Integer skippedEpisodeNo;
 
     /**
+     * 剧集号的偏移，作用于解析出来的剧集号
+     * 在此基础上，加上偏移量再显示给用户
+     * */
+    @Column(name = "episode_no_offset")
+    private Integer episodeNoOffset;
+
+    /**
      * 番剧id
      * @see HbBangumi#getId()
      * */
