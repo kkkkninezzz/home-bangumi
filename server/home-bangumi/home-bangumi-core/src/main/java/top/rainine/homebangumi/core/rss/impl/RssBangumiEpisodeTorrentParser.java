@@ -44,7 +44,7 @@ public class RssBangumiEpisodeTorrentParser {
      * @param parsedInfo 根据rss解析出来的信息
      * @param torrentStoredPath 种子的存储路径
      * */
-    public RssBangumiEpisodePreviewInfo parse(RssBangumiEpisodeParsedInfo parsedInfo, Path torrentStoredPath, Integer season) {
+    public RssBangumiEpisodePreviewInfo parse(RssBangumiEpisodeParsedInfo parsedInfo, Path torrentStoredPath, Integer season, Integer episodeNoOffset) {
         RssBangumiEpisodePreviewInfo.RssBangumiEpisodePreviewInfoBuilder builder = RssBangumiEpisodePreviewInfo
                 .builder()
                 .rawEpisodeTitle(parsedInfo.rawEpisodeTitle())
@@ -131,7 +131,10 @@ public class RssBangumiEpisodeTorrentParser {
             renamedTitleFileName = renamedTitle;
         }
 
-        return builder.episodeNo(episodeTitleInfo.episode())
+        int rawEpisodeNo = episodeTitleInfo.episode();
+        int episodeNo = Optional.ofNullable(episodeNoOffset).map(offset -> rawEpisodeNo + offset).orElse(rawEpisodeNo);
+        return builder.episodeNo(episodeNo)
+                .rawEpisodeNo(rawEpisodeNo)
                 .season(episodeTitleInfo.season())
                 .bangumiTitle(episodeTitleInfo.title())
                 .status(RssBangumiEpisodeStatusEnum.PARSED)

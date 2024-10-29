@@ -39,6 +39,11 @@ public class PreviewRssBangumiReq {
     private String rssLink;
 
     /**
+     * 季度
+     * */
+    private Integer season;
+
+    /**
      * 过滤规则
      * */
     private List<String> filterRules;

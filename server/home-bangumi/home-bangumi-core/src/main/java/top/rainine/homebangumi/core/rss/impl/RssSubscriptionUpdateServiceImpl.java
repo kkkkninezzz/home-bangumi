@@ -90,6 +90,7 @@ public class RssSubscriptionUpdateServiceImpl implements RssSubscriptionUpdateSe
                 .rssLink(rssBangumi.getRssLink())
                 .season(bangumi.getSeason())
                 .skippedEpisodeNo(rssBangumi.getSkippedEpisodeNo())
+                .episodeNoOffset(rssBangumi.getEpisodeNoOffset())
                 .filteredOutRules(rssBangumiComponent.getFilteredOutRules(rssBangumi.getFilterRules()))
                 .parsedTorrentLinks(torrentLinks)
                 .episodeTitleRenameAdapter(episodeTitleRenameAdapter)

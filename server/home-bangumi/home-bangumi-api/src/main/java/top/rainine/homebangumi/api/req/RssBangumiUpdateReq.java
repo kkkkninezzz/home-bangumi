@@ -39,6 +39,11 @@ public class RssBangumiUpdateReq {
     private Integer skippedEpisodeNo;
 
     /**
+     * 剧集偏移
+     * */
+    private Integer episodeNoOffset;
+
+    /**
      * 下载器分类
      * */
     @NotNull(message = HbCodeEnum.ErrorCode.DOWNLOADER_CATEGORY_INVALID)
