@@ -37,6 +37,13 @@ public class HbEpisodeRenameTask extends BaseEntity {
     private Integer season;
 
     /**
+     * 剧集号的偏移，作用于解析出来的剧集号
+     * 在此基础上，加上偏移量再显示给用户
+     * */
+    @Column(name = "episode_no_offset")
+    private Integer episodeNoOffset;
+
+    /**
      * 任务状态
      * @see EpisodeRenameTaskStatusEnum#getStatus()
      * */
@@ -74,6 +81,12 @@ public class HbEpisodeRenameTask extends BaseEntity {
      * */
     @Column(name = "customize_rename_episode_title_format", length = 256)
     private String customizeRenamedEpisodeTitleFormat;
+
+    /**
+     * 跳过的剧集号，如果设置为1，表示从第2集开始，忽略第二集之前的
+     * */
+    @Column(name = "skipped_episode_no")
+    private Integer skippedEpisodeNo;
 
     /**
      * 过滤规则
