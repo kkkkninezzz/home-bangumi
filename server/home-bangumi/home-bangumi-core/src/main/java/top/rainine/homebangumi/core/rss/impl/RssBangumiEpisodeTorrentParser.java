@@ -105,7 +105,7 @@ public class RssBangumiEpisodeTorrentParser {
         // 如果该解析器需要先进行title的解析
         if (episodeTitleRenameAdapter.whitParseTitle()) {
             try {
-                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season);
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season, episodeNoOffset);
             } catch (Exception e) {
                 log.error("[RssBangumiEpisodeTorrentParser]parse title failed, torrentLink: {}, episodeFileName: {}",
                         parsedInfo.torrentLink(), episodeFileName);
@@ -131,10 +131,8 @@ public class RssBangumiEpisodeTorrentParser {
             renamedTitleFileName = renamedTitle;
         }
 
-        int rawEpisodeNo = episodeTitleInfo.episode();
-        int episodeNo = Optional.ofNullable(episodeNoOffset).map(offset -> rawEpisodeNo + offset).orElse(rawEpisodeNo);
-        return builder.episodeNo(episodeNo)
-                .rawEpisodeNo(rawEpisodeNo)
+        return builder.episodeNo(episodeTitleInfo.episode())
+                .rawEpisodeNo(episodeTitleInfo.rawEpisodeNo())
                 .season(episodeTitleInfo.season())
                 .bangumiTitle(episodeTitleInfo.title())
                 .status(RssBangumiEpisodeStatusEnum.PARSED)

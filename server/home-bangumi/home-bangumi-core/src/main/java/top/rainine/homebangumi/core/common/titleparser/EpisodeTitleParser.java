@@ -13,7 +13,8 @@ public interface EpisodeTitleParser {
      * 解析标题
      * @param torrentName 种子名
      * @param season 外部传入的季数，如果为null，会尝试自动生成
+     * @param episodeNoOffset 剧集偏移量，如果为null，则忽略
      * @return 返回标题信息
      * */
-    EpisodeTitleInfo parseTitle(String torrentName, Integer season);
+    EpisodeTitleInfo parseTitle(String torrentName, Integer season, Integer episodeNoOffset);
 }

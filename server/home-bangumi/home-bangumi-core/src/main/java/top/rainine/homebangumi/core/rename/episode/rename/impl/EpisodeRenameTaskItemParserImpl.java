@@ -89,7 +89,7 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         EpisodeTitleInfo episodeTitleInfo;
         if (episodeTitleRenameAdapter.whitParseTitle()) {
             try {
-                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season());
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season(), null);
             } catch (Exception e) {
                 log.error("[EpisodeRenameTaskItemParser]parse title failed, episodeFilePath: {}, episodeFileName: {}",
                         episodeFilePath, episodeFileName);
