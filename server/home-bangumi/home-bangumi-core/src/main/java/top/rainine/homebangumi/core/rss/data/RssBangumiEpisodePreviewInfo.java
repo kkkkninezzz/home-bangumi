@@ -5,6 +5,7 @@ import top.rainine.homebangumi.def.enums.RssBangumiEpisodeStatusEnum;
 
 /**
  * @param episodeNo                 剧集编号
+ * @param rawEpisodeNo              原始的剧集编号
  * @param season                    季
  * @param bangumiTitle              解析出来的番剧名
  * @param rawEpisodeTitle           原始的剧集名
@@ -24,6 +25,7 @@ import top.rainine.homebangumi.def.enums.RssBangumiEpisodeStatusEnum;
  */
 @Builder
 public record RssBangumiEpisodePreviewInfo(int episodeNo,
+                                           int rawEpisodeNo,
                                            int season,
                                            String bangumiTitle,
                                            String rawEpisodeTitle,

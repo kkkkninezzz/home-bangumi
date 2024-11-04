@@ -11,6 +11,13 @@ import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 public interface EpisodeTitleRenameAdapter {
 
     /**
+     * 是否需要先进行title的解析
+     * */
+    default boolean withParseTitle() {
+        return true;
+    }
+
+    /**
      * 重命名标题
      * @param episodeFileName 原始文件名
      * @param episodeTitleInfo 解析后的标题信息

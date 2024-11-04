@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -86,13 +88,23 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         }
 
         EpisodeTitleInfo episodeTitleInfo;
-        try {
-            episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season());
-        } catch (Exception e) {
-            log.error("[EpisodeRenameTaskItemParser]parse title failed, episodeFilePath: {}, episodeFileName: {}",
-                    episodeFilePath, episodeFileName);
-            return builder
-                    .status(EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED)
+        if (episodeTitleRenameAdapter.withParseTitle()) {
+            try {
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, config.season(), config.episodeNoOffset());
+            } catch (Exception e) {
+                log.error("[EpisodeRenameTaskItemParser]parse title failed, episodeFilePath: {}, episodeFileName: {}",
+                        episodeFilePath, episodeFileName);
+                return builder
+                        .status(EpisodeRenameTaskItemStatusEnum.TITLE_PARSE_FAILED)
+                        .build();
+            }
+        } else {
+            episodeTitleInfo = EpisodeTitleInfo
+                    .builder()
+                    .episode(1)
+                    .rawEpisodeNo(1)
+                    .season(Optional.ofNullable(config.season()).orElse(1))
+                    .title(FilenameUtils.getBaseName(episodeFileName))
                     .build();
         }
 
@@ -108,11 +120,18 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
         // 对名字进行过滤
         renamedTitleFileName = HbFileNameUtils.filterIllegalChars(renamedTitleFileName);
 
-        return builder.episodeNo(episodeTitleInfo.episode())
+        builder.episodeNo(episodeTitleInfo.episode())
+                .rawEpisodeNo(episodeTitleInfo.rawEpisodeNo())
                 .season(episodeTitleInfo.season())
-                .renamedEpisodeFileName(renamedTitleFileName)
-                .status(EpisodeRenameTaskItemStatusEnum.PARSED)
-                .build();
+                .renamedEpisodeFileName(renamedTitleFileName);
+
+        if (isSkipped(episodeTitleInfo.episode(), config.skippedEpisodeNo())) {
+            builder.status(EpisodeRenameTaskItemStatusEnum.SKIPPED);
+        } else {
+            builder.status(EpisodeRenameTaskItemStatusEnum.PARSED);
+        }
+
+        return builder.build();
     }
 
     /**
@@ -120,6 +139,13 @@ public class EpisodeRenameTaskItemParserImpl implements EpisodeRenameTaskItemPar
      * */
     private boolean isFilteredOut(String episodeFileName, List<String> rules) {
         return rules.stream().anyMatch(episodeFileName::contains);
+    }
+
+    /**
+     * 是否被跳过
+     * */
+    private boolean isSkipped(int episodeNo, Integer skippedEpisodeNo) {
+        return Objects.nonNull(skippedEpisodeNo) && episodeNo <= skippedEpisodeNo;
     }
 }
 

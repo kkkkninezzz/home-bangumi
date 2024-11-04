@@ -51,7 +51,9 @@ const rssLinkState = ref<FieldValues>({
   handleMethod: RssBangumiHandleMethodEnum.SUBSCRIBE, // 处理方式  默认为订阅
   rssName: "", // 链接名
   rssLink: "", // 实际链接
-  episodeOffset: 0, // 剧集偏移量
+  season: null, // 放送的是哪一季
+  episodeNoOffset: 0, // 剧集偏移
+  skippedEpisodeNo: 0, // 跳过的剧集号
   filterRules: [], // 过滤规则
   downloaderCategory: DownloaderCategoryEnum.QBITTORRENT, // 下载器分类
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
@@ -64,7 +66,9 @@ function initRssLinkState() {
   rssLinkState.value.handleMethod = RssBangumiHandleMethodEnum.SUBSCRIBE;
   rssLinkState.value.rssName = "";
   rssLinkState.value.rssLink = "";
-  rssLinkState.value.episodeOffset = 0;
+  rssLinkState.value.season = null;
+  rssLinkState.value.episodeNoOffset = 0;
+  rssLinkState.value.skippedEpisodeNo = 0;
   //rssLinkState.value.filterRules = [];
   rssLinkState.value.downloaderCategory = DownloaderCategoryEnum.QBITTORRENT;
   rssLinkState.value.episodeTitleRenameMethod =
@@ -170,16 +174,25 @@ const rssLinkColumns: PlusColumn[] = [
     prop: "rssLink",
     valueType: "copy",
     colProps: {
-      span: 16
+      span: 24
+    }
+  },
+  {
+    label: "季度",
+    width: 120,
+    prop: "season",
+    valueType: "input-number",
+    colProps: {
+      span: 12
     }
   },
   {
     label: "剧集偏移",
     width: 120,
-    prop: "episodeOffset",
+    prop: "episodeNoOffset",
     valueType: "input-number",
     colProps: {
-      span: 8
+      span: 12
     }
   },
   {
@@ -189,7 +202,7 @@ const rssLinkColumns: PlusColumn[] = [
     valueType: "select",
     options: EpisodeTitleRenameMethodOptions,
     colProps: {
-      span: 8
+      span: 6
     }
   },
   {
@@ -197,14 +210,24 @@ const rssLinkColumns: PlusColumn[] = [
     width: 120,
     prop: "customizeRenamedEpisodeTitleFormat",
     valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
     fieldProps: computed(() => ({
       disabled:
         rssLinkState.value.episodeTitleRenameMethod !==
         EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE
     })),
     colProps: {
-      span: 16
+      span: 18
+    },
+    renderExtra: () =>
+      `支持的占位符: {title}, {season}, {episode}。 \n例如: {title} S{season}E{episode}`
+  },
+  {
+    label: "跳过的剧集",
+    width: 120,
+    prop: "skippedEpisodeNo",
+    valueType: "input-number",
+    colProps: {
+      span: 6
     }
   },
   {
@@ -215,7 +238,7 @@ const rssLinkColumns: PlusColumn[] = [
       `如果rss链接解析出来的原始标题包含对应规则，那么会过滤掉对应的数据`,
     valueType: "plus-input-tag",
     colProps: {
-      span: 24
+      span: 18
     }
   }
 ];
@@ -244,7 +267,9 @@ const handlePreview = async (
     rssLink: rssLinkState.value.rssLink as string,
     filterRules: rssLinkState.value.filterRules as Array<string>,
     handleMethod: rssLinkState.value.handleMethod as number,
-    episodeOffset: rssLinkState.value.episodeOffset as number,
+    season: rssLinkState.value.season as number,
+    episodeNoOffset: rssLinkState.value.episodeNoOffset as number,
+    skippedEpisodeNo: rssLinkState.value.skippedEpisodeNo as number,
     downloaderCategory: rssLinkState.value.downloaderCategory as number,
     episodeTitleRenameMethod: rssLinkState.value
       .episodeTitleRenameMethod as number,

@@ -36,6 +36,11 @@ public class UpdateEpisodeRenameTaskReq {
     private Integer season;
 
     /**
+     * 剧集的偏移量
+     * */
+    private Integer episodeNoOffset = 0;
+
+    /**
      * 剧集目录路径
      * */
     @NotEmpty(message = HbCodeEnum.ErrorCode.EPISODE_DIR_PATH_INVALID)
@@ -67,6 +72,11 @@ public class UpdateEpisodeRenameTaskReq {
      * 支持占位符 {season} {episode}
      * */
     private String customizeRenamedEpisodeTitleFormat;
+
+    /**
+     * 跳过的剧集号，如果设置为1，表示从第2集开始，忽略第二集之前的
+     * */
+    private Integer skippedEpisodeNo = 0;
 
     /**
      * 过滤规则

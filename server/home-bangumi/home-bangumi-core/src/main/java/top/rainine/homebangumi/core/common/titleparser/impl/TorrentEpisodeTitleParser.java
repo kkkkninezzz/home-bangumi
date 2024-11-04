@@ -8,10 +8,7 @@ import top.rainine.homebangumi.core.common.titleparser.EpisodeTitleParser;
 import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 import top.rainine.homebangumi.core.common.titleparser.exception.EpisodeTitleParseFailedException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +49,7 @@ public class TorrentEpisodeTitleParser implements EpisodeTitleParser {
     private static final Pattern SEASON_PATTERN = Pattern.compile("([Ss]|Season )(\\d{1,3})", Pattern.CASE_INSENSITIVE);
 
     @Override
-    public EpisodeTitleInfo parseTitle(String torrentName, Integer season) {
+    public EpisodeTitleInfo parseTitle(String torrentName, Integer season, Integer episodeNoOffset) {
         Matcher matcher = null;
         for (Pattern pattern: TITLE_RULES) {
             matcher = pattern.matcher(torrentName);
@@ -74,14 +71,16 @@ public class TorrentEpisodeTitleParser implements EpisodeTitleParser {
                 season = getSeason(groupAndTitle.getRight());
             }
 
-            int episode = Integer.parseInt(matcher.group(2));
+            int rawEpisodeNo = Integer.parseInt(matcher.group(2));
 
+            int episodeNo = Optional.ofNullable(episodeNoOffset).map(offset -> rawEpisodeNo + offset).orElse(rawEpisodeNo);
             return EpisodeTitleInfo
                     .builder()
                     .group(group)
                     .title(title)
                     .season(season)
-                    .episode(episode)
+                    .episode(episodeNo)
+                    .rawEpisodeNo(episodeNo)
                     .build();
         } catch (Exception e) {
             log.debug("[TorrentEpisodeTitleParser]parse failed. torrentName: {}", torrentName, e);

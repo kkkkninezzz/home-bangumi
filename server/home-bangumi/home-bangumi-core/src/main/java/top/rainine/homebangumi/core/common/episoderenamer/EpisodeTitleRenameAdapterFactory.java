@@ -30,7 +30,10 @@ public class EpisodeTitleRenameAdapterFactory {
                 return new EpisodeTitleRenameByOfficialTitleAdapter(bangumiOfficialTitle);
             }
             case CUSTOMIZED_TITLE -> {
-                return new EpisodeTitleRenameByCustomizeTitleAdapter(customizeRenamedEpisodeTitleFormat);
+                return new EpisodeTitleRenameByCustomizeTitleAdapter(bangumiOfficialTitle, customizeRenamedEpisodeTitleFormat);
+            }
+            case ONLY_PARSE_EPISODE_NO -> {
+                return new EpisodeTitleRenameOnlyParseEpisodeNoAdapter();
             }
             default -> {
                 log.error("[EpisodeTitleRenameAdapterFactory]new rename adapter failed, not supported method: {}", renameMethod);

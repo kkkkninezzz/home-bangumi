@@ -36,6 +36,11 @@ public class EpisodeRenameTaskDetailResp {
     private Integer season;
 
     /**
+     * 剧集的偏移量
+     * */
+    private Integer episodeNoOffset;
+
+    /**
      * 任务状态
      * @see EpisodeRenameTaskStatusEnum#getStatus()
      * */
@@ -73,6 +78,11 @@ public class EpisodeRenameTaskDetailResp {
      * 格式为json数组字符串，每个元素为一个用于匹配的词组
      * */
     private List<String> filteredOutRules;
+
+    /**
+     * 跳过的剧集号，如果设置为1，表示从第2集开始，忽略第二集之前的
+     * */
+    private Integer skippedEpisodeNo;
 
     /**
      * 是否删除源文件

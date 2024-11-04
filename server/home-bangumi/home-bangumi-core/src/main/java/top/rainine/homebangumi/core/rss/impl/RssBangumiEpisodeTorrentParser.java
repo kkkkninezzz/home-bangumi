@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @authoer rainine
@@ -37,12 +38,13 @@ public class RssBangumiEpisodeTorrentParser {
 
     private final EpisodeTitleRenameAdapter episodeTitleRenameAdapter;
 
+
     /**
      * 根据种子进行解析
      * @param parsedInfo 根据rss解析出来的信息
      * @param torrentStoredPath 种子的存储路径
      * */
-    public RssBangumiEpisodePreviewInfo parse(RssBangumiEpisodeParsedInfo parsedInfo, Path torrentStoredPath, Integer season) {
+    public RssBangumiEpisodePreviewInfo parse(RssBangumiEpisodeParsedInfo parsedInfo, Path torrentStoredPath, Integer season, Integer episodeNoOffset) {
         RssBangumiEpisodePreviewInfo.RssBangumiEpisodePreviewInfoBuilder builder = RssBangumiEpisodePreviewInfo
                 .builder()
                 .rawEpisodeTitle(parsedInfo.rawEpisodeTitle())
@@ -100,13 +102,24 @@ public class RssBangumiEpisodeTorrentParser {
         builder.episodeFileName(episodeFileName);
 
         EpisodeTitleInfo episodeTitleInfo;
-        try {
-            episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season);
-        } catch (Exception e) {
-            log.error("[RssBangumiEpisodeTorrentParser]parse title failed, torrentLink: {}, episodeFileName: {}",
-                    parsedInfo.torrentLink(), episodeFileName);
-            return builder
-                    .status(RssBangumiEpisodeStatusEnum.TITLE_PARSE_FAILED)
+        // 如果该解析器需要先进行title的解析
+        if (episodeTitleRenameAdapter.withParseTitle()) {
+            try {
+                episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season, episodeNoOffset);
+            } catch (Exception e) {
+                log.error("[RssBangumiEpisodeTorrentParser]parse title failed, torrentLink: {}, episodeFileName: {}",
+                        parsedInfo.torrentLink(), episodeFileName);
+                return builder
+                        .status(RssBangumiEpisodeStatusEnum.TITLE_PARSE_FAILED)
+                        .build();
+            }
+        } else {
+            episodeTitleInfo = EpisodeTitleInfo
+                    .builder()
+                    .episode(1)
+                    .rawEpisodeNo(1)
+                    .season(Optional.ofNullable(season).orElse(1))
+                    .title(FilenameUtils.getBaseName(episodeFileName))
                     .build();
         }
 
@@ -120,6 +133,7 @@ public class RssBangumiEpisodeTorrentParser {
         }
 
         return builder.episodeNo(episodeTitleInfo.episode())
+                .rawEpisodeNo(episodeTitleInfo.rawEpisodeNo())
                 .season(episodeTitleInfo.season())
                 .bangumiTitle(episodeTitleInfo.title())
                 .status(RssBangumiEpisodeStatusEnum.PARSED)

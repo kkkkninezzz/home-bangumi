@@ -12,6 +12,11 @@ export type CreateEpisodeRenameTaskReq = {
   season: number;
 
   /**
+   * 剧集偏移量
+   */
+  episodeNoOffset: number;
+
+  /**
    * 剧集目录路径
    */
   episodeDirPath: string;
@@ -41,6 +46,11 @@ export type CreateEpisodeRenameTaskReq = {
    * 过滤规则
    */
   filteredOutRules?: string[];
+
+  /**
+   * 跳过的剧集
+   */
+  skippedEpisodeNo: number;
 
   /**
    * 是否删除源文件
@@ -83,6 +93,11 @@ export type EpisodeRenameTaskDetailResp = {
     season: number;
 
     /**
+     * 剧集偏移量
+     */
+    episodeNoOffset: number;
+
+    /**
      * 任务状态
      */
     taskStatus: number;
@@ -118,6 +133,11 @@ export type EpisodeRenameTaskDetailResp = {
      * 格式为json数组字符串，每个元素为一个用于匹配的词组
      */
     filteredOutRules: string[];
+
+    /**
+     * 跳过的剧集
+     */
+    skippedEpisodeNo: number;
 
     /**
      * 是否删除源文件
@@ -179,6 +199,11 @@ export type EpisodeRenameTaskItemDto = {
   episodeNo: number;
 
   /**
+   * 原始的剧集号
+   */
+  rawEpisodeNo: number;
+
+  /**
    * 错误消息
    */
   errorMessage?: string;
@@ -205,6 +230,11 @@ export type UpdateEpisodeRenameTaskReq = {
    * 剧集季度
    */
   season: number;
+
+  /**
+   * 剧集偏移量
+   */
+  episodeNoOffset: number;
 
   /**
    * 剧集目录路径
@@ -236,6 +266,11 @@ export type UpdateEpisodeRenameTaskReq = {
    * 过滤规则
    */
   filteredOutRules: string[];
+
+  /**
+   * 跳过的剧集
+   */
+  skippedEpisodeNo: number;
 
   /**
    * 是否删除源文件

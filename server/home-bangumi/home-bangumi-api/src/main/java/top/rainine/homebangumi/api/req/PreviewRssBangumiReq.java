@@ -39,14 +39,24 @@ public class PreviewRssBangumiReq {
     private String rssLink;
 
     /**
+     * 季度
+     * */
+    private Integer season;
+
+    /**
      * 过滤规则
      * */
     private List<String> filterRules;
 
     /**
-     * 剧集的偏移量，如果设置为1，表示从第2集开始，忽略第二集之前的
+     * 跳过的剧集号，如果设置为1，表示从第2集开始，忽略第二集之前的
      * */
-    private Integer episodeOffset;
+    private Integer skippedEpisodeNo;
+
+    /**
+     * 剧集的偏移量
+     * */
+    private Integer episodeNoOffset;
 
     /**
      * 收集方式

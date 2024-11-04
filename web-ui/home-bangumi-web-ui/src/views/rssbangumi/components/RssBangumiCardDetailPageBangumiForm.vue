@@ -85,7 +85,8 @@ const rssBangumiState = ref<FieldValues>({
   rssName: "", // 链接名
   rssLink: "", // 实际链接
   filterRules: [], // 过滤规则
-  episodeOffset: 0, // 剧集偏移量
+  skippedEpisodeNo: 0, // 跳过的剧集号
+  episodeNoOffset: 0, // 剧集偏移
   bangumiTitle: "", // 番剧名
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
   customizeRenamedEpisodeTitleFormat: "", // 自定义的重命名后标题格式
@@ -114,7 +115,8 @@ function setRssBangumiState(resp: RssBangumiDetailResp) {
   rssBangumiState.value.rssName = resp.data.rssName;
   rssBangumiState.value.rssLink = resp.data.rssLink;
   rssBangumiState.value.filterRules = resp.data.filterRules;
-  rssBangumiState.value.episodeOffset = resp.data.episodeOffset;
+  rssBangumiState.value.skippedEpisodeNo = resp.data.skippedEpisodeNo;
+  rssBangumiState.value.episodeNoOffset = resp.data.episodeNoOffset;
   rssBangumiState.value.episodeTitleRenameMethod =
     resp.data.episodeTitleRenameMethod;
   rssBangumiState.value.customizeRenamedEpisodeTitleFormat =
@@ -213,52 +215,18 @@ const rssBangumiColumns: PlusColumn[] = [
     prop: "rssLink",
     valueType: "copy",
     colProps: {
-      span: 16
+      span: 24
     },
     fieldProps: { disabled: true }
   },
 
-  {
-    label: "剧集偏移",
-    width: 120,
-    prop: "episodeOffset",
-    valueType: "input-number",
-    colProps: {
-      span: 8
-    }
-  },
   {
     label: "番剧标题",
     width: 120,
     prop: "bangumiTitle",
     valueType: "copy",
     colProps: {
-      span: 10
-    }
-  },
-  {
-    label: "剧集重命名方式",
-    width: 120,
-    prop: "episodeTitleRenameMethod",
-    valueType: "select",
-    options: EpisodeTitleRenameMethodOptions,
-    colProps: {
-      span: 4
-    }
-  },
-  {
-    label: "自定义剧集标题格式",
-    width: 120,
-    prop: "customizeRenamedEpisodeTitleFormat",
-    valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
-    fieldProps: computed(() => ({
-      disabled:
-        rssBangumiState.value.episodeTitleRenameMethod !==
-        EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE
-    })),
-    colProps: {
-      span: 10
+      span: 12
     }
   },
   {
@@ -267,7 +235,16 @@ const rssBangumiColumns: PlusColumn[] = [
     prop: "season",
     valueType: "input-number",
     colProps: {
-      span: 8
+      span: 6
+    }
+  },
+  {
+    label: "剧集偏移",
+    width: 120,
+    prop: "episodeNoOffset",
+    valueType: "input-number",
+    colProps: {
+      span: 6
     }
   },
   {
@@ -275,7 +252,7 @@ const rssBangumiColumns: PlusColumn[] = [
     prop: "broadcastDate",
     valueType: "date-picker",
     colProps: {
-      span: 8
+      span: 12
     }
   },
   {
@@ -321,7 +298,43 @@ const rssBangumiColumns: PlusColumn[] = [
       }
     ],
     colProps: {
-      span: 8
+      span: 12
+    }
+  },
+  {
+    label: "剧集重命名方式",
+    width: 120,
+    prop: "episodeTitleRenameMethod",
+    valueType: "select",
+    options: EpisodeTitleRenameMethodOptions,
+    colProps: {
+      span: 6
+    }
+  },
+  {
+    label: "自定义剧集标题格式",
+    width: 120,
+    prop: "customizeRenamedEpisodeTitleFormat",
+    valueType: "copy",
+    fieldProps: computed(() => ({
+      disabled:
+        rssBangumiState.value.episodeTitleRenameMethod !==
+        EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE
+    })),
+    colProps: {
+      span: 18
+    },
+    renderExtra: () =>
+      `支持的占位符: {title}, {season}, {episode}。 \n例如: {title} S{season}E{episode}`
+  },
+
+  {
+    label: "跳过的剧集",
+    width: 120,
+    prop: "skippedEpisodeNo",
+    valueType: "input-number",
+    colProps: {
+      span: 6
     }
   },
   {
@@ -332,7 +345,7 @@ const rssBangumiColumns: PlusColumn[] = [
       `如果rss链接解析出来的原始标题包含对应规则，那么会过滤掉对应的数据`,
     valueType: "plus-input-tag",
     colProps: {
-      span: 24
+      span: 18
     }
   }
 ];
@@ -359,7 +372,8 @@ const handleSubmit = async (values: FieldValues) => {
   const req: RssBangumiUpdateReq = {
     rssName: rssBangumiState.value.rssName as string,
     filterRules: rssBangumiState.value.filterRules as Array<string>,
-    episodeOffset: rssBangumiState.value.episodeOffset as number,
+    skippedEpisodeNo: rssBangumiState.value.skippedEpisodeNo as number,
+    episodeNoOffset: rssBangumiState.value.episodeNoOffset as number,
     downloaderCategory: rssBangumiState.value.downloaderCategory as number,
     episodeTitleRenameMethod: rssBangumiState.value
       .episodeTitleRenameMethod as number,

@@ -11,6 +11,8 @@ import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 @RequiredArgsConstructor
 public class EpisodeTitleRenameByCustomizeTitleAdapter implements EpisodeTitleRenameAdapter {
 
+    private final String title;
+
     private final String customizeRenamedEpisodeTitleFormat;
 
     @Override
@@ -20,7 +22,9 @@ public class EpisodeTitleRenameByCustomizeTitleAdapter implements EpisodeTitleRe
         String seasonStr = STR."\{season < 10 ? "0": ""}\{season}";
         String episodeStr = STR."\{episodeNo < 10 ? "0": ""}\{episodeNo}";
 
-        return customizeRenamedEpisodeTitleFormat.replace("{season}", seasonStr)
+        return customizeRenamedEpisodeTitleFormat
+                .replace("{title}", title)
+                .replace("{season}", seasonStr)
                 .replace("{episode}", episodeStr);
     }
 }

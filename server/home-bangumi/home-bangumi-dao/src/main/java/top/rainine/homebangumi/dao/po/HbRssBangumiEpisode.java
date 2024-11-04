@@ -34,12 +34,18 @@ public class HbRssBangumiEpisode extends BaseEntity {
     private Long rssBangumiId;
 
     /**
-     * 剧集编号
+     * 剧集编号，可能经过偏移处理，非原始编号
      * 一般来说为01，02
      * 可能有特殊的ova1
      * */
     @Column(name = "episode_No")
     private Integer episodeNo;
+
+    /**
+     * 解析出来的原始剧集号
+     * */
+    @Column(name = "raw_episode_no")
+    private Integer rawEpisodeNo;
 
     /**
      * 原始的剧集名

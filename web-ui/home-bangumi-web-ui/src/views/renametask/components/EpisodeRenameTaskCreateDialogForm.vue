@@ -53,12 +53,14 @@ const emit = defineEmits<{
 const taskState = ref<FieldValues>({
   taskName: "", // 任务鸣潮
   season: 1, // 剧集季度
+  episodeNoOffset: 0, // 剧集偏移
   episodeDirPath: "", // 剧集目录路径
   episodeDirPathMaxDepth: 1, // 目录最大深度
   renamedOutputDirPath: "", // 重命名后输出的目录路径
   episodeTitleRenameMethod: EpisodeTitleRenameMethodEnum.TORRENT_PARSED_TITLE, // 剧集解析方式
   customizeRenamedEpisodeTitleFormat: "", // 自定义的重命名后标题格式
   filteredOutRules: [], // 过滤规则
+  skippedEpisodeNo: 0, // 跳过的剧集号
   deleteSourceFile: false, // 是否删除源文件
   overwriteExistingFile: false // 覆盖已存在文件
 });
@@ -76,6 +78,8 @@ function initTaskState() {
   taskState.value.filteredOutRules = [];
   taskState.value.deleteSourceFile = false;
   taskState.value.overwriteExistingFile = false;
+  taskState.value.episodeNoOffset = 0;
+  taskState.value.skippedEpisodeNo = 0;
 }
 
 // 初始化路径配置
@@ -183,7 +187,7 @@ const taskColumns: PlusColumn[] = [
     prop: "taskName",
     valueType: "copy",
     colProps: {
-      span: 16
+      span: 12
     }
   },
   {
@@ -192,7 +196,16 @@ const taskColumns: PlusColumn[] = [
     prop: "season",
     valueType: "input-number",
     colProps: {
-      span: 8
+      span: 6
+    }
+  },
+  {
+    label: "剧集偏移",
+    width: 120,
+    prop: "episodeNoOffset",
+    valueType: "input-number",
+    colProps: {
+      span: 6
     }
   },
   {
@@ -270,7 +283,7 @@ const taskColumns: PlusColumn[] = [
     valueType: "select",
     options: EpisodeTitleRenameMethodOptions,
     colProps: {
-      span: 8
+      span: 6
     }
   },
   {
@@ -278,14 +291,23 @@ const taskColumns: PlusColumn[] = [
     width: 120,
     prop: "customizeRenamedEpisodeTitleFormat",
     valueType: "copy",
-    tooltip: "支持的占位符: {season}, {episode}",
     fieldProps: computed(() => ({
       disabled:
         taskState.value.episodeTitleRenameMethod !==
         EpisodeTitleRenameMethodEnum.CUSTOMIZED_TITLE
     })),
     colProps: {
-      span: 16
+      span: 18
+    },
+    renderExtra: () => `支持的占位符: {season}, {episode}`
+  },
+  {
+    label: "跳过的剧集",
+    width: 120,
+    prop: "skippedEpisodeNo",
+    valueType: "input-number",
+    colProps: {
+      span: 6
     }
   },
   {
@@ -295,7 +317,7 @@ const taskColumns: PlusColumn[] = [
     renderExtra: () => `如果文件名包含对应规则，那么会过滤掉对应的数据`,
     valueType: "plus-input-tag",
     colProps: {
-      span: 24
+      span: 18
     }
   },
   {
@@ -329,6 +351,7 @@ const handleCreate = async (
   const req: CreateEpisodeRenameTaskReq = {
     taskName: taskState.value.taskName as string,
     season: taskState.value.season as number,
+    episodeNoOffset: taskState.value.episodeNoOffset as number,
     episodeDirPath: taskState.value.episodeDirPath as string,
     episodeDirPathMaxDepth: taskState.value.episodeDirPathMaxDepth as number,
     renamedOutputDirPath: taskState.value.renamedOutputDirPath as string,
@@ -337,6 +360,7 @@ const handleCreate = async (
     customizeRenamedEpisodeTitleFormat: taskState.value
       .customizeRenamedEpisodeTitleFormat as string,
     filteredOutRules: taskState.value.filteredOutRules as Array<string>,
+    skippedEpisodeNo: taskState.value.skippedEpisodeNo as number,
     deleteSourceFile: taskState.value.deleteSourceFile as boolean,
     overwriteExistingFile: taskState.value.overwriteExistingFile as boolean
   };

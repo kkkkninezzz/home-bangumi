@@ -10,10 +10,14 @@ export type RssBangumiPreviewReq = {
   rssName: string;
   /** rss链接地址 */
   rssLink: string;
+  /** 季度 */
+  season: number;
   /** 过滤规则 */
   filterRules: Array<string>;
+  /** 跳过的剧集 */
+  skippedEpisodeNo: number;
   /** 剧集的偏移量 */
-  episodeOffset: number;
+  episodeNoOffset: number;
   /** 收集方式 */
   handleMethod: number;
   /** 下载器分类 */
@@ -58,8 +62,10 @@ export type RssBangumiDetailResp = {
     handleMethod: number;
     status: number;
     filterRules: Array<string>;
+    /** 跳过的剧集 */
+    skippedEpisodeNo: number;
     /** 剧集的偏移量 */
-    episodeOffset: number;
+    episodeNoOffset: number;
     bangumiInfo?: BangumiInfoDto;
     /** 下载器分类 */
     downloaderCategory: number;
@@ -76,6 +82,7 @@ export type RssBangumiDetailResp = {
 export type RssBangumiEpisodeDto = {
   id: number;
   episodeNo?: number;
+  rawEpisodeNo?: number;
   rawEpisodeTitle: string;
   episodeFileName?: string;
   renamedEpisodeFileName?: string;
@@ -108,8 +115,10 @@ export type RssBangumiUpdateReq = {
   rssName: string;
   /** 过滤规则 */
   filterRules: Array<string>;
+  /** 跳过的剧集 */
+  skippedEpisodeNo: number;
   /** 剧集的偏移量 */
-  episodeOffset: number;
+  episodeNoOffset: number;
   /** 下载器分类 */
   downloaderCategory: number;
   /** 剧集标题重命名方式 */

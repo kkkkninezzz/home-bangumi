@@ -25,6 +25,11 @@ public class RssBangumiEpisodeDto {
     private Integer episodeNo;
 
     /**
+     * 原始的剧集号
+     * */
+    private Integer rawEpisodeNo;
+
+    /**
      * 原始的剧集名
      * */
     private String rawEpisodeTitle;

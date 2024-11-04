@@ -56,6 +56,11 @@ public class EpisodeRenameTaskItemDto {
     private Integer episodeNo;
 
     /**
+     * 原始的剧集编号
+     * */
+    private Integer rawEpisodeNo;
+
+    /**
      * 错误消息
      * */
     private String errorMessage;
