@@ -103,7 +103,7 @@ public class RssBangumiEpisodeTorrentParser {
 
         EpisodeTitleInfo episodeTitleInfo;
         // 如果该解析器需要先进行title的解析
-        if (episodeTitleRenameAdapter.whitParseTitle()) {
+        if (episodeTitleRenameAdapter.withParseTitle()) {
             try {
                 episodeTitleInfo = episodeTitleParser.parseTitle(episodeFileName, season, episodeNoOffset);
             } catch (Exception e) {
@@ -117,6 +117,7 @@ public class RssBangumiEpisodeTorrentParser {
             episodeTitleInfo = EpisodeTitleInfo
                     .builder()
                     .episode(1)
+                    .rawEpisodeNo(1)
                     .season(Optional.ofNullable(season).orElse(1))
                     .title(FilenameUtils.getBaseName(episodeFileName))
                     .build();

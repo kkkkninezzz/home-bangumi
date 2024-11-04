@@ -6,6 +6,7 @@ import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
 /**
  *
  * @param episodeNo                 剧集编号
+ * @param rawEpisodeNo              原始的剧集编号
  * @param season                    季
  * @param episodeFileName           种子中获取到的剧集文件名
  * @param episodeFilePath           剧集文件的路径
@@ -20,6 +21,7 @@ import top.rainine.homebangumi.def.enums.EpisodeRenameTaskItemStatusEnum;
  */
 @Builder
 public record EpisodeRenameTaskItemParsedInfo(int episodeNo,
+                                              int rawEpisodeNo,
                                               int season,
                                               String episodeFileName,
                                               String episodeFilePath,

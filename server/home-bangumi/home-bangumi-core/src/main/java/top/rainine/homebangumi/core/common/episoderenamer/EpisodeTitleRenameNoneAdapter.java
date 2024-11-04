@@ -11,7 +11,7 @@ import top.rainine.homebangumi.core.common.titleparser.data.EpisodeTitleInfo;
 public class EpisodeTitleRenameNoneAdapter implements EpisodeTitleRenameAdapter {
 
     @Override
-    public boolean whitParseTitle() {
+    public boolean withParseTitle() {
         return false;
     }
 

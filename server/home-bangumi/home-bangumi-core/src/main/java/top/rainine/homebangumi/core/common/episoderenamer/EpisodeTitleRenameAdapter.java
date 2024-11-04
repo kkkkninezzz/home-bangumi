@@ -13,7 +13,7 @@ public interface EpisodeTitleRenameAdapter {
     /**
      * 是否需要先进行title的解析
      * */
-    default boolean whitParseTitle() {
+    default boolean withParseTitle() {
         return true;
     }
 
