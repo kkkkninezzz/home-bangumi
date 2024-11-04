@@ -70,6 +70,12 @@ public class HbEpisodeRenameTaskItem extends BaseEntity {
     private Integer episodeNo;
 
     /**
+     * 解析出来的原始剧集号
+     * */
+    @Column(name = "raw_episode_no")
+    private Integer rawEpisodeNo;
+
+    /**
      * 错误消息
      * */
     @Column(name = "error_message", length = 512)
