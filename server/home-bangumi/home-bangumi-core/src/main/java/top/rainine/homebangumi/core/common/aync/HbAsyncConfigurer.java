@@ -22,8 +22,8 @@ public class HbAsyncConfigurer implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
-        threadPool.setCorePoolSize(1);
-        threadPool.setMaxPoolSize(2);
+        threadPool.setCorePoolSize(2);
+        threadPool.setMaxPoolSize(4);
         threadPool.setThreadNamePrefix("hb-async-"); // 设置线程名称前缀
         threadPool.setAwaitTerminationSeconds(60); // 设置终止等待时间
         threadPool.setWaitForTasksToCompleteOnShutdown(true);
