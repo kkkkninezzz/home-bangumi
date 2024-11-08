@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
 import top.rainine.homebangumi.core.downloader.qbittorrent.QbTorrentProperties;
 import top.rainine.homebangumi.core.message.pusher.WecomchanPusher;
+import top.rainine.homebangumi.core.metadata.tmdb.data.TmdbObjectRuntimeHints;
 
 /**
  * @authoer rainine
@@ -25,6 +26,7 @@ public class CustomGsonObjectRuntimeHints {
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             hints.reflection().registerType(QbTorrentProperties.class, MemberCategory.values());
             hints.reflection().registerType(WecomchanPusher.WecomchanPushResponse.class, MemberCategory.values());
+            TmdbObjectRuntimeHints.registerHints(hints);
         }
     }
 }

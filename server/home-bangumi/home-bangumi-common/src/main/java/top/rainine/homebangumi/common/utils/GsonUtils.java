@@ -35,7 +35,7 @@ public class GsonUtils {
         return GSON.fromJson(jsonArrStr, getGenericTypeForList(clazz));
     }
 
-    public static <T> T toJson(String json, Class<T> clazz) {
+    public static <T> T fromJson(String json, Class<T> clazz) {
         return GSON.fromJson(json, clazz);
     }
 }

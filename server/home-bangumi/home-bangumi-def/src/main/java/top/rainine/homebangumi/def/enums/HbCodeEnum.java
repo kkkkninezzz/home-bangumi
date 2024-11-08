@@ -155,7 +155,7 @@ public enum HbCodeEnum {
 
     EPISODE_DIR_PATH_MAX_DEPTH_INVALID(ErrorCode.EPISODE_DIR_PATH_MAX_DEPTH_INVALID, "episodeDirPathMaxDepth invalid"),
 
-
+    REQUEST_TMDB_FAILED(ErrorCode.REQUEST_TMDB_FAILED, "request tmdb failed"),
     ;
     private final String code;
 
@@ -547,6 +547,11 @@ public enum HbCodeEnum {
          * 遍历预览路径失败
          * */
         String WALK_FILE_PATH_FAILED = "HB100024";
+
+        /**
+         * 请求tmdb失败
+         * */
+        String REQUEST_TMDB_FAILED = "HB100025";
         //endregion
     }
 }

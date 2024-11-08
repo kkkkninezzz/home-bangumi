@@ -232,7 +232,7 @@ public class QbittorrentEpisodeDownloadAdapter implements EpisodeDownloadAdapter
         try {
             return okHttpService.sendRequestByCookie(request, response -> {
                 if (response.isSuccessful() && Objects.nonNull(response.body())) {
-                    QbTorrentProperties qbTorrentProperties = GsonUtils.toJson(response.body().string(), QbTorrentProperties.class);
+                    QbTorrentProperties qbTorrentProperties = GsonUtils.fromJson(response.body().string(), QbTorrentProperties.class);
                     TorrentDownloadStatusEnum statusEnum;
                     if (Objects.equals(qbTorrentProperties.getPiecesHave(), qbTorrentProperties.getPiecesNum())) {
                         statusEnum = TorrentDownloadStatusEnum.FINISHED;

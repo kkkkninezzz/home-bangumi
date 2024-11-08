@@ -70,7 +70,7 @@ public class WecomchanPusher implements MessagePusher, InitializingBean {
         try {
             boolean result = okHttpService.sendRequest(request, response -> {
                 if (response.isSuccessful() && Objects.nonNull(response.body())) {
-                    WecomchanPushResponse pushResponse = GsonUtils.toJson(response.body().string(), WecomchanPushResponse.class);
+                    WecomchanPushResponse pushResponse = GsonUtils.fromJson(response.body().string(), WecomchanPushResponse.class);
                     return Objects.equals(pushResponse.errcode, 0);
                 }
 
