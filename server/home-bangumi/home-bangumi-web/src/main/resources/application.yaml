@@ -1,14 +1,25 @@
 logging:
   config: classpath:logback-spring.xml
+  level:
+    org:
+      h2: DEBUG
+    com:
+      zaxxer:
+        hikari: DEBUG
 
 spring:
   application:
     name: home-bangumi
   datasource:
-    url: jdbc:sqlite:./data/db/database.db?journal_mode=WAL
-    driver-class-name: org.sqlite.JDBC
+    url: jdbc:h2:file:./data/db/hb
+    driver-class-name: org.h2.Driver
+    username: hb
+    password: hb
+    hikari:
+      maximum-pool-size: 10
+      max-lifetime: 600000
+      connection-timeout: 3000
   jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
     open-in-view: false
