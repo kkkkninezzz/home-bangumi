@@ -7,8 +7,11 @@ spring:
   application:
     name: home-bangumi
   datasource:
-    url: jdbc:sqlite:/data/home-bangumi/db/database.db?journal_mode=WAL
+    url: jdbc:sqlite:/data/home-bangumi/db/database.db?journal_mode=WAL&busy_timeout=5000
     driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 3000
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
