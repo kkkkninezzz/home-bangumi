@@ -1,5 +1,6 @@
 package top.rainine.homebangumi.dao.utils;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Callable;
@@ -10,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @description sqlite的写入lock
  * @date 2025/2/21 18:13:33
  */
+@Getter
 @Component
 public class SqliteWriteLock {
 
