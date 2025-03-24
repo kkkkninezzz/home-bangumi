@@ -45,6 +45,8 @@ public class RssBangumiEpisodeDownloadServiceImpl implements RssBangumiEpisodeDo
 
     private final HbEventBus hbEventBus;
 
+    private final NotFoundInDownloaderCounter notFoundInDownloaderCounter;
+
     @Override
     @Async
     public void pushAllToDownloader() {
@@ -117,8 +119,15 @@ public class RssBangumiEpisodeDownloadServiceImpl implements RssBangumiEpisodeDo
                     switch (torrentDownloadStatus.status()) {
                         case FINISHED -> episode.setStatus(RssBangumiEpisodeStatusEnum.EPISODE_DOWNLOAD_FINISHED.getStatus());
                         case NOT_FOUND -> {
-                            episode.setStatus(RssBangumiEpisodeStatusEnum.EPISODE_DOWNLOAD_FAILED.getStatus());
-                            episode.setErrorMessage("not found episode torrent in downloader");
+                            int count = notFoundInDownloaderCounter.getCount(episode.getId());
+                            // 如果3次内都还是NOT_FOUND，则进行重试
+                            if (count < 3) {
+                                notFoundInDownloaderCounter.inc(episode.getId());
+                                return null;
+                            } else {
+                                episode.setStatus(RssBangumiEpisodeStatusEnum.EPISODE_DOWNLOAD_FAILED.getStatus());
+                                episode.setErrorMessage("not found episode torrent in downloader");
+                            }
                         }
                         case FAILED ->  episode.setStatus(RssBangumiEpisodeStatusEnum.EPISODE_DOWNLOAD_FAILED.getStatus());
                         case null, default -> {
@@ -128,6 +137,9 @@ public class RssBangumiEpisodeDownloadServiceImpl implements RssBangumiEpisodeDo
                     return episode;
                 }).filter(Objects::nonNull)
                 .toList();
+
+        // 从NOT_FOUND的缓存计数器中，移除
+        episodes.forEach(episode -> notFoundInDownloaderCounter.remove(episode.getId()));
 
         List<HbRssBangumiEpisode> finishedEpisodes = episodes.stream()
                 .filter(episode -> RssBangumiEpisodeStatusEnum.EPISODE_DOWNLOAD_FINISHED.equals(episode.getStatus()))

@@ -75,7 +75,8 @@ public class MessageServiceImpl implements MessageService {
         LocalDateTime startTime = HbDateUtils.now().plusDays(-daysAgo);
         List<HbMessage> entities = messageRepository.findAllByReadAndCreatedTimeGreaterThanOrderByCreatedTimeDesc(Boolean.FALSE, HbDateUtils.toMills(startTime), PageRequest.of(0, limit));
 
-        MessagesResp resp = new MessagesResp();resp.setMessages(entities.stream().map(messageConvertor::toMessageDto).toList());
+        MessagesResp resp = new MessagesResp();
+        resp.setMessages(entities.stream().map(messageConvertor::toMessageDto).toList());
 
 
         return resp;

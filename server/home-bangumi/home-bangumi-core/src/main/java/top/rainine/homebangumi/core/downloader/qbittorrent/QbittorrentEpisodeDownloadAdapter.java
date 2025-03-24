@@ -246,7 +246,14 @@ public class QbittorrentEpisodeDownloadAdapter implements EpisodeDownloadAdapter
                             .progress(progress)
                             .build();
                 }
-                return TorrentDownloadStatusInfo.NOT_FOUND;
+
+                // 只有明确返回了404，才视为not_found
+                if (response.code() == 404) {
+                    return TorrentDownloadStatusInfo.NOT_FOUND;
+                }
+
+                return TorrentDownloadStatusInfo.DEFAULT_ERROR;
+
             });
         } catch (IOException e) {
             log.error("[QbittorrentEpisodeDownloadAdapter]getTorrentDownloadStatus failed, url: {}", torrentPropertiesApi, e);
