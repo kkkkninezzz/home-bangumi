@@ -7,6 +7,8 @@ import okhttp3.Request;
 import org.springframework.stereotype.Component;
 import top.rainine.homebangumi.common.utils.GsonUtils;
 import top.rainine.homebangumi.core.common.net.OkHttpService;
+import top.rainine.homebangumi.core.metadata.tmdb.data.TmdbMovieSeries;
+import top.rainine.homebangumi.core.metadata.tmdb.data.TmdbMovieSeriesResultsPage;
 import top.rainine.homebangumi.core.metadata.tmdb.data.TmdbTvSeriesResultsPage;
 import top.rainine.homebangumi.def.enums.HbCodeEnum;
 import top.rainine.homebangumi.def.exception.HbBizException;
@@ -65,5 +67,17 @@ public class TmdbComponent {
                 .build();
 
         return sendRequest(url, apiToken, TmdbTvSeriesResultsPage.class);
+    }
+
+    /**
+     * 搜索movie
+     * */
+    public TmdbMovieSeriesResultsPage searchMovie(String domain, String apiToken, String query) {
+        HttpUrl url = Objects.requireNonNull(HttpUrl.parse(STR."\{domain}" + "/3/search/movie"))
+                .newBuilder()
+                .addQueryParameter("query", query)
+                .build();
+
+        return sendRequest(url, apiToken, TmdbMovieSeriesResultsPage.class);
     }
 }
