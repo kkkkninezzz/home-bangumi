@@ -14,5 +14,7 @@ public class TmdbObjectRuntimeHints {
         hints.reflection().registerType(TmdbResultsPage.class, MemberCategory.values());
         hints.reflection().registerType(TmdbTvSeries.class, MemberCategory.values());
         hints.reflection().registerType(TmdbTvSeriesResultsPage.class, MemberCategory.values());
+        hints.reflection().registerType(TmdbMovieSeries.class, MemberCategory.values());
+        hints.reflection().registerType(TmdbMovieSeriesResultsPage.class, MemberCategory.values());
     }
 }

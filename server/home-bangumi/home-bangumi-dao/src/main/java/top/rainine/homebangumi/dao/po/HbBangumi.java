@@ -63,4 +63,9 @@ public class HbBangumi extends BaseEntity {
     @Column(name = "season")
     private Integer season;
 
+    /**
+     * 放送的是哪一季的名字
+     * */
+    @Column(name = "season_name")
+    private Integer seasonName;
 }
